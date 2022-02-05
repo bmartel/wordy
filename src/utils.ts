@@ -51,8 +51,11 @@ export const GUESS_SIZE = 6;
 export const fill = (func: () => any, length = 0) =>
   Array.from({ length }, func);
 export const makeGuessResult = () => fill(() => "empty", WORD_SIZE);
-export const makeGuesses = (letters = "", result = makeGuessResult()) =>
-  fill(() => ({ letters, result }), GUESS_SIZE);
+export const makeGuesses = (letters = "", result = undefined) =>
+  fill(
+    () => ({ letters, result: result || [...makeGuessResult()] }),
+    GUESS_SIZE
+  );
 
 export const initializeGuesses = makeGuesses();
 export const initializeGuess = initializeGuesses[0];

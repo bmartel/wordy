@@ -134,6 +134,8 @@ export class CwApp extends LitElement {
   }
 
   _handleKeydown = (e: KeyboardEvent) => {
+    if (this.status !== "idle") return;
+
     switch (e.key) {
       case "Backspace":
         return this.removeLetter();
@@ -155,7 +157,6 @@ export class CwApp extends LitElement {
   }
 
   render() {
-    console.log(this.guesses);
     return html`
       <cw-board
         .guesses=${this.guesses}

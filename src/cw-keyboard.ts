@@ -107,9 +107,9 @@ export class CwKeyboard extends LitElement {
     return html`
       <div id="keyboard">
         <div class="row">
-          <button data-key="q" data-state="correct">q</button>
-          <button data-key="w" data-state="present">w</button>
-          <button data-key="e" data-state="absent">e</button>
+          <button data-key="q">q</button>
+          <button data-key="w">w</button>
+          <button data-key="e">e</button>
           <button data-key="r">r</button>
           <button data-key="t">t</button>
           <button data-key="y">y</button>

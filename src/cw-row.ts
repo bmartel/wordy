@@ -26,6 +26,8 @@ export class CwRow extends LitElement {
   @property({ reflect: true })
   status: GameStatus = "idle";
 
+  revealed = false;
+
   static styles = css`
     :host {
       display: block;
@@ -89,6 +91,12 @@ export class CwRow extends LitElement {
     }
   `;
 
+  protected updated(): void {
+    if (this.status === "reveal") {
+      this.revealed = true;
+    }
+  }
+
   render() {
     let letters: string[] = this.guess.split("");
     letters = [
@@ -100,28 +108,48 @@ export class CwRow extends LitElement {
       <div class="row">
         <cw-tile
           .letter=${letters[0]}
-          .status=${this.result[0]}
-          .animation=${letters[0] !== "" ? "pop" : ""}
+          .status=${this.revealed ? this.result[0] : "tbd"}
+          .animation=${letters[0] !== ""
+            ? this.status === "reveal"
+              ? "flip-in"
+              : "pop"
+            : ""}
         ></cw-tile>
         <cw-tile
           .letter=${letters[1]}
-          .status=${this.result[1]}
-          .animation=${letters[1] !== "" ? "pop" : ""}
+          .status=${this.revealed ? this.result[1] : "tbd"}
+          .animation=${letters[1] !== ""
+            ? this.status === "reveal"
+              ? "flip-in"
+              : "pop"
+            : ""}
         ></cw-tile>
         <cw-tile
           .letter=${letters[2]}
-          .status=${this.result[2]}
-          .animation=${letters[2] !== "" ? "pop" : ""}
+          .status=${this.revealed ? this.result[2] : "tbd"}
+          .animation=${letters[2] !== ""
+            ? this.status === "reveal"
+              ? "flip-in"
+              : "pop"
+            : ""}
         ></cw-tile>
         <cw-tile
           .letter=${letters[3]}
-          .status=${this.result[3]}
-          .animation=${letters[3] !== "" ? "pop" : ""}
+          .status=${this.revealed ? this.result[3] : "tbd"}
+          .animation=${letters[3] !== ""
+            ? this.status === "reveal"
+              ? "flip-in"
+              : "pop"
+            : ""}
         ></cw-tile>
         <cw-tile
           .letter=${letters[4]}
-          .status=${this.result[4]}
-          .animation=${letters[4] !== "" ? "pop" : ""}
+          .status=${this.revealed ? this.result[4] : "tbd"}
+          .animation=${letters[4] !== ""
+            ? this.status === "reveal"
+              ? "flip-in"
+              : "pop"
+            : ""}
         ></cw-tile>
       </div>
     `;
