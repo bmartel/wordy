@@ -1,12 +1,15 @@
 import { html, css, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import {
-  controlKeyMap,
   initializeGuesses,
   Guess,
   LetterKey,
   letterKeyMap,
   GuessResult,
+  WORD_SIZE,
+  GameStatus,
+  WIN_ANIMATION_DURATION,
+  INVALID_ANIMATION_DURATION,
 } from "./utils";
 import "./cw-board.ts";
 import "./cw-keyboard.ts";
@@ -25,6 +28,10 @@ export class CwApp extends LitElement {
   guesses: Guess[] = initializeGuesses;
   @state()
   targetWord: string = "pleat";
+  @state()
+  status: GameStatus = "idle";
+
+  _clearStatus: any = null;
 
   static styles = css`
     :host {
@@ -41,13 +48,33 @@ export class CwApp extends LitElement {
   get activeGuess(): string {
     return this.guesses[this.guess].letters;
   }
-
   set activeGuess(value) {
-    this.guesses[this.guess].letters = value;
+    const guess = this.guesses[this.guess];
+
+    guess.letters = value;
+
+    this.guesses = this.guesses.map((g, i) => {
+      if (i === this.guess) {
+        return guess;
+      }
+      return g;
+    });
   }
 
   get activeResult(): GuessResult[] {
     return this.guesses[this.guess].result;
+  }
+  set activeResult(value) {
+    const guess = this.guesses[this.guess];
+
+    guess.result = value as any;
+
+    this.guesses = this.guesses.map((g, i) => {
+      if (i === this.guess) {
+        return guess;
+      }
+      return g;
+    });
   }
 
   private removeLetter() {
@@ -57,42 +84,65 @@ export class CwApp extends LitElement {
   }
 
   private insertLetter(key: LetterKey) {
-    if (this.activeGuess.length < 5) {
+    if (this.activeGuess.length < WORD_SIZE && key in letterKeyMap) {
       this.activeGuess += key;
     }
   }
 
   private attemptGuess() {
-    if (this.activeGuess.length < 5) {
-      // error
+    if (this._clearStatus) clearTimeout(this._clearStatus);
+
+    const guess = this.activeGuess;
+    if (guess.length < WORD_SIZE) {
+      // error not enough chars
+      this.status = "invalid";
+      this._clearStatus = setTimeout(() => {
+        this.status = "idle";
+      }, INVALID_ANIMATION_DURATION);
     } else {
-      // update result
+      // evaluate and update result
       const word = this.targetWord;
+      const result = this.activeResult;
 
       for (let c = 0; c < word.length; c++) {
         const char = word.charAt(c);
-        const w = word.indexOf(char);
-        this.activeResult[c] =
-          w === c ? "correct" : w > -1 ? "present" : "absent";
+        const w = guess.indexOf(char);
+        result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
+      }
+
+      if (result.some((r) => r !== "correct")) {
+        this.status = "reveal";
+        this.activeResult = result;
+        // not a win condition
+        if (this.guess < 5) {
+          // next row
+          this._clearStatus = setTimeout(() => {
+            this.guess++;
+            this.status = "idle";
+          }, WIN_ANIMATION_DURATION);
+        } else {
+          // game over
+          this._clearStatus = setTimeout(() => {
+            this.status = "lose";
+          }, WIN_ANIMATION_DURATION);
+        }
+      } else {
+        this.status = "win";
+        // win condition
       }
     }
   }
 
-  private _handleKeydown(e: KeyboardEvent) {
-    if (this.guesses.length >= 6) return;
-    if (e.key in controlKeyMap) {
-      switch (e.key) {
-        case "Backspace":
-          return this.removeLetter();
-        case "Enter":
-          return this.attemptGuess();
-        default:
-          if (e.key in letterKeyMap) {
-            return this.insertLetter(e.key as LetterKey);
-          }
-      }
+  _handleKeydown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case "Backspace":
+        return this.removeLetter();
+      case "Enter":
+        return this.attemptGuess();
+      default:
+        return this.insertLetter(e.key as LetterKey);
     }
-  }
+  };
 
   connectedCallback() {
     super.connectedCallback();
@@ -105,8 +155,13 @@ export class CwApp extends LitElement {
   }
 
   render() {
+    console.log(this.guesses);
     return html`
-      <cw-board .guesses=${this.guesses} .guess=${this.activeGuess}></cw-board>
+      <cw-board
+        .guesses=${this.guesses}
+        .guess=${this.guess}
+        .status=${this.status}
+      ></cw-board>
       <cw-keyboard></cw-keyboard>
     `;
   }

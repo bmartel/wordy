@@ -1,6 +1,15 @@
 import { html, css, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "./cw-tile.ts";
+import {
+  initializeGuess,
+  Guess,
+  INVALID_ANIMATION_DURATION,
+  WIN_ANIMATION_DURATION,
+  WORD_SIZE,
+  fill,
+  GameStatus,
+} from "./utils";
 
 /**
  * An example element.
@@ -10,22 +19,29 @@ import "./cw-tile.ts";
  */
 @customElement("cw-row")
 export class CwRow extends LitElement {
+  @property()
+  guess: Guess["letters"] = initializeGuess.letters;
+  @property()
+  result: Guess["result"] = initializeGuess.result;
+  @property({ reflect: true })
+  status: GameStatus = "idle";
+
   static styles = css`
     :host {
       display: block;
     }
-    :host([invalid]) {
+    :host([status="invalid"]) {
       animation-name: Shake;
-      animation-duration: 600ms;
+      animation-duration: ${INVALID_ANIMATION_DURATION}ms;
     }
     .row {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(${WORD_SIZE}, 1fr);
       grid-gap: 5px;
     }
-    .win {
+    :host([status="win"]) {
       animation-name: Bounce;
-      animation-duration: 1000ms;
+      animation-duration: ${WIN_ANIMATION_DURATION}ms;
     }
 
     @keyframes Bounce {
@@ -74,13 +90,39 @@ export class CwRow extends LitElement {
   `;
 
   render() {
+    let letters: string[] = this.guess.split("");
+    letters = [
+      ...letters,
+      ...(fill(() => "", WORD_SIZE - letters.length) as string[]),
+    ];
+
     return html`
       <div class="row">
-        <cw-tile></cw-tile>
-        <cw-tile></cw-tile>
-        <cw-tile></cw-tile>
-        <cw-tile></cw-tile>
-        <cw-tile></cw-tile>
+        <cw-tile
+          .letter=${letters[0]}
+          .status=${this.result[0]}
+          .animation=${letters[0] !== "" ? "pop" : ""}
+        ></cw-tile>
+        <cw-tile
+          .letter=${letters[1]}
+          .status=${this.result[1]}
+          .animation=${letters[1] !== "" ? "pop" : ""}
+        ></cw-tile>
+        <cw-tile
+          .letter=${letters[2]}
+          .status=${this.result[2]}
+          .animation=${letters[2] !== "" ? "pop" : ""}
+        ></cw-tile>
+        <cw-tile
+          .letter=${letters[3]}
+          .status=${this.result[3]}
+          .animation=${letters[3] !== "" ? "pop" : ""}
+        ></cw-tile>
+        <cw-tile
+          .letter=${letters[4]}
+          .status=${this.result[4]}
+          .animation=${letters[4] !== "" ? "pop" : ""}
+        ></cw-tile>
       </div>
     `;
   }

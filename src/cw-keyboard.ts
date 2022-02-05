@@ -141,7 +141,7 @@ export class CwKeyboard extends LitElement {
           <button data-key="n">n</button>
           <button data-key="m">m</button>
           <button data-key="Backspace" class="one-and-a-half">
-            <cw-icon icon="backspace"></cw-icon>
+            <cw-icon name="backspace"></cw-icon>
           </button>
         </div>
       </div>

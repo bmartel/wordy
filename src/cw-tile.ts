@@ -1,5 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { TileStatus } from "./utils";
 
 /**
  * An example element.
@@ -9,9 +10,15 @@ import { customElement, property } from "lit/decorators.js";
  */
 @customElement("cw-tile")
 export class CwTile extends LitElement {
+  @property({ reflect: true })
+  status: TileStatus = "empty";
+  @property({ reflect: true })
+  animation: string = "";
+  @property()
+  letter: string = "";
+
   static styles = css`
     :host {
-      --cw-tile-text-color: var(--cw-color);
       display: inline-block;
     }
     .tile {
@@ -32,12 +39,11 @@ export class CwTile extends LitElement {
       padding-bottom: 100%;
     }
     :host([status="empty"]) > .tile {
-      border: 2px solid var(--color-tone-4);
+      border: 2px solid var(--cw-border-color);
     }
     :host([status="tbd"]) > .tile {
-      background-color: var(--color-tone-7);
-      border: 2px solid var(--color-tone-5);
-      color: var(--color-tone-1);
+      background-color: var(--cw-background-color);
+      border: 2px solid var(--cw-border-color-emphasis);
     }
     :host([status="correct"]) > .tile {
       background-color: var(--color-correct);
@@ -91,14 +97,8 @@ export class CwTile extends LitElement {
     }
   `;
 
-  @property({ reflect: true })
-  status: string = "tbd";
-
-  @property({ reflect: true })
-  animation: string = "";
-
   render() {
-    return html` <div class="tile"></div> `;
+    return html` <div class="tile">${this.letter}</div> `;
   }
 }
 

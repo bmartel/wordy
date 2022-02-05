@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
-import { customElement, state } from "lit/decorators.js";
-import { Guess, initializeGuesses } from "./utils";
+import { customElement, property } from "lit/decorators.js";
+import { GameStatus, Guess, initializeGuesses } from "./utils";
 import "./cw-row.ts";
 
 /**
@@ -11,9 +11,11 @@ import "./cw-row.ts";
  */
 @customElement("cw-board")
 export class CwBoard extends LitElement {
-  @state()
+  @property()
   guess: number = 0;
-  @state()
+  @property()
+  status: GameStatus = "idle";
+  @property()
   guesses: Guess[] = initializeGuesses;
 
   static styles = css`
@@ -41,12 +43,36 @@ export class CwBoard extends LitElement {
   render() {
     return html`
       <div class="board">
-        <cw-row></cw-row>
-        <cw-row></cw-row>
-        <cw-row></cw-row>
-        <cw-row></cw-row>
-        <cw-row></cw-row>
-        <cw-row></cw-row>
+        <cw-row
+          .guess=${this.guesses[0].letters}
+          .result=${this.guesses[0].result}
+          .status=${this.guess === 0 ? this.status : undefined}
+        ></cw-row>
+        <cw-row
+          .guess=${this.guesses[1].letters}
+          .result=${this.guesses[1].result}
+          .status=${this.guess === 1 ? this.status : undefined}
+        ></cw-row>
+        <cw-row
+          .guess=${this.guesses[2].letters}
+          .result=${this.guesses[2].result}
+          .status=${this.guess === 2 ? this.status : undefined}
+        ></cw-row>
+        <cw-row
+          .guess=${this.guesses[3].letters}
+          .result=${this.guesses[3].result}
+          .status=${this.guess === 3 ? this.status : undefined}
+        ></cw-row>
+        <cw-row
+          .guess=${this.guesses[4].letters}
+          .result=${this.guesses[4].result}
+          .status=${this.guess === 4 ? this.status : undefined}
+        ></cw-row>
+        <cw-row
+          .guess=${this.guesses[5].letters}
+          .result=${this.guesses[5].result}
+          .status=${this.guess === 5 ? this.status : undefined}
+        ></cw-row>
       </div>
     `;
   }
