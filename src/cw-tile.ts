@@ -36,7 +36,7 @@ export class CwTile extends LitElement {
     }
     :host([status="tbd"]) > .tile {
       background-color: var(--color-tone-7);
-      border: 2px solid var(--color-tone-3);
+      border: 2px solid var(--color-tone-5);
       color: var(--color-tone-1);
     }
     :host([status="correct"]) > .tile {

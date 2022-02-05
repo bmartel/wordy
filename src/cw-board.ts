@@ -1,5 +1,6 @@
 import { html, css, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
+import { Guess, initializeGuesses } from "./utils";
 import "./cw-row.ts";
 
 /**
@@ -10,6 +11,11 @@ import "./cw-row.ts";
  */
 @customElement("cw-board")
 export class CwBoard extends LitElement {
+  @state()
+  guess: number = 0;
+  @state()
+  guesses: Guess[] = initializeGuesses;
+
   static styles = css`
     :host {
       display: flex;

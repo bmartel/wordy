@@ -23,7 +23,7 @@ export class CwTheme extends LitElement {
       --green: #6aaa64;
       --darkendGreen: #538d4e;
       --yellow: #c9b458;
-      --darkendYellow: #b59f3b;
+      --darkendYellow: #b39200;
       --lightGray: #d8d8d8;
       --gray: #86888a;
       --darkGray: #939598;
@@ -34,11 +34,11 @@ export class CwTheme extends LitElement {
 
       --color-present: var(--darkendYellow);
       --color-correct: var(--darkendGreen);
-      --color-absent: var(--color-tone-4);
+      --color-absent: var(--color-tone-6);
       --tile-text-color: var(--color-tone-1);
       --key-text-color: var(--color-tone-1);
-      --key-evaluated-text-color: var(--color-tone-1);
-      --key-bg: var(--color-tone-2);
+      --key-evaluated-text-color: var(--white);
+      --key-bg: var(--color-tone-3);
       --key-bg-present: var(--color-present);
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
