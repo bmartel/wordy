@@ -137,9 +137,9 @@ export class CwApp extends LitElement {
     this.status = "reveal";
 
     // Determine results
-    for (let c = 0; c < word.length; c++) {
-      const char = word.charAt(c);
-      const w = guess.indexOf(char);
+    for (let c = 0; c < guess.length; c++) {
+      const char = guess.charAt(c);
+      const w = word.indexOf(char);
       result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
     }
 
