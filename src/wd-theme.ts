@@ -36,12 +36,13 @@ export class CwTheme extends LitElement {
       --key-bg-present: var(--color-present);
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
-      --modal-content-bg: var(--color-tone-7);
+      --modal-content-bg: var(--color-tone-1);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
       --wd-border-color: var(--color-tone-1);
       --wd-border-color-emphasis: var(--color-tone-2);
+      --wd-icon-color: var(--color-tone-7);
 
       --wd-max-width: 500px;
       --wd-header-height: 50px;
@@ -61,10 +62,12 @@ export class CwTheme extends LitElement {
         --key-bg-correct: var(--color-correct);
         --key-bg-absent: var(--color-absent);
         --modal-content-bg: var(--color-tone-7);
+
         --wd-background-color: var(--color-tone-7);
         --wd-color: var(--white);
         --wd-border-color: var(--color-tone-6);
         --wd-border-color-emphasis: var(--color-tone-4);
+        --wd-icon-color: var(--color-tone-1);
       }
     }
     @media (max-height: 600px) {

@@ -16,7 +16,7 @@ export class CwPage extends LitElement {
       top: 0;
       left: 0;
       justify-content: center;
-      background-color: var(--color-background);
+      background-color: var(--wd-background-color);
       animation: SlideIn 100ms linear;
       z-index: 2000;
     }
@@ -27,7 +27,7 @@ export class CwPage extends LitElement {
 
     .content {
       position: relative;
-      color: var(--color-tone-1);
+      color: var(--wd-color);
       padding: 0 32px;
       max-width: var(--wd-max-width);
       width: 100%;
@@ -103,13 +103,25 @@ export class CwPage extends LitElement {
     }
   `;
 
+  private closePage() {
+    this.dispatchEvent(
+      new CustomEvent("wd-page", {
+        detail: { open: false },
+        composed: true,
+        bubbles: true,
+      })
+    );
+  }
+
   render() {
     return html`
       <div class="overlay">
         <div class="content">
           <header>
             <h1><slot></slot></h1>
-            <wd-icon name="x"></wd-icon>
+            <button @click=${this.closePage} class="close-icon">
+              <wd-icon name="x"></wd-icon>
+            </button>
           </header>
           <div class="content-container">
             <slot name="content"></slot>

@@ -10,8 +10,8 @@ export class CwHeader extends LitElement {
       justify-content: space-between;
       align-items: center;
       height: var(--wd-header-height);
-      color: var(--color-tone-1);
-      border-bottom: 1px solid var(--color-tone-4);
+      color: var(--wd-icon-color);
+      border-bottom: 1px solid var(--wd-border-color);
       gap: 4px;
       padding-inline: 2px;
     }
@@ -30,21 +30,40 @@ export class CwHeader extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      color: inherit;
       height: 36px;
       width: 36px;
       opacity: 0.5;
-      color: var(--wd-color);
       background: none;
       border: none;
       cursor: pointer;
     }
   `;
 
+  private showHelp(e: Event) {
+    e.preventDefault();
+    this.dispatchEvent(
+      new CustomEvent("wd-page", {
+        detail: {
+          content: "help",
+          open: true,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   render() {
     return html`
       <header>
         <div class="menu">
-          <button id="help-button" class="icon" aria-label="help">
+          <button
+            @click=${this.showHelp}
+            id="help-button"
+            class="icon"
+            aria-label="help"
+          >
             <wd-icon name="help"></wd-icon>
           </button>
         </div>

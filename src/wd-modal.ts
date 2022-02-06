@@ -21,7 +21,7 @@ export class CwModal extends LitElement {
       z-index: 3000;
     }
 
-    :host([open]) .overlay {
+    :host([open="true"]) .overlay {
       display: flex;
     }
 
@@ -84,14 +84,24 @@ export class CwModal extends LitElement {
     }
   `;
 
+  private closeModal() {
+    this.dispatchEvent(
+      new CustomEvent("wd-modal", {
+        detail: { open: false },
+        composed: true,
+        bubbles: true,
+      })
+    );
+  }
+
   render() {
     return html`
       <div class="overlay">
         <div class="content">
           <slot></slot>
-          <div class="close-icon">
+          <button @click=${this.closeModal} class="close-icon">
             <wd-icon name="x"></wd-icon>
-          </div>
+          </button>
         </div>
       </div>
     `;

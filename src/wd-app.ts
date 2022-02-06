@@ -16,6 +16,9 @@ import {
 import "./wd-header.ts";
 import "./wd-board.ts";
 import "./wd-keyboard.ts";
+import "./wd-help.ts";
+import "./wd-page.ts";
+import "./wd-modal.ts";
 
 @customElement("wd-app")
 export class CwApp extends LitElement {
@@ -29,6 +32,10 @@ export class CwApp extends LitElement {
   targetWord: string = "rowdy";
   @state()
   status: GameStatus = "idle";
+  @state()
+  page: string = "";
+  @state()
+  modal: string = "";
 
   _clearStatus: any = null;
 
@@ -43,6 +50,24 @@ export class CwApp extends LitElement {
       box-sizing: border-box;
     }
   `;
+
+  private handleModal(e: CustomEvent) {
+    const { open = false, content = "" } = e.detail;
+    if (open) {
+      this.modal = content;
+    } else {
+      this.modal = "";
+    }
+  }
+
+  private handlePage(e: CustomEvent) {
+    const { open = false, content = "" } = e.detail;
+    if (open) {
+      this.page = content;
+    } else {
+      this.page = "";
+    }
+  }
 
   get activeGuess(): string {
     return this.guesses[this.guess].letters;
@@ -194,6 +219,10 @@ export class CwApp extends LitElement {
       return;
 
     switch (e.key) {
+      case "Escape":
+        this.page = "";
+        this.modal = "";
+        return;
       case "Backspace":
         return this.removeLetter();
       case "Enter":
@@ -215,13 +244,22 @@ export class CwApp extends LitElement {
 
   render() {
     return html`
-      <wd-header></wd-header>
+      <wd-header
+        @wd-modal=${this.handleModal}
+        @wd-page=${this.handlePage}
+      ></wd-header>
       <wd-board
         .guesses=${this.guesses}
         .guess=${this.guess}
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
+      <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
+        ${this.page === "help" ? html`<wd-help page></wd-help>` : null}
+      </wd-page>
+      <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
+        ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
+      </wd-modal>
     `;
   }
 }
