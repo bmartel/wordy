@@ -43,7 +43,7 @@ export type AllowedKey = keyof typeof allowedKeyMap;
 export type GuessResult = "correct" | "present" | "absent";
 export type LetterKeyResult = "empty" | "tbd" | GuessResult;
 export type LetterKeyResultMap = Record<LetterKey, LetterKeyResult>;
-export type TileStatus = "empty" | "tbd" | GuessResult;
+export type cellStatus = "empty" | "tbd" | GuessResult;
 export type GameStatus = "idle" | "invalid" | "reveal" | "win" | "lose";
 export interface Guess {
   letters: string;
@@ -88,3 +88,8 @@ export const random = (length = 8) => {
 
 export const INVALID_ANIMATION_DURATION = 600;
 export const WIN_ANIMATION_DURATION = 1000;
+
+export const IS_TOUCH_DEVICE =
+  "ontouchstart" in window ||
+  navigator.maxTouchPoints > 0 ||
+  (navigator as any).msMaxTouchPoints > 0;

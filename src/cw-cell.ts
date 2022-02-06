@@ -1,11 +1,11 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { TileStatus } from "./utils";
+import { cellStatus } from "./utils";
 
-@customElement("cw-tile")
-export class CwTile extends LitElement {
+@customElement("cw-cell")
+export class Cwcell extends LitElement {
   @property({ reflect: true })
-  status: TileStatus = "empty";
+  status: cellStatus = "empty";
   @property({ reflect: true })
   animation: string = "";
   @property()
@@ -15,7 +15,7 @@ export class CwTile extends LitElement {
     :host {
       display: inline-block;
     }
-    .tile {
+    .cell {
       width: 100%;
       display: inline-flex;
       justify-content: center;
@@ -23,7 +23,7 @@ export class CwTile extends LitElement {
       font-weight: bold;
       vertical-align: middle;
       box-sizing: border-box;
-      color: var(--tile-text-color);
+      color: var(--cell-text-color);
       text-transform: uppercase;
       user-select: none;
 
@@ -35,31 +35,31 @@ export class CwTile extends LitElement {
       transition-delay: var(--transition-delay, 250ms);
       transition-timing-function: ease-out;
     }
-    .tile::before {
+    .cell::before {
       content: "";
       display: inline-block;
       padding-bottom: 100%;
     }
-    :host([status="empty"]) > .tile {
+    :host([status="empty"]) > .cell {
       border-color: var(--cw-border-color);
     }
-    :host([status="tbd"]) > .tile {
+    :host([status="tbd"]) > .cell {
       background-color: var(--cw-background-color);
       border-color: var(--cw-border-color-emphasis);
     }
-    :host([status="correct"]) > .tile {
+    :host([status="correct"]) > .cell {
       background-color: var(--color-correct);
       color: var(--key-evaluated-text-color);
     }
-    :host([status="present"]) > .tile {
+    :host([status="present"]) > .cell {
       background-color: var(--color-present);
       color: var(--key-evaluated-text-color);
     }
-    :host([status="absent"]) > .tile {
+    :host([status="absent"]) > .cell {
       background-color: var(--color-absent);
       color: var(--key-evaluated-text-color);
     }
-    :host([animation="pop"]) > .tile {
+    :host([animation="pop"]) > .cell {
       animation-name: PopIn;
       animation-duration: 100ms;
     }
@@ -74,7 +74,7 @@ export class CwTile extends LitElement {
         opacity: 1;
       }
     }
-    :host([animation="flip"]) > .tile {
+    :host([animation="flip"]) > .cell {
       animation-name: Flip;
       animation-duration: 500ms;
       animation-delay: var(--animation-delay, 0ms);
@@ -94,12 +94,12 @@ export class CwTile extends LitElement {
   `;
 
   render() {
-    return html` <div class="tile">${this.letter}</div> `;
+    return html` <div class="cell">${this.letter}</div> `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-tile": CwTile;
+    "cw-cell": Cwcell;
   }
 }

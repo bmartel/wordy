@@ -145,7 +145,7 @@ export class CwApp extends LitElement {
     const word = this.targetWord;
     const result = this.activeResult;
 
-    // Allow the row tiles to animate
+    // Allow the row cells to animate
     this.status = "reveal";
 
     // Determine results

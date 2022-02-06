@@ -91,12 +91,18 @@ export class CwKeyboard extends LitElement {
 
   createRenderRoot() {
     const root = super.createRenderRoot();
-    root.addEventListener("click", (e) => {
-      const { key = "", state = "" } = (e?.target as any)?.dataset || {};
-      if (!state && allowedKeyMap[key as keyof typeof allowedKeyMap]) {
+
+    const dispatchKey = (e: Event) => {
+      e.preventDefault();
+      const { key = "", state = "empty" } = (e?.target as any)?.dataset || {};
+      if (
+        state === "empty" &&
+        allowedKeyMap[key as keyof typeof allowedKeyMap]
+      ) {
         window.dispatchEvent(new KeyboardEvent("keydown", { key }));
       }
-    });
+    };
+    root.addEventListener("click", dispatchKey);
     return root;
   }
 
