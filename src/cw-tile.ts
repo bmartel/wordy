@@ -29,8 +29,8 @@ export class CwTile extends LitElement {
 
       border: 2px solid transparent;
 
-      will-change: background-color, border-color;
-      transition-property: background-color, border-color;
+      will-change: color, background-color, border-color;
+      transition-property: color, background-color, border-color;
       transition-duration: 0ms;
       transition-delay: var(--transition-delay, 250ms);
       transition-timing-function: ease-out;
@@ -49,12 +49,15 @@ export class CwTile extends LitElement {
     }
     :host([status="correct"]) > .tile {
       background-color: var(--color-correct);
+      color: var(--key-evaluated-text-color);
     }
     :host([status="present"]) > .tile {
       background-color: var(--color-present);
+      color: var(--key-evaluated-text-color);
     }
     :host([status="absent"]) > .tile {
       background-color: var(--color-absent);
+      color: var(--key-evaluated-text-color);
     }
     :host([animation="pop"]) > .tile {
       animation-name: PopIn;

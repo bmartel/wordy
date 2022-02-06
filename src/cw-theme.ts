@@ -28,7 +28,7 @@ export class CwTheme extends LitElement {
 
       --color-present: var(--yellow);
       --color-correct: var(--green);
-      --color-absent: var(--color-tone-2);
+      --color-absent: var(--color-tone-3);
       --tile-text-color: var(--color-tone-7);
       --key-text-color: var(--color-tone-7);
       --key-evaluated-text-color: var(--white);
@@ -63,7 +63,7 @@ export class CwTheme extends LitElement {
         --modal-content-bg: var(--color-tone-7);
         --cw-background-color: var(--color-tone-7);
         --cw-color: var(--white);
-        --cw-border-color: var(--color-tone-5);
+        --cw-border-color: var(--color-tone-6);
         --cw-border-color-emphasis: var(--color-tone-4);
       }
     }
