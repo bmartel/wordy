@@ -16,7 +16,8 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "types": ["vite-plugin-pwa/client"]
   },
   "include": ["src/**/*.ts"],
   "exclude": []
