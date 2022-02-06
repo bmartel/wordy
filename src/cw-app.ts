@@ -176,7 +176,8 @@ export class CwApp extends LitElement {
   }
 
   _handleKeydown = (e: KeyboardEvent) => {
-    if (e.isComposing || e.ctrlKey || this.status !== "idle") return;
+    if (e.isComposing || e.ctrlKey || e.altKey || this.status !== "idle")
+      return;
 
     switch (e.key) {
       case "Backspace":
