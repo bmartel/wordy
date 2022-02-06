@@ -9,6 +9,9 @@ import {
   WORD_SIZE,
   GameStatus,
   INVALID_ANIMATION_DURATION,
+  LetterKeyResultMap,
+  ValidationResult,
+  ValidationReason,
 } from "./utils";
 import "./cw-board.ts";
 import "./cw-keyboard.ts";
@@ -19,6 +22,8 @@ export class CwApp extends LitElement {
   guess: number = 0;
   @state()
   guesses: Guess[] = initializeGuesses;
+  @state()
+  letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
   @state()
   targetWord: string = "pleat";
   @state()
@@ -82,48 +87,91 @@ export class CwApp extends LitElement {
     }
   }
 
+  // Game conditions
+  private win() {
+    this.status = "win";
+  }
+  private lose() {
+    this.status = "lose";
+  }
+  private nextRow() {
+    this.guess++;
+    this.status = "idle";
+  }
+
+  private invalidGuess(guess: string, reason: ValidationReason) {
+    this.status = "invalid";
+    // Check and handle various reasons here
+    switch (reason) {
+      case ValidationReason.INVALID_CHAR_LEN:
+      case ValidationReason.INVALID_WORD:
+      default:
+        break;
+    }
+    this._clearStatus = setTimeout(() => {
+      this.status = "idle";
+    }, INVALID_ANIMATION_DURATION);
+  }
+
+  private validate(guess: string): ValidationResult {
+    if (guess.length < WORD_SIZE) {
+      return {
+        success: false,
+        reason: ValidationReason.INVALID_CHAR_LEN,
+      };
+    }
+    // if (validWords.indexOf(guess)) {
+    //   return {
+    //     success: false,
+    //     reason: ValidationReason.INVALID_WORD,
+    //   };
+    // }
+    return { success: true };
+  }
+
+  private determineResults(guess: string) {
+    const word = this.targetWord;
+    const result = this.activeResult;
+
+    // Allow the row tiles to animate
+    this.status = "reveal";
+
+    // Determine results
+    for (let c = 0; c < word.length; c++) {
+      const char = word.charAt(c);
+      const w = guess.indexOf(char);
+      result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
+    }
+
+    // Set the results so it will be displayed correctly
+    this.activeResult = result;
+  }
+
+  private updateGameStatus() {
+    this._clearStatus = setTimeout(() => {
+      if (this.activeResult.some((r) => r !== "correct")) {
+        // not a win condition
+        if (this.guess < 5) {
+          this.nextRow();
+        } else {
+          this.lose();
+        }
+      } else {
+        this.win();
+      }
+    }, 5 * 500);
+  }
+
   private attemptGuess() {
     if (this._clearStatus) clearTimeout(this._clearStatus);
 
     const guess = this.activeGuess;
-    if (guess.length < WORD_SIZE) {
-      // error not enough chars
-      this.status = "invalid";
-      this._clearStatus = setTimeout(() => {
-        this.status = "idle";
-      }, INVALID_ANIMATION_DURATION);
+    const result = this.validate(guess);
+    if (result.success) {
+      this.determineResults(guess);
+      this.updateGameStatus();
     } else {
-      // evaluate and update result
-      const word = this.targetWord;
-      const result = this.activeResult;
-
-      this.status = "reveal";
-
-      for (let c = 0; c < word.length; c++) {
-        const char = word.charAt(c);
-        const w = guess.indexOf(char);
-        result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
-      }
-
-      this.activeResult = result;
-
-      // Update game status
-      this._clearStatus = setTimeout(() => {
-        if (this.activeResult.some((r) => r !== "correct")) {
-          // not a win condition
-          if (this.guess < 5) {
-            // next row
-            this.guess++;
-            this.status = "idle";
-          } else {
-            // game over
-            this.status = "lose";
-          }
-        } else {
-          this.status = "win";
-          // win condition
-        }
-      }, 5 * 500);
+      this.invalidGuess(guess, result.reason!);
     }
   }
 
@@ -136,7 +184,7 @@ export class CwApp extends LitElement {
       case "Enter":
         return this.attemptGuess();
       default:
-        return this.insertLetter(e.key as LetterKey);
+        return this.insertLetter(e.key.toLowerCase() as LetterKey);
     }
   };
 
@@ -157,7 +205,7 @@ export class CwApp extends LitElement {
         .guess=${this.guess}
         .status=${this.status}
       ></cw-board>
-      <cw-keyboard></cw-keyboard>
+      <cw-keyboard .letter=${this.letters}></cw-keyboard>
     `;
   }
 }

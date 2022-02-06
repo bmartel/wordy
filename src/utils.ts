@@ -1,33 +1,34 @@
 export const letterKeyMap = {
-  q: true,
-  w: true,
-  e: true,
-  r: true,
-  t: true,
-  y: true,
-  u: true,
-  i: true,
-  o: true,
-  p: true,
+  q: "empty",
+  w: "empty",
+  e: "empty",
+  r: "empty",
+  t: "empty",
+  y: "empty",
+  u: "empty",
+  i: "empty",
+  o: "empty",
+  p: "empty",
 
-  a: true,
-  s: true,
-  d: true,
-  f: true,
-  g: true,
-  h: true,
-  j: true,
-  k: true,
-  l: true,
+  a: "empty",
+  s: "empty",
+  d: "empty",
+  f: "empty",
+  g: "empty",
+  h: "empty",
+  j: "empty",
+  k: "empty",
+  l: "empty",
 
-  z: true,
-  x: true,
-  c: true,
-  v: true,
-  b: true,
-  n: true,
-  m: true,
+  z: "empty",
+  x: "empty",
+  c: "empty",
+  v: "empty",
+  b: "empty",
+  n: "empty",
+  m: "empty",
 };
+
 export const controlKeyMap = {
   Enter: true,
   Backspace: true,
@@ -40,6 +41,8 @@ export const allowedKeyMap = {
 export type LetterKey = keyof typeof letterKeyMap;
 export type AllowedKey = keyof typeof allowedKeyMap;
 export type GuessResult = "correct" | "present" | "absent";
+export type LetterKeyResult = "empty" | "tbd" | GuessResult;
+export type LetterKeyResultMap = Record<LetterKey, LetterKeyResult>;
 export type TileStatus = "empty" | "tbd" | GuessResult;
 export type GameStatus = "idle" | "invalid" | "reveal" | "win" | "lose";
 export interface Guess {
@@ -48,8 +51,19 @@ export interface Guess {
 }
 export const WORD_SIZE = 5;
 export const GUESS_SIZE = 6;
+
+export enum ValidationReason {
+  INVALID_CHAR_LEN,
+  INVALID_WORD,
+}
+export type ValidationResult = {
+  success: boolean;
+  reason?: ValidationReason;
+};
 export const fill = (func: () => any, length = 0) =>
   Array.from({ length }, func);
+
+// seed functions
 export const makeGuessResult = () => fill(() => "empty", WORD_SIZE);
 export const makeGuesses = (letters = "", result = undefined) =>
   fill(
