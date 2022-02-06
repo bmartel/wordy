@@ -11,12 +11,6 @@ import {
   GameStatus,
 } from "./utils";
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-row")
 export class CwRow extends LitElement {
   @property()
