@@ -13,6 +13,7 @@ import {
   ValidationResult,
   ValidationReason,
 } from "./utils";
+import "./cw-header.ts";
 import "./cw-board.ts";
 import "./cw-keyboard.ts";
 
@@ -25,7 +26,7 @@ export class CwApp extends LitElement {
   @state()
   letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
   @state()
-  targetWord: string = "pleat";
+  targetWord: string = "rowdy";
   @state()
   status: GameStatus = "idle";
 
@@ -214,6 +215,7 @@ export class CwApp extends LitElement {
 
   render() {
     return html`
+      <cw-header></cw-header>
       <cw-board
         .guesses=${this.guesses}
         .guess=${this.guess}
