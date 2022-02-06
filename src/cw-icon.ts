@@ -15,6 +15,8 @@ export class CwIcon extends LitElement {
       display: block;
       height: 24px;
       width: 24px;
+      pointer-events: none;
+      user-select: none;
     }
   `;
 
