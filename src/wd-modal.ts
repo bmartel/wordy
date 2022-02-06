@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "./wd-icon";
+import "./wd-icon.ts";
 
 @customElement("wd-modal")
 export class CwModal extends LitElement {

@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { allowedKeyMap, letterKeyMap, LetterKeyResultMap } from "./utils";
-import "./wd-icon";
+import "./wd-icon.ts";
 
 @customElement("wd-keyboard")
 export class CwKeyboard extends LitElement {

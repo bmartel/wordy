@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import "./wd-icon";
+import "./wd-icon.ts";
 
 @customElement("wd-header")
 export class CwHeader extends LitElement {
