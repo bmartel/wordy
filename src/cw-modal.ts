@@ -2,8 +2,8 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "./cw-icon";
 
-@customElement("cw-page")
-export class CwPage extends LitElement {
+@customElement("cw-modal")
+export class CwModal extends LitElement {
   @property({ reflect: true })
   open = false;
 
@@ -16,66 +16,47 @@ export class CwPage extends LitElement {
       top: 0;
       left: 0;
       justify-content: center;
-      background-color: var(--color-background);
-      animation: SlideIn 100ms linear;
-      z-index: 2000;
+      align-items: center;
+      background-color: var(--opacity-50);
+      z-index: 3000;
     }
 
-    :host([open="true"]) .overlay {
+    :host([open]) .overlay {
       display: flex;
     }
 
     .content {
       position: relative;
+      border-radius: 8px;
+      border: 1px solid var(--color-tone-6);
+      background-color: var(--modal-content-bg);
       color: var(--color-tone-1);
-      padding: 0 32px;
-      max-width: var(--cw-max-width);
-      width: 100%;
+      box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-height: 90%;
       overflow-y: auto;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
+      animation: SlideIn 200ms;
+      max-width: var(--game-max-width);
+      padding: 16px;
+      box-sizing: border-box;
     }
 
-    .content-container {
-      height: 100%;
+    .content.closing {
+      animation: SlideOut 200ms;
     }
 
-    .overlay.closing {
-      animation: SlideOut 150ms linear;
-    }
-
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    h1 {
-      font-weight: 700;
-      font-size: 16px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 10px;
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 16px;
+      right: 16px;
     }
 
     cw-icon {
-      position: absolute;
-      right: 0;
+      position: fixed;
       user-select: none;
       cursor: pointer;
-    }
-
-    @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-      .content {
-        max-width: 100%;
-        padding: 0;
-      }
-      cw-icon {
-        padding: 0 16px;
-      }
     }
 
     @keyframes SlideIn {
@@ -107,12 +88,9 @@ export class CwPage extends LitElement {
     return html`
       <div class="overlay">
         <div class="content">
-          <header>
-            <h1><slot></slot></h1>
+          <slot></slot>
+          <div class="close-icon">
             <cw-icon name="x"></cw-icon>
-          </header>
-          <div class="content-container">
-            <slot name="content"></slot>
           </div>
         </div>
       </div>
@@ -122,6 +100,6 @@ export class CwPage extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-page": CwPage;
+    "cw-modal": CwModal;
   }
 }

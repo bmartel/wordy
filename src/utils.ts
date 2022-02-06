@@ -38,6 +38,11 @@ export const allowedKeyMap = {
   ...controlKeyMap,
 };
 
+export const WORD_SIZE = 5;
+export const GUESS_SIZE = 6;
+export const INVALID_ANIMATION_DURATION = 600;
+export const WIN_ANIMATION_DURATION = 1000;
+
 export type LetterKey = keyof typeof letterKeyMap;
 export type AllowedKey = keyof typeof allowedKeyMap;
 export type GuessResult = "correct" | "present" | "absent";
@@ -49,9 +54,11 @@ export interface Guess {
   letters: string;
   result: [GuessResult, GuessResult, GuessResult, GuessResult, GuessResult];
 }
-export const WORD_SIZE = 5;
-export const GUESS_SIZE = 6;
-
+export const GuessResultSymbols: Record<GuessResult, string> = {
+  absent: "🟦",
+  present: "🟨",
+  correct: "🟩",
+};
 export enum ValidationReason {
   INVALID_CHAR_LEN,
   INVALID_WORD,
@@ -74,7 +81,6 @@ export const makeGuesses = (letters = "", result = undefined) =>
 export const initializeGuesses = makeGuesses();
 export const initializeGuess = initializeGuesses[0];
 
-// Declare all characters
 const RANDOM_CHARS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const RANDOM_CHARS_LEN = RANDOM_CHARS.length;
@@ -85,9 +91,6 @@ export const random = (length = 8) => {
   }
   return str;
 };
-
-export const INVALID_ANIMATION_DURATION = 600;
-export const WIN_ANIMATION_DURATION = 1000;
 
 export const IS_TOUCH_DEVICE =
   "ontouchstart" in window ||
