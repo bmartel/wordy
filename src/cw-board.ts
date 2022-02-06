@@ -3,12 +3,6 @@ import { customElement, property } from "lit/decorators.js";
 import { GameStatus, Guess, initializeGuesses } from "./utils";
 import "./cw-row.ts";
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-board")
 export class CwBoard extends LitElement {
   @property()

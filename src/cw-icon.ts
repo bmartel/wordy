@@ -8,12 +8,6 @@ const icons: Record<any, any> = {
 
 type Icon = keyof typeof icons;
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-icon")
 export class CwIcon extends LitElement {
   static styles = css`

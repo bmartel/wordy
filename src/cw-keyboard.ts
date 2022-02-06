@@ -1,14 +1,8 @@
 import { html, css, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import "./cw-icon";
 import { allowedKeyMap } from "./utils";
+import "./cw-icon";
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-keyboard")
 export class CwKeyboard extends LitElement {
   static styles = css`

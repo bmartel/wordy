@@ -2,12 +2,6 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { TileStatus } from "./utils";
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-tile")
 export class CwTile extends LitElement {
   @property({ reflect: true })
@@ -32,6 +26,14 @@ export class CwTile extends LitElement {
       color: var(--tile-text-color);
       text-transform: uppercase;
       user-select: none;
+
+      border: 2px solid transparent;
+
+      will-change: background-color, border-color;
+      transition-property: background-color, border-color;
+      transition-duration: 0ms;
+      transition-delay: var(--transition-delay, 250ms);
+      transition-timing-function: ease-out;
     }
     .tile::before {
       content: "";
@@ -39,11 +41,11 @@ export class CwTile extends LitElement {
       padding-bottom: 100%;
     }
     :host([status="empty"]) > .tile {
-      border: 2px solid var(--cw-border-color);
+      border-color: var(--cw-border-color);
     }
     :host([status="tbd"]) > .tile {
       background-color: var(--cw-background-color);
-      border: 2px solid var(--cw-border-color-emphasis);
+      border-color: var(--cw-border-color-emphasis);
     }
     :host([status="correct"]) > .tile {
       background-color: var(--color-correct);
@@ -69,26 +71,17 @@ export class CwTile extends LitElement {
         opacity: 1;
       }
     }
-    :host([animation="flip-in"]) > .tile {
-      animation-name: FlipIn;
-      animation-duration: 250ms;
+    :host([animation="flip"]) > .tile {
+      animation-name: Flip;
+      animation-duration: 500ms;
+      animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }
-    @keyframes FlipIn {
+    @keyframes Flip {
       0% {
         transform: rotateX(0);
       }
-      100% {
-        transform: rotateX(-90deg);
-      }
-    }
-    :host([animation="flip-out"]) > .tile {
-      animation-name: FlipOut;
-      animation-duration: 250ms;
-      animation-timing-function: ease-in;
-    }
-    @keyframes FlipOut {
-      0% {
+      50% {
         transform: rotateX(-90deg);
       }
       100% {

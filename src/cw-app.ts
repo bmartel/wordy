@@ -8,18 +8,11 @@ import {
   GuessResult,
   WORD_SIZE,
   GameStatus,
-  WIN_ANIMATION_DURATION,
   INVALID_ANIMATION_DURATION,
 } from "./utils";
 import "./cw-board.ts";
 import "./cw-keyboard.ts";
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement("cw-app")
 export class CwApp extends LitElement {
   @state()
@@ -104,32 +97,33 @@ export class CwApp extends LitElement {
       const word = this.targetWord;
       const result = this.activeResult;
 
+      this.status = "reveal";
+
       for (let c = 0; c < word.length; c++) {
         const char = word.charAt(c);
         const w = guess.indexOf(char);
         result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
       }
 
-      if (result.some((r) => r !== "correct")) {
-        this.status = "reveal";
-        this.activeResult = result;
-        // not a win condition
-        if (this.guess < 5) {
-          // next row
-          this._clearStatus = setTimeout(() => {
+      this.activeResult = result;
+
+      // Update game status
+      this._clearStatus = setTimeout(() => {
+        if (this.activeResult.some((r) => r !== "correct")) {
+          // not a win condition
+          if (this.guess < 5) {
+            // next row
             this.guess++;
             this.status = "idle";
-          }, WIN_ANIMATION_DURATION);
-        } else {
-          // game over
-          this._clearStatus = setTimeout(() => {
+          } else {
+            // game over
             this.status = "lose";
-          }, WIN_ANIMATION_DURATION);
+          }
+        } else {
+          this.status = "win";
+          // win condition
         }
-      } else {
-        this.status = "win";
-        // win condition
-      }
+      }, 5 * 500);
     }
   }
 
