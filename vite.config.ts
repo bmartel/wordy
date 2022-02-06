@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "index.html",
+      name: "Wordy",
       formats: ["es"],
     },
     // rollupOptions: {

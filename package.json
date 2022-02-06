@@ -1,11 +1,11 @@
 {
-  "name": "cross-wordle",
+  "name": "wordy",
   "version": "0.0.0",
-  "main": "dist/my-element.es.js",
+  "main": "dist/index.html",
   "exports": {
-    ".": "./dist/my-element.es.js"
+    ".": "./dist/wordy.es.js"
   },
-  "types": "types/my-element.d.ts",
+  "types": "types/wordy.d.ts",
   "files": [
     "dist",
     "types"
