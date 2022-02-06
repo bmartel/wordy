@@ -898,15 +898,15 @@ function t$2(t2) {
  */
 var n;
 ((n = window.HTMLSlotElement) === null || n === void 0 ? void 0 : n.prototype.assignedElements) != null ? (o2, n2) => o2.assignedElements(n2) : (o2, n2) => o2.assignedNodes(n2).filter((o3) => o3.nodeType === Node.ELEMENT_NODE);
-var __defProp$7 = Object.defineProperty;
-var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-var __decorateClass$7 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
+var __defProp$a = Object.defineProperty;
+var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+var __decorateClass$a = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$7(target, key, result);
+    __defProp$a(target, key, result);
   return result;
 };
 let CwTheme = class extends s {
@@ -951,12 +951,13 @@ CwTheme.styles = r$2`
       --key-bg-present: var(--color-present);
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
-      --modal-content-bg: var(--color-tone-7);
+      --modal-content-bg: var(--color-tone-1);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
       --wd-border-color: var(--color-tone-1);
       --wd-border-color-emphasis: var(--color-tone-2);
+      --wd-icon-color: var(--color-tone-7);
 
       --wd-max-width: 500px;
       --wd-header-height: 50px;
@@ -976,10 +977,12 @@ CwTheme.styles = r$2`
         --key-bg-correct: var(--color-correct);
         --key-bg-absent: var(--color-absent);
         --modal-content-bg: var(--color-tone-7);
+
         --wd-background-color: var(--color-tone-7);
         --wd-color: var(--white);
         --wd-border-color: var(--color-tone-6);
         --wd-border-color-emphasis: var(--color-tone-4);
+        --wd-icon-color: var(--color-tone-1);
       }
     }
     @media (max-height: 600px) {
@@ -998,7 +1001,7 @@ CwTheme.styles = r$2`
       color: var(--wd-color);
     }
   `;
-CwTheme = __decorateClass$7([
+CwTheme = __decorateClass$a([
   n$1("wd-theme")
 ], CwTheme);
 const letterKeyMap = {
@@ -1104,15 +1107,15 @@ class t extends e {
 }
 t.directiveName = "unsafeSVG", t.resultType = 2;
 const o = e$1(t);
-var __defProp$6 = Object.defineProperty;
-var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-var __decorateClass$6 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
+var __defProp$9 = Object.defineProperty;
+var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+var __decorateClass$9 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$6(target, key, result);
+    __defProp$9(target, key, result);
   return result;
 };
 const icons = {
@@ -1149,29 +1152,45 @@ CwIcon.styles = r$2`
       user-select: none;
     }
   `;
-__decorateClass$6([
+__decorateClass$9([
   e$2()
 ], CwIcon.prototype, "name", 2);
-CwIcon = __decorateClass$6([
+CwIcon = __decorateClass$9([
   n$1("wd-icon")
 ], CwIcon);
-var __defProp$5 = Object.defineProperty;
-var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-var __decorateClass$5 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+var __defProp$8 = Object.defineProperty;
+var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+var __decorateClass$8 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$5(target, key, result);
+    __defProp$8(target, key, result);
   return result;
 };
 let CwHeader = class extends s {
+  showHelp(e2) {
+    e2.preventDefault();
+    this.dispatchEvent(new CustomEvent("wd-page", {
+      detail: {
+        content: "help",
+        open: true
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
   render() {
     return $`
       <header>
         <div class="menu">
-          <button id="help-button" class="icon" aria-label="help">
+          <button
+            @click=${this.showHelp}
+            id="help-button"
+            class="icon"
+            aria-label="help"
+          >
             <wd-icon name="help"></wd-icon>
           </button>
         </div>
@@ -1194,8 +1213,8 @@ CwHeader.styles = r$2`
       justify-content: space-between;
       align-items: center;
       height: var(--wd-header-height);
-      color: var(--color-tone-1);
-      border-bottom: 1px solid var(--color-tone-4);
+      color: var(--wd-icon-color);
+      border-bottom: 1px solid var(--wd-border-color);
       gap: 4px;
       padding-inline: 2px;
     }
@@ -1214,27 +1233,27 @@ CwHeader.styles = r$2`
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      color: inherit;
       height: 36px;
       width: 36px;
       opacity: 0.5;
-      color: var(--wd-color);
       background: none;
       border: none;
       cursor: pointer;
     }
   `;
-CwHeader = __decorateClass$5([
+CwHeader = __decorateClass$8([
   n$1("wd-header")
 ], CwHeader);
-var __defProp$4 = Object.defineProperty;
-var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-var __decorateClass$4 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+var __defProp$7 = Object.defineProperty;
+var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
+var __decorateClass$7 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$4(target, key, result);
+    __defProp$7(target, key, result);
   return result;
 };
 let Cwcell = class extends s {
@@ -1329,27 +1348,27 @@ Cwcell.styles = r$2`
       }
     }
   `;
-__decorateClass$4([
+__decorateClass$7([
   e$2({ reflect: true })
 ], Cwcell.prototype, "status", 2);
-__decorateClass$4([
+__decorateClass$7([
   e$2({ reflect: true })
 ], Cwcell.prototype, "animation", 2);
-__decorateClass$4([
+__decorateClass$7([
   e$2()
 ], Cwcell.prototype, "letter", 2);
-Cwcell = __decorateClass$4([
+Cwcell = __decorateClass$7([
   n$1("wd-cell")
 ], Cwcell);
-var __defProp$3 = Object.defineProperty;
-var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-var __decorateClass$3 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+var __defProp$6 = Object.defineProperty;
+var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
+var __decorateClass$6 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$3(target, key, result);
+    __defProp$6(target, key, result);
   return result;
 };
 let CwRow = class extends s {
@@ -1470,27 +1489,27 @@ CwRow.styles = r$2`
       }
     }
   `;
-__decorateClass$3([
+__decorateClass$6([
   e$2()
 ], CwRow.prototype, "guess", 2);
-__decorateClass$3([
+__decorateClass$6([
   e$2()
 ], CwRow.prototype, "result", 2);
-__decorateClass$3([
+__decorateClass$6([
   e$2({ reflect: true })
 ], CwRow.prototype, "status", 2);
-CwRow = __decorateClass$3([
+CwRow = __decorateClass$6([
   n$1("wd-row")
 ], CwRow);
-var __defProp$2 = Object.defineProperty;
-var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
-var __decorateClass$2 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
+var __defProp$5 = Object.defineProperty;
+var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+var __decorateClass$5 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$2(target, key, result);
+    __defProp$5(target, key, result);
   return result;
 };
 let CwBoard = class extends s {
@@ -1558,27 +1577,27 @@ CwBoard.styles = r$2`
       box-sizing: border-box;
     }
   `;
-__decorateClass$2([
+__decorateClass$5([
   e$2()
 ], CwBoard.prototype, "guess", 2);
-__decorateClass$2([
+__decorateClass$5([
   e$2()
 ], CwBoard.prototype, "status", 2);
-__decorateClass$2([
+__decorateClass$5([
   e$2()
 ], CwBoard.prototype, "guesses", 2);
-CwBoard = __decorateClass$2([
+CwBoard = __decorateClass$5([
   n$1("wd-board")
 ], CwBoard);
-var __defProp$1 = Object.defineProperty;
-var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
-var __decorateClass$1 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+var __defProp$4 = Object.defineProperty;
+var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
+var __decorateClass$4 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$1(target, key, result);
+    __defProp$4(target, key, result);
   return result;
 };
 let CwKeyboard = class extends s {
@@ -1724,12 +1743,376 @@ CwKeyboard.styles = r$2`
       color: var(--key-evaluated-text-color);
     }
   `;
-__decorateClass$1([
+__decorateClass$4([
   e$2()
 ], CwKeyboard.prototype, "letters", 2);
-CwKeyboard = __decorateClass$1([
+CwKeyboard = __decorateClass$4([
   n$1("wd-keyboard")
 ], CwKeyboard);
+var __defProp$3 = Object.defineProperty;
+var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
+var __decorateClass$3 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$3(target, key, result);
+  return result;
+};
+let CwHelp = class extends s {
+  render() {
+    return $`
+      <section>
+        <div class="instructions">
+          <p>Guess the <strong>WORD</strong> in 6 tries.</p>
+          <p>
+            Each guess must be a valid 5 letter word. Hit the enter button to
+            submit.
+          </p>
+          <p>
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the word.
+          </p>
+          <p>
+            Revealed letters which are not found within the hidden word cannot
+            be used in further guesses.
+          </p>
+          <div class="examples">
+            <p><strong>Examples</strong></p>
+            <div class="example">
+              <div class="row">
+                <wd-cell letter="b" status="correct" animation="flip"></wd-cell>
+                <wd-cell letter="r"></wd-cell>
+                <wd-cell letter="i"></wd-cell>
+                <wd-cell letter="n"></wd-cell>
+                <wd-cell letter="g"></wd-cell>
+              </div>
+              <p>
+                The letter <strong>B</strong> is in the word and in the correct
+                spot.
+              </p>
+            </div>
+            <div class="example">
+              <div class="row">
+                <wd-cell letter="w"></wd-cell>
+                <wd-cell letter="o" status="present" animation="flip"></wd-cell>
+                <wd-cell letter="r"></wd-cell>
+                <wd-cell letter="d"></wd-cell>
+                <wd-cell letter="y"></wd-cell>
+              </div>
+              <p>
+                The letter <strong>O</strong> is in the word but in the wrong
+                spot.
+              </p>
+            </div>
+            <div class="example">
+              <div class="row">
+                <wd-cell letter="b"></wd-cell>
+                <wd-cell letter="r"></wd-cell>
+                <wd-cell letter="a"></wd-cell>
+                <wd-cell letter="i" status="absent" animation="flip"></wd-cell>
+                <wd-cell letter="n"></wd-cell>
+              </div>
+              <p>
+                The letter <strong>I</strong> is not in the word in any spot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+};
+CwHelp.styles = r$2`
+    .instructions {
+      font-size: 14px;
+      color: var(--color-tone-1);
+    }
+
+    .examples {
+      border-bottom: 1px solid var(--color-tone-4);
+      border-top: 1px solid var(--color-tone-4);
+    }
+
+    .example {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    wd-cell {
+      width: 40px;
+      height: 40px;
+    }
+
+    :host([page]) section {
+      padding: 16px;
+      padding-top: 0px;
+    }
+  `;
+CwHelp = __decorateClass$3([
+  n$1("wd-help")
+], CwHelp);
+var __defProp$2 = Object.defineProperty;
+var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
+var __decorateClass$2 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$2(target, key, result);
+  return result;
+};
+let CwPage = class extends s {
+  constructor() {
+    super(...arguments);
+    this.open = false;
+  }
+  closePage() {
+    this.dispatchEvent(new CustomEvent("wd-page", {
+      detail: { open: false },
+      composed: true,
+      bubbles: true
+    }));
+  }
+  render() {
+    return $`
+      <div class="overlay">
+        <div class="content">
+          <header>
+            <h1><slot></slot></h1>
+            <button @click=${this.closePage} class="close-icon">
+              <wd-icon name="x"></wd-icon>
+            </button>
+          </header>
+          <div class="content-container">
+            <slot name="content"></slot>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+};
+CwPage.styles = r$2`
+    .overlay {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      justify-content: center;
+      background-color: var(--wd-background-color);
+      animation: SlideIn 100ms linear;
+      z-index: 2000;
+    }
+
+    :host([open="true"]) .overlay {
+      display: flex;
+    }
+
+    .content {
+      position: relative;
+      color: var(--wd-color);
+      padding: 0 32px;
+      max-width: var(--wd-max-width);
+      width: 100%;
+      overflow-y: auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-container {
+      height: 100%;
+    }
+
+    .overlay.closing {
+      animation: SlideOut 150ms linear;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    wd-icon {
+      position: absolute;
+      right: 0;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+      .content {
+        max-width: 100%;
+        padding: 0;
+      }
+      wd-icon {
+        padding: 0 16px;
+      }
+    }
+
+    @keyframes SlideIn {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+    @keyframes SlideOut {
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+      90% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+    }
+  `;
+__decorateClass$2([
+  e$2({ reflect: true })
+], CwPage.prototype, "open", 2);
+CwPage = __decorateClass$2([
+  n$1("wd-page")
+], CwPage);
+var __defProp$1 = Object.defineProperty;
+var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
+var __decorateClass$1 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$1(target, key, result);
+  return result;
+};
+let CwModal = class extends s {
+  constructor() {
+    super(...arguments);
+    this.open = false;
+  }
+  closeModal() {
+    this.dispatchEvent(new CustomEvent("wd-modal", {
+      detail: { open: false },
+      composed: true,
+      bubbles: true
+    }));
+  }
+  render() {
+    return $`
+      <div class="overlay">
+        <div class="content">
+          <slot></slot>
+          <button @click=${this.closeModal} class="close-icon">
+            <wd-icon name="x"></wd-icon>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+};
+CwModal.styles = r$2`
+    .overlay {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--opacity-50);
+      z-index: 3000;
+    }
+
+    :host([open="true"]) .overlay {
+      display: flex;
+    }
+
+    .content {
+      position: relative;
+      border-radius: 8px;
+      border: 1px solid var(--color-tone-6);
+      background-color: var(--modal-content-bg);
+      color: var(--color-tone-1);
+      box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-height: 90%;
+      overflow-y: auto;
+      animation: SlideIn 200ms;
+      max-width: var(--game-max-width);
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .content.closing {
+      animation: SlideOut 200ms;
+    }
+
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+
+    wd-icon {
+      position: fixed;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    @keyframes SlideIn {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+    @keyframes SlideOut {
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+      90% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+    }
+  `;
+__decorateClass$1([
+  e$2({ reflect: true })
+], CwModal.prototype, "open", 2);
+CwModal = __decorateClass$1([
+  n$1("wd-modal")
+], CwModal);
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __decorateClass = (decorators, target, key, kind) => {
@@ -1749,11 +2132,17 @@ let CwApp = class extends s {
     this.letters = letterKeyMap;
     this.targetWord = "rowdy";
     this.status = "idle";
+    this.page = "";
+    this.modal = "";
     this._clearStatus = null;
     this._handleKeydown = (e2) => {
       if (e2.isComposing || e2.ctrlKey || e2.altKey || this.status !== "idle")
         return;
       switch (e2.key) {
+        case "Escape":
+          this.page = "";
+          this.modal = "";
+          return;
         case "Backspace":
           return this.removeLetter();
         case "Enter":
@@ -1762,6 +2151,22 @@ let CwApp = class extends s {
           return this.insertLetter(e2.key.toLowerCase());
       }
     };
+  }
+  handleModal(e2) {
+    const { open = false, content = "" } = e2.detail;
+    if (open) {
+      this.modal = content;
+    } else {
+      this.modal = "";
+    }
+  }
+  handlePage(e2) {
+    const { open = false, content = "" } = e2.detail;
+    if (open) {
+      this.page = content;
+    } else {
+      this.page = "";
+    }
   }
   get activeGuess() {
     return this.guesses[this.guess].letters;
@@ -1884,13 +2289,22 @@ let CwApp = class extends s {
   }
   render() {
     return $`
-      <wd-header></wd-header>
+      <wd-header
+        @wd-modal=${this.handleModal}
+        @wd-page=${this.handlePage}
+      ></wd-header>
       <wd-board
         .guesses=${this.guesses}
         .guess=${this.guess}
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
+      <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
+        ${this.page === "help" ? $`<wd-help page></wd-help>` : null}
+      </wd-page>
+      <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
+        ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
+      </wd-modal>
     `;
   }
 };
@@ -1920,6 +2334,12 @@ __decorateClass([
 __decorateClass([
   t$2()
 ], CwApp.prototype, "status", 2);
+__decorateClass([
+  t$2()
+], CwApp.prototype, "page", 2);
+__decorateClass([
+  t$2()
+], CwApp.prototype, "modal", 2);
 CwApp = __decorateClass([
   n$1("wd-app")
 ], CwApp);
