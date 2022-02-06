@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "./cw-cell.ts";
+import "./wd-cell.ts";
 import {
   initializeGuess,
   Guess,
@@ -11,7 +11,7 @@ import {
   GameStatus,
 } from "./utils";
 
-@customElement("cw-row")
+@customElement("wd-row")
 export class CwRow extends LitElement {
   @property()
   guess: Guess["letters"] = initializeGuess.letters;
@@ -101,7 +101,7 @@ export class CwRow extends LitElement {
 
     return html`
       <div class="row">
-        <cw-cell
+        <wd-cell
           style="--transition-delay:${revealing ? "250ms" : "0ms"};"
           .letter=${letters[0]}
           .status=${this.status === "reveal" || this.revealed
@@ -116,8 +116,8 @@ export class CwRow extends LitElement {
               ? ""
               : "pop"
             : ""}
-        ></cw-cell>
-        <cw-cell
+        ></wd-cell>
+        <wd-cell
           style="--animation-delay:500ms;--transition-delay:${revealing
             ? "750ms"
             : "0ms"};"
@@ -134,8 +134,8 @@ export class CwRow extends LitElement {
               ? ""
               : "pop"
             : ""}
-        ></cw-cell>
-        <cw-cell
+        ></wd-cell>
+        <wd-cell
           style="--animation-delay:1000ms;--transition-delay:${revealing
             ? "1250ms"
             : "0ms"};"
@@ -152,8 +152,8 @@ export class CwRow extends LitElement {
               ? ""
               : "pop"
             : ""}
-        ></cw-cell>
-        <cw-cell
+        ></wd-cell>
+        <wd-cell
           style="--animation-delay:1500ms;--transition-delay:${revealing
             ? "1750ms"
             : "0ms"};"
@@ -170,8 +170,8 @@ export class CwRow extends LitElement {
               ? ""
               : "pop"
             : ""}
-        ></cw-cell>
-        <cw-cell
+        ></wd-cell>
+        <wd-cell
           style="--animation-delay:2000ms;--transition-delay:${revealing
             ? "2250ms"
             : "0ms"};"
@@ -188,7 +188,7 @@ export class CwRow extends LitElement {
               ? ""
               : "pop"
             : ""}
-        ></cw-cell>
+        ></wd-cell>
       </div>
     `;
   }
@@ -196,6 +196,6 @@ export class CwRow extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-row": CwRow;
+    "wd-row": CwRow;
   }
 }

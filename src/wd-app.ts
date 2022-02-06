@@ -13,11 +13,11 @@ import {
   ValidationResult,
   ValidationReason,
 } from "./utils";
-import "./cw-header.ts";
-import "./cw-board.ts";
-import "./cw-keyboard.ts";
+import "./wd-header.ts";
+import "./wd-board.ts";
+import "./wd-keyboard.ts";
 
-@customElement("cw-app")
+@customElement("wd-app")
 export class CwApp extends LitElement {
   @state()
   guess: number = 0;
@@ -35,7 +35,7 @@ export class CwApp extends LitElement {
   static styles = css`
     :host {
       width: 100%;
-      max-width: var(--cw-max-width);
+      max-width: var(--wd-max-width);
       margin: 0 auto;
       height: 100%;
       display: flex;
@@ -215,19 +215,19 @@ export class CwApp extends LitElement {
 
   render() {
     return html`
-      <cw-header></cw-header>
-      <cw-board
+      <wd-header></wd-header>
+      <wd-board
         .guesses=${this.guesses}
         .guess=${this.guess}
         .status=${this.status}
-      ></cw-board>
-      <cw-keyboard .letters=${this.letters}></cw-keyboard>
+      ></wd-board>
+      <wd-keyboard .letters=${this.letters}></wd-keyboard>
     `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-app": CwApp;
+    "wd-app": CwApp;
   }
 }

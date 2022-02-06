@@ -1,8 +1,8 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "./cw-icon";
+import "./wd-icon";
 
-@customElement("cw-modal")
+@customElement("wd-modal")
 export class CwModal extends LitElement {
   @property({ reflect: true })
   open = false;
@@ -53,7 +53,7 @@ export class CwModal extends LitElement {
       right: 16px;
     }
 
-    cw-icon {
+    wd-icon {
       position: fixed;
       user-select: none;
       cursor: pointer;
@@ -90,7 +90,7 @@ export class CwModal extends LitElement {
         <div class="content">
           <slot></slot>
           <div class="close-icon">
-            <cw-icon name="x"></cw-icon>
+            <wd-icon name="x"></wd-icon>
           </div>
         </div>
       </div>
@@ -100,6 +100,6 @@ export class CwModal extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-modal": CwModal;
+    "wd-modal": CwModal;
   }
 }

@@ -12,7 +12,7 @@ const icons: Record<any, any> = {
 
 type Icon = keyof typeof icons;
 
-@customElement("cw-icon")
+@customElement("wd-icon")
 export class CwIcon extends LitElement {
   static styles = css`
     :host {
@@ -43,6 +43,6 @@ export class CwIcon extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-icon": CwIcon;
+    "wd-icon": CwIcon;
   }
 }

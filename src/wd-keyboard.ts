@@ -1,9 +1,9 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { allowedKeyMap, letterKeyMap, LetterKeyResultMap } from "./utils";
-import "./cw-icon";
+import "./wd-icon";
 
-@customElement("cw-keyboard")
+@customElement("wd-keyboard")
 export class CwKeyboard extends LitElement {
   @property()
   letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
@@ -144,7 +144,7 @@ export class CwKeyboard extends LitElement {
           <button data-key="n" data-state=${this.letters.n}>n</button>
           <button data-key="m" data-state=${this.letters.m}>m</button>
           <button data-key="Backspace" class="one-and-a-half">
-            <cw-icon name="backspace"></cw-icon>
+            <wd-icon name="backspace"></wd-icon>
           </button>
         </div>
       </div>
@@ -154,6 +154,6 @@ export class CwKeyboard extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-keyboard": CwKeyboard;
+    "wd-keyboard": CwKeyboard;
   }
 }

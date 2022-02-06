@@ -1,15 +1,15 @@
 import { html, css, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import "./cw-icon";
+import "./wd-icon";
 
-@customElement("cw-header")
+@customElement("wd-header")
 export class CwHeader extends LitElement {
   static styles = css`
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: var(--cw-header-height);
+      height: var(--wd-header-height);
       color: var(--color-tone-1);
       border-bottom: 1px solid var(--color-tone-4);
       gap: 4px;
@@ -33,7 +33,7 @@ export class CwHeader extends LitElement {
       height: 36px;
       width: 36px;
       opacity: 0.5;
-      color: var(--cw-color);
+      color: var(--wd-color);
       background: none;
       border: none;
       cursor: pointer;
@@ -45,16 +45,16 @@ export class CwHeader extends LitElement {
       <header>
         <div class="menu">
           <button id="help-button" class="icon" aria-label="help">
-            <cw-icon name="help"></cw-icon>
+            <wd-icon name="help"></wd-icon>
           </button>
         </div>
         <div class="title">🟨🟩🟨🟩🟩</div>
         <div class="menu">
           <button id="statistics-button" class="icon" aria-label="statistics">
-            <cw-icon name="stats"></cw-icon>
+            <wd-icon name="stats"></wd-icon>
           </button>
           <button id="settings-button" class="icon" aria-label="settings">
-            <cw-icon name="settings"></cw-icon>
+            <wd-icon name="settings"></wd-icon>
           </button>
         </div>
       </header>
@@ -64,6 +64,6 @@ export class CwHeader extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-header": CwHeader;
+    "wd-header": CwHeader;
   }
 }

@@ -2,7 +2,7 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { cellStatus } from "./utils";
 
-@customElement("cw-cell")
+@customElement("wd-cell")
 export class Cwcell extends LitElement {
   @property({ reflect: true })
   status: cellStatus = "empty";
@@ -41,11 +41,11 @@ export class Cwcell extends LitElement {
       padding-bottom: 100%;
     }
     :host([status="empty"]) > .cell {
-      border-color: var(--cw-border-color);
+      border-color: var(--wd-border-color);
     }
     :host([status="tbd"]) > .cell {
-      background-color: var(--cw-background-color);
-      border-color: var(--cw-border-color-emphasis);
+      background-color: var(--wd-background-color);
+      border-color: var(--wd-border-color-emphasis);
     }
     :host([status="correct"]) > .cell {
       background-color: var(--color-correct);
@@ -100,6 +100,6 @@ export class Cwcell extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-cell": Cwcell;
+    "wd-cell": Cwcell;
   }
 }

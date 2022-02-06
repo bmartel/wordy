@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-@customElement("cw-theme")
+@customElement("wd-theme")
 export class CwTheme extends LitElement {
   static styles = css`
     :host {
@@ -38,15 +38,15 @@ export class CwTheme extends LitElement {
       --key-bg-absent: var(--color-absent);
       --modal-content-bg: var(--color-tone-7);
 
-      --cw-background-color: var(--white);
-      --cw-color: var(--white);
-      --cw-border-color: var(--color-tone-1);
-      --cw-border-color-emphasis: var(--color-tone-2);
+      --wd-background-color: var(--white);
+      --wd-color: var(--white);
+      --wd-border-color: var(--color-tone-1);
+      --wd-border-color-emphasis: var(--color-tone-2);
 
-      --cw-max-width: 500px;
-      --cw-header-height: 50px;
-      --cw-keyboard-height: 200px;
-      --cw-board-font-size: 32px;
+      --wd-max-width: 500px;
+      --wd-header-height: 50px;
+      --wd-keyboard-height: 200px;
+      --wd-board-font-size: 32px;
     }
     @media (prefers-color-scheme: dark) {
       :host {
@@ -61,26 +61,26 @@ export class CwTheme extends LitElement {
         --key-bg-correct: var(--color-correct);
         --key-bg-absent: var(--color-absent);
         --modal-content-bg: var(--color-tone-7);
-        --cw-background-color: var(--color-tone-7);
-        --cw-color: var(--white);
-        --cw-border-color: var(--color-tone-6);
-        --cw-border-color-emphasis: var(--color-tone-4);
+        --wd-background-color: var(--color-tone-7);
+        --wd-color: var(--white);
+        --wd-border-color: var(--color-tone-6);
+        --wd-border-color-emphasis: var(--color-tone-4);
       }
     }
     @media (max-height: 600px) {
       :host {
-        --cw-board-font-size: 28px;
+        --wd-board-font-size: 28px;
       }
     }
     @media (max-height: 500px) {
       :host {
-        --cw-board-font-size: 24px;
+        --wd-board-font-size: 24px;
       }
     }
     main {
       height: 100%;
-      background-color: var(--cw-background-color);
-      color: var(--cw-color);
+      background-color: var(--wd-background-color);
+      color: var(--wd-color);
     }
   `;
 
@@ -95,6 +95,6 @@ export class CwTheme extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-theme": CwTheme;
+    "wd-theme": CwTheme;
   }
 }

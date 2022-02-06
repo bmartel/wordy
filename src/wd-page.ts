@@ -1,8 +1,8 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "./cw-icon";
+import "./wd-icon";
 
-@customElement("cw-page")
+@customElement("wd-page")
 export class CwPage extends LitElement {
   @property({ reflect: true })
   open = false;
@@ -29,7 +29,7 @@ export class CwPage extends LitElement {
       position: relative;
       color: var(--color-tone-1);
       padding: 0 32px;
-      max-width: var(--cw-max-width);
+      max-width: var(--wd-max-width);
       width: 100%;
       overflow-y: auto;
       height: 100%;
@@ -61,7 +61,7 @@ export class CwPage extends LitElement {
       margin-bottom: 10px;
     }
 
-    cw-icon {
+    wd-icon {
       position: absolute;
       right: 0;
       user-select: none;
@@ -73,7 +73,7 @@ export class CwPage extends LitElement {
         max-width: 100%;
         padding: 0;
       }
-      cw-icon {
+      wd-icon {
         padding: 0 16px;
       }
     }
@@ -109,7 +109,7 @@ export class CwPage extends LitElement {
         <div class="content">
           <header>
             <h1><slot></slot></h1>
-            <cw-icon name="x"></cw-icon>
+            <wd-icon name="x"></wd-icon>
           </header>
           <div class="content-container">
             <slot name="content"></slot>
@@ -122,6 +122,6 @@ export class CwPage extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "cw-page": CwPage;
+    "wd-page": CwPage;
   }
 }
