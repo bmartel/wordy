@@ -1,10 +1,13 @@
 import { html, css, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
-import { allowedKeyMap } from "./utils";
+import { customElement, property } from "lit/decorators.js";
+import { allowedKeyMap, letterKeyMap, LetterKeyResultMap } from "./utils";
 import "./cw-icon";
 
 @customElement("cw-keyboard")
 export class CwKeyboard extends LitElement {
+  @property()
+  letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
+
   static styles = css`
     :host {
       height: var(--keyboard-height);
@@ -101,39 +104,39 @@ export class CwKeyboard extends LitElement {
     return html`
       <div id="keyboard">
         <div class="row">
-          <button data-key="q">q</button>
-          <button data-key="w">w</button>
-          <button data-key="e">e</button>
-          <button data-key="r">r</button>
-          <button data-key="t">t</button>
-          <button data-key="y">y</button>
-          <button data-key="u">u</button>
-          <button data-key="i">i</button>
-          <button data-key="o">o</button>
-          <button data-key="p">p</button>
+          <button data-key="q" data-state=${this.letters.q}>q</button>
+          <button data-key="w" data-state=${this.letters.w}>w</button>
+          <button data-key="e" data-state=${this.letters.e}>e</button>
+          <button data-key="r" data-state=${this.letters.r}>r</button>
+          <button data-key="t" data-state=${this.letters.t}>t</button>
+          <button data-key="y" data-state=${this.letters.y}>y</button>
+          <button data-key="u" data-state=${this.letters.u}>u</button>
+          <button data-key="i" data-state=${this.letters.i}>i</button>
+          <button data-key="o" data-state=${this.letters.o}>o</button>
+          <button data-key="p" data-state=${this.letters.p}>p</button>
         </div>
         <div class="row">
           <div class="spacer half"></div>
-          <button data-key="a">a</button>
-          <button data-key="s">s</button>
-          <button data-key="d">d</button>
-          <button data-key="f">f</button>
-          <button data-key="g">g</button>
-          <button data-key="h">h</button>
-          <button data-key="j">j</button>
-          <button data-key="k">k</button>
-          <button data-key="l">l</button>
+          <button data-key="a" data-state=${this.letters.a}>a</button>
+          <button data-key="s" data-state=${this.letters.s}>s</button>
+          <button data-key="d" data-state=${this.letters.d}>d</button>
+          <button data-key="f" data-state=${this.letters.f}>f</button>
+          <button data-key="g" data-state=${this.letters.g}>g</button>
+          <button data-key="h" data-state=${this.letters.h}>h</button>
+          <button data-key="j" data-state=${this.letters.j}>j</button>
+          <button data-key="k" data-state=${this.letters.k}>k</button>
+          <button data-key="l" data-state=${this.letters.l}>l</button>
           <div class="spacer half"></div>
         </div>
         <div class="row">
           <button data-key="Enter" class="one-and-a-half">enter</button
-          ><button data-key="z">z</button>
-          <button data-key="x">x</button>
-          <button data-key="c">c</button>
-          <button data-key="v">v</button>
-          <button data-key="b">b</button>
-          <button data-key="n">n</button>
-          <button data-key="m">m</button>
+          ><button data-key="z" data-state=${this.letters.z}>z</button>
+          <button data-key="x" data-state=${this.letters.x}>x</button>
+          <button data-key="c" data-state=${this.letters.c}>c</button>
+          <button data-key="v" data-state=${this.letters.v}>v</button>
+          <button data-key="b" data-state=${this.letters.b}>b</button>
+          <button data-key="n" data-state=${this.letters.n}>n</button>
+          <button data-key="m" data-state=${this.letters.m}>m</button>
           <button data-key="Backspace" class="one-and-a-half">
             <cw-icon name="backspace"></cw-icon>
           </button>

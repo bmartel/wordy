@@ -129,6 +129,18 @@ export class CwApp extends LitElement {
     return { success: true };
   }
 
+  private updateKeyboard() {
+    const guess = this.activeGuess;
+    const result = this.activeResult;
+
+    const letters: LetterKeyResultMap = {} as LetterKeyResultMap;
+
+    for (let r = 0; r < result.length; r++) {
+      letters[guess.charAt(r) as LetterKey] = result[r];
+    }
+    this.letters = { ...this.letters, ...letters };
+  }
+
   private determineResults(guess: string) {
     const word = this.targetWord;
     const result = this.activeResult;
@@ -149,6 +161,7 @@ export class CwApp extends LitElement {
 
   private updateGameStatus() {
     this._clearStatus = setTimeout(() => {
+      this.updateKeyboard();
       if (this.activeResult.some((r) => r !== "correct")) {
         // not a win condition
         if (this.guess < 5) {
@@ -206,7 +219,7 @@ export class CwApp extends LitElement {
         .guess=${this.guess}
         .status=${this.status}
       ></cw-board>
-      <cw-keyboard .letter=${this.letters}></cw-keyboard>
+      <cw-keyboard .letters=${this.letters}></cw-keyboard>
     `;
   }
 }
