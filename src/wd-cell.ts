@@ -26,7 +26,8 @@ export class Cwcell extends LitElement {
       color: var(--cell-text-color);
       text-transform: uppercase;
       user-select: none;
-
+      font-size: var(--wd-board-font-size);
+      line-height: var(--wd-board-font-size);
       border: 2px solid transparent;
 
       will-change: color, background-color, border-color;
