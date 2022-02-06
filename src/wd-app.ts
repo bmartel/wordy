@@ -100,7 +100,7 @@ export class CwApp extends LitElement {
     this.status = "idle";
   }
 
-  private invalidGuess(guess: string, reason: ValidationReason) {
+  private invalidGuess(_guess: string, reason: ValidationReason) {
     this.status = "invalid";
     // Check and handle various reasons here
     switch (reason) {
