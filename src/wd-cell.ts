@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { CellStatus } from "./utils";
+import { CellStatus, WIN_ANIMATION_DURATION } from "./utils";
 
 @customElement("wd-cell")
 export class CwCell extends LitElement {
@@ -66,7 +66,7 @@ export class CwCell extends LitElement {
     }
     :host([animation="bounce"]) > .cell {
       animation-name: Bounce;
-      animation-duration: 1000ms;
+      animation-duration: ${WIN_ANIMATION_DURATION}ms;
       animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }

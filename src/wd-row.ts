@@ -5,7 +5,6 @@ import {
   initializeGuess,
   Guess,
   INVALID_ANIMATION_DURATION,
-  WIN_ANIMATION_DURATION,
   WORD_SIZE,
   fill,
   GameStatus,
