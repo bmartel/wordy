@@ -194,11 +194,11 @@ const createToast = (text: string) => {
   return node;
 };
 const flipToast = (toast: HTMLElement) => {
-  const first = Toaster?.offsetHeight;
+  const first = Toaster?.offsetHeight || 0;
 
   Toaster?.appendChild(toast);
 
-  const last = Toaster?.offsetHeight;
+  const last = Toaster?.offsetHeight || 0;
   const invert = last - first;
 
   Toaster?.animate(
