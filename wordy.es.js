@@ -5552,9 +5552,6 @@ CwTheme.styles = r$2`
       --color-tone-5: #213d6d;
       --color-tone-6: #142a5a;
       --color-tone-7: #060f1a;
-      --shadow-color: rgba(0, 0, 0, 0.16);
-      --opacity-50: rgba(0, 0, 0, 0.5);
-      --opacity-70: rgba(0, 0, 0, 0.7);
 
       --green: #6aaa64;
       --darkendGreen: #538d4e;
@@ -5580,6 +5577,8 @@ CwTheme.styles = r$2`
       --key-bg-absent: var(--color-absent);
       --modal-content-color: var(--color-tone-7);
       --modal-content-bg: var(--white);
+      --shadow-color: rgba(0, 0, 0, 0.16);
+      --overlay-bg: rgba(255, 255, 255, 0.5);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
@@ -5608,6 +5607,7 @@ CwTheme.styles = r$2`
       --modal-content-bg: var(--color-tone-7);
       --modal-content-color: var(--color-tone-1);
       --shadow-color: rgba(255, 255, 255, 0.16);
+      --overlay-bg: rgba(0, 0, 0, 0.5);
 
       --wd-background-color: var(--color-tone-7);
       --wd-color: var(--white);
@@ -7122,7 +7122,7 @@ CwModal.styles = r$2`
       left: 0;
       justify-content: center;
       align-items: center;
-      background-color: var(--opacity-70);
+      background-color: var(--overlay-bg);
       z-index: 3000;
     }
 
@@ -7158,7 +7158,7 @@ CwModal.styles = r$2`
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--wd-color);
+      color: var(--wd-icon-color);
       height: 36px;
       width: 36px;
       opacity: 0.5;
