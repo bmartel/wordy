@@ -168,7 +168,11 @@ export class CwApp extends LitElement {
   }
 
   private insertLetter(key: LetterKey) {
-    if (this.activeGuess.length < WORD_SIZE && key in letterKeyMap) {
+    if (
+      this.activeGuess.length < WORD_SIZE &&
+      key in letterKeyMap &&
+      this.letters[key] !== "absent"
+    ) {
       this.activeGuess += key;
     }
   }
