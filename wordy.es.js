@@ -5409,7 +5409,11 @@ var ValidationReason;
 })(ValidationReason || (ValidationReason = {}));
 const fill = (func, length = 0) => Array.from({ length }, func);
 const makeGuessResult = () => fill(() => "empty", WORD_SIZE);
-const makeGuesses = (letters = "", result = void 0) => fill(() => ({ letters, result: result || [...makeGuessResult()] }), GUESS_SIZE);
+const makeGuesses = (letters = "", result = void 0) => fill(() => ({
+  letters,
+  status: "tbd",
+  result: result || [...makeGuessResult()]
+}), GUESS_SIZE);
 const initializeGuesses = makeGuesses();
 const initializeGuess = initializeGuesses[0];
 const pickRandomWord = () => {
@@ -5948,7 +5952,6 @@ CwCell.styles = r$2`
       font-size: var(--wd-board-font-size);
       line-height: var(--wd-board-font-size);
       border: 2px solid transparent;
-
       will-change: color, background-color, border-color;
       transition-property: color, background-color, border-color;
       transition-duration: 0ms;
@@ -6069,6 +6072,7 @@ let CwRow = class extends s {
     this.guess = initializeGuess.letters;
     this.result = initializeGuess.result;
     this.status = "idle";
+    this.evaluated = false;
     this.revealed = false;
   }
   updated() {
@@ -6086,34 +6090,34 @@ let CwRow = class extends s {
     return $`
       <div class="row">
         <wd-cell
-          style="--transition-delay:${revealing ? "250ms" : "0ms"};"
+          style="--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "250ms" : "0ms"};"
           .letter=${letters[0]}
-          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[0] : letters[0] !== "" ? "tbd" : "empty"}
-          .animation=${letters[0] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[0] : letters[0] !== "" ? "tbd" : "empty"}
+          .animation=${letters[0] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:500ms;--transition-delay:${revealing ? "750ms" : "0ms"};"
+          style="--animation-delay:500ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "750ms" : "0ms"};"
           .letter=${letters[1]}
-          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[1] : letters[1] !== "" ? "tbd" : "empty"}
-          .animation=${letters[1] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[1] : letters[1] !== "" ? "tbd" : "empty"}
+          .animation=${letters[1] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1000ms;--transition-delay:${revealing ? "1250ms" : "0ms"};"
+          style="--animation-delay:1000ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1250ms" : "0ms"};"
           .letter=${letters[2]}
-          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[2] : letters[2] !== "" ? "tbd" : "empty"}
-          .animation=${letters[2] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[2] : letters[2] !== "" ? "tbd" : "empty"}
+          .animation=${letters[2] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1500ms;--transition-delay:${revealing ? "1750ms" : "0ms"};"
+          style="--animation-delay:1500ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1750ms" : "0ms"};"
           .letter=${letters[3]}
-          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[3] : letters[3] !== "" ? "tbd" : "empty"}
-          .animation=${letters[3] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[3] : letters[3] !== "" ? "tbd" : "empty"}
+          .animation=${letters[3] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:2000ms;--transition-delay:${revealing ? "2250ms" : "0ms"};"
+          style="--animation-delay:2000ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "2250ms" : "0ms"};"
           .letter=${letters[4]}
-          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[4] : letters[4] !== "" ? "tbd" : "empty"}
-          .animation=${letters[4] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[4] : letters[4] !== "" ? "tbd" : "empty"}
+          .animation=${letters[4] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
       </div>
     `;
@@ -6164,6 +6168,9 @@ __decorateClass$9([
 __decorateClass$9([
   e$2({ reflect: true })
 ], CwRow.prototype, "status", 2);
+__decorateClass$9([
+  e$2()
+], CwRow.prototype, "evaluated", 2);
 CwRow = __decorateClass$9([
   n$1("wd-row")
 ], CwRow);
@@ -6186,38 +6193,43 @@ let CwBoard = class extends s {
     this.guesses = initializeGuesses;
   }
   render() {
-    const gameOver = ["win", "lose"].indexOf(this.status) > -1;
     return $`
       <div class="board">
         <wd-row
           .guess=${this.guesses[0].letters}
           .result=${this.guesses[0].result}
-          .status=${this.guess === 0 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 0 ? this.status : this.guesses[0].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[0].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[1].letters}
           .result=${this.guesses[1].result}
-          .status=${this.guess === 1 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 1 ? this.status : this.guesses[1].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[1].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[2].letters}
           .result=${this.guesses[2].result}
-          .status=${this.guess === 2 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 2 ? this.status : this.guesses[2].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[2].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[3].letters}
           .result=${this.guesses[3].result}
-          .status=${this.guess === 3 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 3 ? this.status : this.guesses[3].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[3].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[4].letters}
           .result=${this.guesses[4].result}
-          .status=${this.guess === 4 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 4 ? this.status : this.guesses[4].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[4].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[5].letters}
           .result=${this.guesses[5].result}
-          .status=${this.guess === 5 ? this.status : gameOver ? "reveal" : void 0}
+          .status=${this.guess === 5 ? this.status : this.guesses[5].status === "evaluated" ? "reveal" : void 0}
+          .evaluated=${this.guesses[5].status === "evaluated"}
         ></wd-row>
       </div>
     `;
@@ -7212,7 +7224,6 @@ let CwApp = class extends s {
     this.toast = "";
     this.closingPage = false;
     this.closingModal = false;
-    this.closingToast = false;
     this._clearTimeout = null;
     this._autosaveTimeout = null;
     this._handleKeydown = async (e2) => {
@@ -7279,6 +7290,16 @@ let CwApp = class extends s {
   set activeResult(value) {
     const guess = this.guesses[this.guess];
     guess.result = value;
+    this.guesses = this.guesses.map((g2, i2) => {
+      if (i2 === this.guess) {
+        return guess;
+      }
+      return g2;
+    });
+  }
+  set activeStatus(value) {
+    const guess = this.guesses[this.guess];
+    guess.status = value;
     this.guesses = this.guesses.map((g2, i2) => {
       if (i2 === this.guess) {
         return guess;
@@ -7364,6 +7385,7 @@ let CwApp = class extends s {
   updateGameStatus() {
     this._clearTimeout = setTimeout(() => {
       this.updateKeyboard();
+      this.activeStatus = "evaluated";
       if (this.activeResult.some((r2) => r2 !== "correct")) {
         if (this.guess < 5) {
           this.nextRow();
@@ -7508,9 +7530,6 @@ __decorateClass([
 __decorateClass([
   t$2()
 ], CwApp.prototype, "closingModal", 2);
-__decorateClass([
-  t$2()
-], CwApp.prototype, "closingToast", 2);
 CwApp = __decorateClass([
   n$1("wd-app")
 ], CwApp);
