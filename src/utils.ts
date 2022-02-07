@@ -156,6 +156,10 @@ export const manager = (async (): Promise<GameManager> => {
     games[active.id] = active;
     await store.setItem("games", games);
   };
+  if (!activeGameId) {
+    await store.setItem("activeGameId", active.id);
+    await saveGame({});
+  }
   return {
     active,
     games,
