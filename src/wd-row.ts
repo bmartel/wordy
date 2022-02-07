@@ -35,32 +35,6 @@ export class CwRow extends LitElement {
       grid-template-columns: repeat(${WORD_SIZE}, 1fr);
       grid-gap: 5px;
     }
-    :host([status="win"]) {
-      animation-name: Bounce;
-      animation-duration: ${WIN_ANIMATION_DURATION}ms;
-    }
-
-    @keyframes Bounce {
-      0%,
-      20% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-30px);
-      }
-      50% {
-        transform: translateY(5px);
-      }
-      60% {
-        transform: translateY(-15px);
-      }
-      80% {
-        transform: translateY(2px);
-      }
-      100% {
-        transform: translateY(0);
-      }
-    }
     @keyframes Shake {
       10%,
       90% {
@@ -104,7 +78,9 @@ export class CwRow extends LitElement {
         <wd-cell
           style="--transition-delay:${revealing ? "250ms" : "0ms"};"
           .letter=${letters[0]}
-          .status=${this.status === "reveal" || this.revealed
+          .status=${this.status === "reveal" ||
+          this.status === "win" ||
+          this.revealed
             ? this.result[0]
             : letters[0] !== ""
             ? "tbd"
@@ -112,6 +88,8 @@ export class CwRow extends LitElement {
           .animation=${letters[0] !== ""
             ? revealing
               ? "flip"
+              : this.status === "win"
+              ? "bounce"
               : this.revealed
               ? ""
               : "pop"
@@ -122,7 +100,9 @@ export class CwRow extends LitElement {
             ? "750ms"
             : "0ms"};"
           .letter=${letters[1]}
-          .status=${this.status === "reveal" || this.revealed
+          .status=${this.status === "reveal" ||
+          this.status === "win" ||
+          this.revealed
             ? this.result[1]
             : letters[1] !== ""
             ? "tbd"
@@ -130,6 +110,8 @@ export class CwRow extends LitElement {
           .animation=${letters[1] !== ""
             ? revealing
               ? "flip"
+              : this.status === "win"
+              ? "bounce"
               : this.revealed
               ? ""
               : "pop"
@@ -140,14 +122,18 @@ export class CwRow extends LitElement {
             ? "1250ms"
             : "0ms"};"
           .letter=${letters[2]}
-          .status=${this.status === "reveal" || this.revealed
+          .status=${this.status === "reveal" ||
+          this.status === "win" ||
+          this.revealed
             ? this.result[2]
             : letters[2] !== ""
             ? "tbd"
             : "empty"}
           .animation=${letters[2] !== ""
-            ? this.status === "reveal" && !this.revealed
+            ? revealing
               ? "flip"
+              : this.status === "win"
+              ? "bounce"
               : this.revealed
               ? ""
               : "pop"
@@ -158,14 +144,18 @@ export class CwRow extends LitElement {
             ? "1750ms"
             : "0ms"};"
           .letter=${letters[3]}
-          .status=${this.status === "reveal" || this.revealed
+          .status=${this.status === "reveal" ||
+          this.status === "win" ||
+          this.revealed
             ? this.result[3]
             : letters[3] !== ""
             ? "tbd"
             : "empty"}
           .animation=${letters[3] !== ""
-            ? this.status === "reveal" && !this.revealed
+            ? revealing
               ? "flip"
+              : this.status === "win"
+              ? "bounce"
               : this.revealed
               ? ""
               : "pop"
@@ -176,14 +166,18 @@ export class CwRow extends LitElement {
             ? "2250ms"
             : "0ms"};"
           .letter=${letters[4]}
-          .status=${this.status === "reveal" || this.revealed
+          .status=${this.status === "reveal" ||
+          this.status === "win" ||
+          this.revealed
             ? this.result[4]
             : letters[4] !== ""
             ? "tbd"
             : "empty"}
           .animation=${letters[4] !== ""
-            ? this.status === "reveal"
+            ? revealing
               ? "flip"
+              : this.status === "win"
+              ? "bounce"
               : this.revealed
               ? ""
               : "pop"

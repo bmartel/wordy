@@ -1,11 +1,11 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { cellStatus } from "./utils";
+import { CellStatus } from "./utils";
 
 @customElement("wd-cell")
-export class Cwcell extends LitElement {
+export class CwCell extends LitElement {
   @property({ reflect: true })
-  status: cellStatus = "empty";
+  status: CellStatus = "empty";
   @property({ reflect: true })
   animation: string = "";
   @property()
@@ -64,6 +64,34 @@ export class Cwcell extends LitElement {
       animation-name: PopIn;
       animation-duration: 100ms;
     }
+    :host([animation="bounce"]) > .cell {
+      animation-name: Bounce;
+      animation-duration: 1000ms;
+      animation-delay: var(--animation-delay, 0ms);
+      animation-timing-function: ease-in;
+    }
+
+    @keyframes Bounce {
+      0%,
+      20% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-30px);
+      }
+      50% {
+        transform: translateY(5px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+      80% {
+        transform: translateY(2px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
     @keyframes PopIn {
       from {
         transform: scale(0.8);
@@ -101,6 +129,6 @@ export class Cwcell extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "wd-cell": Cwcell;
+    "wd-cell": CwCell;
   }
 }

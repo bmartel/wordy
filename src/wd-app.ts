@@ -259,9 +259,12 @@ export class CwApp extends LitElement {
         guesses: this.guesses,
         letters: this.letters,
         solution: this.solution,
-        status: this.status,
+        status:
+          this.status === "win" || this.status === "lose"
+            ? this.status
+            : "idle",
       });
-    }, 1000);
+    }, 5 * 500);
   }
 
   async connectedCallback() {

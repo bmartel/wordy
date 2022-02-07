@@ -57,7 +57,7 @@ export type AllowedKey = keyof typeof allowedKeyMap;
 export type GuessResult = "correct" | "present" | "absent";
 export type LetterKeyResult = "empty" | "tbd" | GuessResult;
 export type LetterKeyResultMap = Record<LetterKey, LetterKeyResult>;
-export type cellStatus = "empty" | "tbd" | GuessResult;
+export type CellStatus = "empty" | "tbd" | GuessResult;
 export type GameStatus = "idle" | "invalid" | "reveal" | "win" | "lose";
 export interface Guess {
   letters: string;
