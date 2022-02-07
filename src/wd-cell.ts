@@ -83,13 +83,13 @@ export class Cwcell extends LitElement {
     }
     @keyframes Flip {
       0% {
-        transform: rotateX(0);
+        transform: rotateY(0);
       }
       50% {
-        transform: rotateX(-90deg);
+        transform: rotateY(-90deg);
       }
       100% {
-        transform: rotateX(0);
+        transform: rotateY(0);
       }
     }
   `;

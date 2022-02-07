@@ -42,7 +42,7 @@ export class CwHelp extends LitElement {
             submit.
           </p>
           <p>
-            After each guess, the color of the tiles will change to show how
+            After each guess, the color of the cells will change to show how
             close your guess was to the word.
           </p>
           <p>

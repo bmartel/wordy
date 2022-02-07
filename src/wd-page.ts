@@ -6,6 +6,8 @@ import "./wd-icon.ts";
 export class CwPage extends LitElement {
   @property({ reflect: true })
   open = false;
+  @property({ reflect: true })
+  closing = false;
 
   static styles = css`
     .overlay {
@@ -23,8 +25,13 @@ export class CwPage extends LitElement {
       z-index: 2000;
     }
 
-    :host([open="true"]) .overlay {
+    :host([open="true"]) .overlay,
+    :host([closing="true"]) .overlay {
       display: flex;
+    }
+
+    :host([closing="true"]) .overlay {
+      animation: SlideOut 150ms linear;
     }
 
     .content {
@@ -41,10 +48,6 @@ export class CwPage extends LitElement {
     .content-container {
       flex: 1;
       overflow-y: auto;
-    }
-
-    .overlay.closing {
-      animation: SlideOut 150ms linear;
     }
 
     header {
@@ -65,7 +68,8 @@ export class CwPage extends LitElement {
 
     .close-icon {
       position: absolute;
-      right: 0;
+      top: 4px;
+      right: 4px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -112,6 +116,11 @@ export class CwPage extends LitElement {
       }
     }
   `;
+
+  protected updated(): void {
+    if (this.open) {
+    }
+  }
 
   private closePage() {
     this.dispatchEvent(

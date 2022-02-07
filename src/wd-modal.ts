@@ -6,6 +6,8 @@ import "./wd-icon.ts";
 export class CwModal extends LitElement {
   @property({ reflect: true })
   open = false;
+  @property({ reflect: true })
+  closing = false;
 
   static styles = css`
     .overlay {
@@ -21,8 +23,13 @@ export class CwModal extends LitElement {
       z-index: 3000;
     }
 
-    :host([open="true"]) .overlay {
+    :host([open="true"]) .overlay,
+    :host([closing="true"]) .overlay {
       display: flex;
+    }
+
+    :host([closing="true"]) .content {
+      animation: SlideOut 200ms;
     }
 
     .content {
@@ -41,21 +48,19 @@ export class CwModal extends LitElement {
       box-sizing: border-box;
     }
 
-    .content.closing {
-      animation: SlideOut 200ms;
-    }
-
     .close-icon {
-      width: 24px;
-      height: 24px;
       position: absolute;
-      top: 16px;
-      right: 16px;
-    }
-
-    wd-icon {
-      position: fixed;
-      user-select: none;
+      top: 4px;
+      right: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wd-color);
+      height: 36px;
+      width: 36px;
+      opacity: 0.5;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 

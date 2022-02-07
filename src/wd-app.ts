@@ -36,8 +36,12 @@ export class CwApp extends LitElement {
   page: string = "";
   @state()
   modal: string = "";
+  @state()
+  closingPage = false;
+  @state()
+  closingModal = false;
 
-  _clearStatus: any = null;
+  _clearTimeout: any = null;
 
   static styles = css`
     :host {
@@ -56,7 +60,11 @@ export class CwApp extends LitElement {
     if (open) {
       this.modal = content;
     } else {
-      this.modal = "";
+      this.closingModal = true;
+      setTimeout(() => {
+        this.modal = "";
+        this.closingModal = false;
+      }, 200);
     }
   }
 
@@ -65,7 +73,11 @@ export class CwApp extends LitElement {
     if (open) {
       this.page = content;
     } else {
-      this.page = "";
+      this.closingPage = true;
+      setTimeout(() => {
+        this.page = "";
+        this.closingPage = false;
+      }, 150);
     }
   }
 
@@ -134,7 +146,7 @@ export class CwApp extends LitElement {
       default:
         break;
     }
-    this._clearStatus = setTimeout(() => {
+    this._clearTimeout = setTimeout(() => {
       this.status = "idle";
     }, INVALID_ANIMATION_DURATION);
   }
@@ -186,7 +198,7 @@ export class CwApp extends LitElement {
   }
 
   private updateGameStatus() {
-    this._clearStatus = setTimeout(() => {
+    this._clearTimeout = setTimeout(() => {
       this.updateKeyboard();
       if (this.activeResult.some((r) => r !== "correct")) {
         // not a win condition
@@ -202,7 +214,7 @@ export class CwApp extends LitElement {
   }
 
   private attemptGuess() {
-    if (this._clearStatus) clearTimeout(this._clearStatus);
+    if (this._clearTimeout) clearTimeout(this._clearTimeout);
 
     const guess = this.activeGuess;
     const result = this.validate(guess);
@@ -254,12 +266,21 @@ export class CwApp extends LitElement {
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
-      <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
+      <wd-page
+        .open=${this.page !== ""}
+        .closing=${this.closingPage}
+        @wd-page=${this.handlePage}
+      >
         ${this.page === "help"
-          ? html`<wd-help page slot="content"></wd-help>`
+          ? html`<span>How To Play</span>
+              <wd-help page slot="content"></wd-help>`
           : null}
       </wd-page>
-      <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
+      <wd-modal
+        .open=${this.modal !== ""}
+        .closing=${this.closingModal}
+        @wd-modal=${this.handleModal}
+      >
         ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
       </wd-modal>
     `;
