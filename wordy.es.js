@@ -7018,7 +7018,7 @@ CwModal.styles = r$2`
       max-height: 90%;
       overflow-y: auto;
       animation: SlideIn 200ms;
-      max-width: var(--game-max-width);
+      max-width: var(--wd-max-width);
       padding: 16px;
       box-sizing: border-box;
     }
@@ -7087,7 +7087,7 @@ let CwApp = class extends s {
   constructor() {
     super(...arguments);
     this.guess = 0;
-    this.guesses = [];
+    this.guesses = initializeGuesses;
     this.letters = letterKeyMap;
     this.targetWord = "";
     this.status = "idle";
