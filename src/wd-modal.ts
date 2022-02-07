@@ -37,7 +37,7 @@ export class CwModal extends LitElement {
       border-radius: 8px;
       border: 1px solid var(--color-tone-6);
       background-color: var(--modal-content-bg);
-      color: var(--color-tone-1);
+      color: var(--modal-content-color);
       box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
       width: 90%;
       max-height: 90%;
@@ -89,7 +89,8 @@ export class CwModal extends LitElement {
     }
   `;
 
-  private closeModal() {
+  private closeModal(e: Event) {
+    e.preventDefault();
     this.dispatchEvent(
       new CustomEvent("wd-modal", {
         detail: { open: false },
@@ -99,10 +100,15 @@ export class CwModal extends LitElement {
     );
   }
 
+  private preventClose(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   render() {
     return html`
-      <div class="overlay">
-        <div class="content">
+      <div class="overlay" @click=${this.closeModal}>
+        <div class="content" @click=${this.preventClose}>
           <slot></slot>
           <button @click=${this.closeModal} class="close-icon">
             <wd-icon name="x"></wd-icon>

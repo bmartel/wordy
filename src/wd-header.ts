@@ -26,11 +26,11 @@ export class CwHeader extends LitElement {
       right: 0;
       pointer-events: none;
     }
-    button.icon {
+    .icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: inherit;
+      color: var(--wd-icon-color);
       height: 36px;
       width: 36px;
       opacity: 0.5;
@@ -54,6 +54,34 @@ export class CwHeader extends LitElement {
     );
   }
 
+  private showStats(e: Event) {
+    e.preventDefault();
+    this.dispatchEvent(
+      new CustomEvent("wd-modal", {
+        detail: {
+          content: "stats",
+          open: true,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private showSettings(e: Event) {
+    e.preventDefault();
+    this.dispatchEvent(
+      new CustomEvent("wd-page", {
+        detail: {
+          content: "settings",
+          open: true,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   render() {
     return html`
       <header>
@@ -69,10 +97,20 @@ export class CwHeader extends LitElement {
         </div>
         <div class="title">🟨🟩🟨🟩🟩</div>
         <div class="menu">
-          <button id="statistics-button" class="icon" aria-label="statistics">
+          <button
+            @click=${this.showStats}
+            id="statistics-button"
+            class="icon"
+            aria-label="statistics"
+          >
             <wd-icon name="stats"></wd-icon>
           </button>
-          <button id="settings-button" class="icon" aria-label="settings">
+          <button
+            @click=${this.showSettings}
+            id="settings-button"
+            class="icon"
+            aria-label="settings"
+          >
             <wd-icon name="settings"></wd-icon>
           </button>
         </div>

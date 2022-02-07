@@ -17,6 +17,8 @@ import "./wd-header.ts";
 import "./wd-board.ts";
 import "./wd-keyboard.ts";
 import "./wd-help.ts";
+import "./wd-settings.ts";
+import "./wd-stats.ts";
 import "./wd-page.ts";
 import "./wd-modal.ts";
 
@@ -35,7 +37,7 @@ export class CwApp extends LitElement {
   @state()
   page: string = "";
   @state()
-  modal: string = "";
+  modal: string = localStorage.getItem("shown_help") ? "" : "help";
   @state()
   closingPage = false;
   @state()
@@ -246,6 +248,7 @@ export class CwApp extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    localStorage.setItem("shown_help", "1");
     window.addEventListener("keydown", this._handleKeydown);
   }
 
@@ -275,6 +278,10 @@ export class CwApp extends LitElement {
           ? html`<span>How To Play</span>
               <wd-help page slot="content"></wd-help>`
           : null}
+        ${this.page === "settings"
+          ? html`<span>Settings</span>
+              <wd-settings page slot="content"></wd-settings>`
+          : null}
       </wd-page>
       <wd-modal
         .open=${this.modal !== ""}
@@ -282,6 +289,7 @@ export class CwApp extends LitElement {
         @wd-modal=${this.handleModal}
       >
         ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
+        ${this.modal === "stats" ? html`<wd-stats></wd-stats>` : null}
       </wd-modal>
     `;
   }

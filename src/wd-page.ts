@@ -36,7 +36,7 @@ export class CwPage extends LitElement {
 
     .content {
       position: relative;
-      color: var(--wd-color);
+      color: var(--modal-content-color);
       padding: 0 32px;
       max-width: var(--wd-max-width);
       width: 100%;
@@ -73,7 +73,7 @@ export class CwPage extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--wd-color);
+      color: var(--wd-icon-color);
       height: 36px;
       width: 36px;
       opacity: 0.5;

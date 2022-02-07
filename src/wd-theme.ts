@@ -1,8 +1,16 @@
 import { html, css, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
+
+// @media (prefers-color-scheme: dark) {
+//   :host {
+//   }
+// }
 
 @customElement("wd-theme")
 export class CwTheme extends LitElement {
+  @property({ reflect: true })
+  dark: boolean;
+
   static styles = css`
     :host {
       --color-tone-1: #d7e9f8;
@@ -36,10 +44,13 @@ export class CwTheme extends LitElement {
       --key-bg-present: var(--color-present);
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
+      --modal-content-color: var(--color-tone-7);
       --modal-content-bg: var(--color-tone-1);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-5);
+      --wd-switch-bg: var(--color-tone-2);
       --wd-border-color: var(--color-tone-1);
       --wd-border-color-emphasis: var(--color-tone-2);
       --wd-icon-color: var(--color-tone-7);
@@ -49,26 +60,27 @@ export class CwTheme extends LitElement {
       --wd-keyboard-height: 200px;
       --wd-board-font-size: 32px;
     }
-    @media (prefers-color-scheme: dark) {
-      :host {
-        --color-present: var(--darkendYellow);
-        --color-correct: var(--darkendGreen);
-        --color-absent: var(--color-tone-6);
-        --cell-text-color: var(--white);
-        --key-text-color: var(--white);
-        --key-evaluated-text-color: var(--white);
-        --key-bg: var(--color-tone-3);
-        --key-bg-present: var(--color-present);
-        --key-bg-correct: var(--color-correct);
-        --key-bg-absent: var(--color-absent);
-        --modal-content-bg: var(--color-tone-7);
+    :host([dark="true"]) {
+      --color-present: var(--darkendYellow);
+      --color-correct: var(--darkendGreen);
+      --color-absent: var(--color-tone-6);
+      --cell-text-color: var(--white);
+      --key-text-color: var(--white);
+      --key-evaluated-text-color: var(--white);
+      --key-bg: var(--color-tone-3);
+      --key-bg-present: var(--color-present);
+      --key-bg-correct: var(--color-correct);
+      --key-bg-absent: var(--color-absent);
+      --modal-content-bg: var(--color-tone-7);
+      --modal-content-color: var(--color-tone-1);
 
-        --wd-background-color: var(--color-tone-7);
-        --wd-color: var(--white);
-        --wd-border-color: var(--color-tone-6);
-        --wd-border-color-emphasis: var(--color-tone-4);
-        --wd-icon-color: var(--color-tone-1);
-      }
+      --wd-background-color: var(--color-tone-7);
+      --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-2);
+      --wd-switch-bg: var(--color-tone-5);
+      --wd-border-color: var(--color-tone-6);
+      --wd-border-color-emphasis: var(--color-tone-4);
+      --wd-icon-color: var(--color-tone-1);
     }
     @media (max-height: 600px) {
       :host {
@@ -87,9 +99,24 @@ export class CwTheme extends LitElement {
     }
   `;
 
+  constructor() {
+    super();
+    const darkTheme = localStorage.getItem("theme_dark");
+    if (darkTheme !== null) {
+      this.dark = darkTheme === "on";
+    } else {
+      this.dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      localStorage.setItem("theme_dark", this.dark ? "on" : "");
+    }
+  }
+
+  private updateTheme(e: CustomEvent) {
+    this.dark = e.detail.on;
+  }
+
   render() {
     return html`
-      <main>
+      <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
     `;

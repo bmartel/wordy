@@ -6,14 +6,17 @@ import "./wd-icon.ts";
 @customElement("wd-help")
 export class CwHelp extends LitElement {
   static styles = css`
+    :host {
+      color: var(--modal-content-color);
+    }
+
     .instructions {
       font-size: 14px;
-      color: var(--color-tone-1);
     }
 
     .examples {
-      border-bottom: 1px solid var(--color-tone-4);
-      border-top: 1px solid var(--color-tone-4);
+      border-bottom: 1px solid var(--wd-border-color);
+      border-top: 1px solid var(--wd-border-color);
     }
 
     .example {
