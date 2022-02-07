@@ -898,133 +898,6 @@ function t$2(t2) {
  */
 var n;
 ((n = window.HTMLSlotElement) === null || n === void 0 ? void 0 : n.prototype.assignedElements) != null ? (o2, n2) => o2.assignedElements(n2) : (o2, n2) => o2.assignedNodes(n2).filter((o3) => o3.nodeType === Node.ELEMENT_NODE);
-var __defProp$d = Object.defineProperty;
-var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-var __decorateClass$d = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
-  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
-    if (decorator = decorators[i2])
-      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-  if (kind && result)
-    __defProp$d(target, key, result);
-  return result;
-};
-let CwTheme = class extends s {
-  constructor() {
-    super();
-    const darkTheme = localStorage.getItem("theme_dark");
-    if (darkTheme !== null) {
-      this.dark = darkTheme === "on";
-    } else {
-      this.dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      localStorage.setItem("theme_dark", this.dark ? "on" : "");
-    }
-  }
-  updateTheme(e2) {
-    this.dark = e2.detail.on;
-  }
-  render() {
-    return $`
-      <main @wd-dark-theme=${this.updateTheme}>
-        <slot></slot>
-      </main>
-    `;
-  }
-};
-CwTheme.styles = r$2`
-    :host {
-      --color-tone-1: #d7e9f8;
-      --color-tone-2: #81a8d5;
-      --color-tone-3: #577bac;
-      --color-tone-4: #345787;
-      --color-tone-5: #213d6d;
-      --color-tone-6: #142a5a;
-      --color-tone-7: #060f1a;
-      --opacity-50: rgba(0, 0, 0, 0.5);
-      --opacity-70: rgba(0, 0, 0, 0.7);
-
-      --green: #6aaa64;
-      --darkendGreen: #538d4e;
-      --yellow: #c9b458;
-      --darkendYellow: #b39200;
-      --lightGray: #d8d8d8;
-      --gray: #86888a;
-      --darkGray: #939598;
-      --white: #fff;
-      --black: #c40000;
-      --orange: #f5793a;
-      --blue: #85c0f9;
-
-      --color-present: var(--yellow);
-      --color-correct: var(--green);
-      --color-absent: var(--color-tone-3);
-      --cell-text-color: var(--color-tone-7);
-      --key-text-color: var(--color-tone-7);
-      --key-evaluated-text-color: var(--white);
-      --key-bg: var(--color-tone-1);
-      --key-bg-present: var(--color-present);
-      --key-bg-correct: var(--color-correct);
-      --key-bg-absent: var(--color-absent);
-      --modal-content-color: var(--color-tone-7);
-      --modal-content-bg: var(--white);
-
-      --wd-background-color: var(--white);
-      --wd-color: var(--white);
-      --wd-color-faded: var(--color-tone-5);
-      --wd-switch-bg: var(--color-tone-2);
-      --wd-border-color: var(--color-tone-1);
-      --wd-border-color-emphasis: var(--color-tone-2);
-      --wd-icon-color: var(--color-tone-7);
-
-      --wd-max-width: 500px;
-      --wd-header-height: 50px;
-      --wd-keyboard-height: 200px;
-      --wd-board-font-size: 32px;
-    }
-    :host([dark="true"]) {
-      --color-present: var(--darkendYellow);
-      --color-correct: var(--darkendGreen);
-      --color-absent: var(--color-tone-6);
-      --cell-text-color: var(--white);
-      --key-text-color: var(--white);
-      --key-evaluated-text-color: var(--white);
-      --key-bg: var(--color-tone-3);
-      --key-bg-present: var(--color-present);
-      --key-bg-correct: var(--color-correct);
-      --key-bg-absent: var(--color-absent);
-      --modal-content-bg: var(--color-tone-7);
-      --modal-content-color: var(--color-tone-1);
-
-      --wd-background-color: var(--color-tone-7);
-      --wd-color: var(--white);
-      --wd-color-faded: var(--color-tone-2);
-      --wd-switch-bg: var(--color-tone-5);
-      --wd-border-color: var(--color-tone-6);
-      --wd-border-color-emphasis: var(--color-tone-4);
-      --wd-icon-color: var(--color-tone-1);
-    }
-    @media (max-height: 600px) {
-      :host {
-        --wd-board-font-size: 28px;
-      }
-    }
-    @media (max-height: 500px) {
-      :host {
-        --wd-board-font-size: 24px;
-      }
-    }
-    main {
-      height: 100%;
-      background-color: var(--wd-background-color);
-      color: var(--wd-color);
-    }
-  `;
-__decorateClass$d([
-  e$2({ reflect: true })
-], CwTheme.prototype, "dark", 2);
-CwTheme = __decorateClass$d([
-  n$1("wd-theme")
-], CwTheme);
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function commonjsRequire(path) {
   throw new Error('Could not dynamically require "' + path + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
@@ -5542,6 +5415,9 @@ const initializeGuess = initializeGuesses[0];
 const pickRandomWord = () => {
   return config.words[Math.floor(Math.random() * WORD_LIST_SIZE)];
 };
+const isValidWord = (word) => {
+  return config.words.indexOf(word) > -1;
+};
 const newGame = () => {
   return {
     id: nanoid(),
@@ -5582,6 +5458,230 @@ const manager = (async () => {
     saveGame
   };
 })();
+let Toaster = null;
+const initToaster = (node) => {
+  Toaster = node;
+};
+const removeToaster = () => {
+  Toaster = null;
+};
+const createToast = (text) => {
+  const node = document.createElement("output");
+  node.innerText = text;
+  node.classList.add("toast");
+  node.setAttribute("role", "status");
+  return node;
+};
+const flipToast = (toast) => {
+  const first = (Toaster == null ? void 0 : Toaster.offsetHeight) || 0;
+  Toaster == null ? void 0 : Toaster.appendChild(toast);
+  const last = (Toaster == null ? void 0 : Toaster.offsetHeight) || 0;
+  const invert = last - first;
+  Toaster == null ? void 0 : Toaster.animate([{ transform: `translateY(${invert}px)` }, { transform: "translateY(0)" }], {
+    duration: 150,
+    easing: "ease-out"
+  });
+};
+const addToast = (toast) => {
+  const { matches: motionOK } = window.matchMedia("(prefers-reduced-motion: no-preference)");
+  (Toaster == null ? void 0 : Toaster.children.length) && motionOK ? flipToast(toast) : Toaster == null ? void 0 : Toaster.appendChild(toast);
+};
+const Toast = (text) => {
+  const toast = createToast(text);
+  addToast(toast);
+  return new Promise(async (resolve) => {
+    await Promise.allSettled(toast.getAnimations().map((animation) => animation.finished));
+    Toaster == null ? void 0 : Toaster.removeChild(toast);
+    resolve();
+  });
+};
+var __defProp$d = Object.defineProperty;
+var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+var __decorateClass$d = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$d(target, key, result);
+  return result;
+};
+let CwTheme = class extends s {
+  constructor() {
+    super();
+    const darkTheme = localStorage.getItem("theme_dark");
+    if (darkTheme !== null) {
+      this.dark = darkTheme === "on";
+    } else {
+      this.dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      localStorage.setItem("theme_dark", this.dark ? "on" : "");
+    }
+  }
+  updateTheme(e2) {
+    this.dark = e2.detail.on;
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    setTimeout(() => {
+      initToaster(this.renderRoot.querySelector(".toast-layer"));
+    }, 0);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    removeToaster();
+  }
+  render() {
+    return $`
+      <section class="toast-layer"></section>
+      <main @wd-dark-theme=${this.updateTheme}>
+        <slot></slot>
+      </main>
+    `;
+  }
+};
+CwTheme.styles = r$2`
+    :host {
+      --color-tone-1: #d7e9f8;
+      --color-tone-2: #81a8d5;
+      --color-tone-3: #577bac;
+      --color-tone-4: #345787;
+      --color-tone-5: #213d6d;
+      --color-tone-6: #142a5a;
+      --color-tone-7: #060f1a;
+      --shadow-color: rgba(0, 0, 0, 0.16);
+      --opacity-50: rgba(0, 0, 0, 0.5);
+      --opacity-70: rgba(0, 0, 0, 0.7);
+
+      --green: #6aaa64;
+      --darkendGreen: #538d4e;
+      --yellow: #c9b458;
+      --darkendYellow: #b39200;
+      --lightGray: #d8d8d8;
+      --gray: #86888a;
+      --darkGray: #939598;
+      --white: #fff;
+      --black: #c40000;
+      --orange: #f5793a;
+      --blue: #85c0f9;
+
+      --color-present: var(--yellow);
+      --color-correct: var(--green);
+      --color-absent: var(--color-tone-3);
+      --cell-text-color: var(--color-tone-7);
+      --key-text-color: var(--color-tone-7);
+      --key-evaluated-text-color: var(--white);
+      --key-bg: var(--color-tone-1);
+      --key-bg-present: var(--color-present);
+      --key-bg-correct: var(--color-correct);
+      --key-bg-absent: var(--color-absent);
+      --modal-content-color: var(--color-tone-7);
+      --modal-content-bg: var(--white);
+
+      --wd-background-color: var(--white);
+      --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-5);
+      --wd-switch-bg: var(--color-tone-2);
+      --wd-border-color: var(--color-tone-1);
+      --wd-border-color-emphasis: var(--color-tone-2);
+      --wd-icon-color: var(--color-tone-7);
+
+      --wd-max-width: 500px;
+      --wd-header-height: 50px;
+      --wd-keyboard-height: 200px;
+      --wd-board-font-size: 32px;
+    }
+    :host([dark="true"]) {
+      --color-present: var(--darkendYellow);
+      --color-correct: var(--darkendGreen);
+      --color-absent: var(--color-tone-6);
+      --cell-text-color: var(--white);
+      --key-text-color: var(--white);
+      --key-evaluated-text-color: var(--white);
+      --key-bg: var(--color-tone-3);
+      --key-bg-present: var(--color-present);
+      --key-bg-correct: var(--color-correct);
+      --key-bg-absent: var(--color-absent);
+      --modal-content-bg: var(--color-tone-7);
+      --modal-content-color: var(--color-tone-1);
+      --shadow-color: rgba(255, 255, 255, 0.16);
+
+      --wd-background-color: var(--color-tone-7);
+      --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-2);
+      --wd-switch-bg: var(--color-tone-5);
+      --wd-border-color: var(--color-tone-6);
+      --wd-border-color-emphasis: var(--color-tone-4);
+      --wd-icon-color: var(--color-tone-1);
+    }
+    @media (max-height: 600px) {
+      :host {
+        --wd-board-font-size: 28px;
+      }
+    }
+    @media (max-height: 500px) {
+      :host {
+        --wd-board-font-size: 24px;
+      }
+    }
+    main {
+      height: 100%;
+      background-color: var(--wd-background-color);
+      color: var(--wd-color);
+    }
+    .toast-layer {
+      position: fixed;
+      z-index: 1;
+      inset-block-end: 0;
+      inset-inline: 0;
+      padding-block-end: 25vh;
+      display: grid;
+      justify-items: center;
+      justify-content: center;
+      gap: 1vh;
+      pointer-events: none;
+    }
+    .toast {
+      --_duration: 3s;
+      --_travel-distance: 0;
+      color: var(--modal-content-color);
+      background-color: var(--modal-content-bg);
+      will-change: transform;
+      animation: fade-in 0.3s ease, slide-in 0.3s ease,
+        fade-out 0.3s ease var(--_duration);
+      max-inline-size: min(25ch, 90vw);
+      padding-block: 0.5ch;
+      padding-inline: 1ch;
+      border-radius: 5px;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-color) 0px 1px 4px;
+    }
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+    }
+    @keyframes fade-out {
+      to {
+        opacity: 0;
+      }
+    }
+    @keyframes slide-in {
+      from {
+        transform: translateY(var(--_travel-distance, 10px));
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .toast {
+        --_travel-distance: 5vh;
+      }
+    }
+  `;
+__decorateClass$d([
+  e$2({ reflect: true })
+], CwTheme.prototype, "dark", 2);
+CwTheme = __decorateClass$d([
+  n$1("wd-theme")
+], CwTheme);
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -7109,8 +7209,10 @@ let CwApp = class extends s {
     this.status = "idle";
     this.page = "";
     this.modal = "";
+    this.toast = "";
     this.closingPage = false;
     this.closingModal = false;
+    this.closingToast = false;
     this._clearTimeout = null;
     this._autosaveTimeout = null;
     this._handleKeydown = async (e2) => {
@@ -7141,6 +7243,10 @@ let CwApp = class extends s {
         this.closingModal = false;
       }, 200);
     }
+  }
+  handleToast(e2) {
+    const { content = "" } = e2.detail;
+    Toast(content);
   }
   handlePage(e2) {
     const { open = false, content = "" } = e2.detail;
@@ -7204,7 +7310,17 @@ let CwApp = class extends s {
     this.status = "invalid";
     switch (reason) {
       case ValidationReason.INVALID_CHAR_LEN:
+        this.handleToast({
+          detail: {
+            content: "Not enough letters!"
+          }
+        });
+        break;
       case ValidationReason.INVALID_WORD:
+        this.handleToast({
+          detail: { content: "Not a valid word!" }
+        });
+        break;
     }
     this._clearTimeout = setTimeout(() => {
       this.status = "idle";
@@ -7215,6 +7331,12 @@ let CwApp = class extends s {
       return {
         success: false,
         reason: ValidationReason.INVALID_CHAR_LEN
+      };
+    }
+    if (!isValidWord(guess)) {
+      return {
+        success: false,
+        reason: ValidationReason.INVALID_WORD
       };
     }
     return { success: true };
@@ -7338,6 +7460,23 @@ CwApp.styles = r$2`
       flex-direction: column;
       box-sizing: border-box;
     }
+    #toast-layer-1 {
+      z-index: 5000;
+    }
+    #toast-layer-2 {
+      z-index: 6000;
+    }
+    .wd-toasts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      pointer-events: none;
+      width: fit-content;
+    }
   `;
 __decorateClass([
   t$2()
@@ -7362,10 +7501,16 @@ __decorateClass([
 ], CwApp.prototype, "modal", 2);
 __decorateClass([
   t$2()
+], CwApp.prototype, "toast", 2);
+__decorateClass([
+  t$2()
 ], CwApp.prototype, "closingPage", 2);
 __decorateClass([
   t$2()
 ], CwApp.prototype, "closingModal", 2);
+__decorateClass([
+  t$2()
+], CwApp.prototype, "closingToast", 2);
 CwApp = __decorateClass([
   n$1("wd-app")
 ], CwApp);
