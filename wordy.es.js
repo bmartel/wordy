@@ -1123,7 +1123,7 @@ const icons = {
   stats: `<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>`,
   settings: `<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>`,
   help: `<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>`,
-  x: `<path fill="none" stroke="currentColor stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`
+  x: `<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`
 };
 let CwIcon = class extends s {
   constructor() {
@@ -1903,6 +1903,8 @@ CwPage.styles = r$2`
       height: 100%;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       justify-content: center;
       background-color: var(--wd-background-color);
       animation: SlideIn 100ms linear;
@@ -1919,14 +1921,14 @@ CwPage.styles = r$2`
       padding: 0 32px;
       max-width: var(--wd-max-width);
       width: 100%;
-      overflow-y: auto;
       height: 100%;
       display: flex;
       flex-direction: column;
     }
 
     .content-container {
-      height: 100%;
+      flex: 1;
+      overflow-y: auto;
     }
 
     .overlay.closing {
@@ -1949,10 +1951,18 @@ CwPage.styles = r$2`
       margin-bottom: 10px;
     }
 
-    wd-icon {
+    .close-icon {
       position: absolute;
       right: 0;
-      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wd-color);
+      height: 36px;
+      width: 36px;
+      opacity: 0.5;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 
@@ -2301,7 +2311,7 @@ let CwApp = class extends s {
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
       <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
-        ${this.page === "help" ? $`<wd-help page></wd-help>` : null}
+        ${this.page === "help" ? $`<wd-help page slot="content"></wd-help>` : null}
       </wd-page>
       <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
         ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
