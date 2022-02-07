@@ -13,6 +13,8 @@ import {
   ValidationResult,
   ValidationReason,
   initializeGuesses,
+  isValidWord,
+  Toast,
 } from "./utils";
 import "./wd-header.ts";
 import "./wd-board.ts";
@@ -40,9 +42,13 @@ export class CwApp extends LitElement {
   @state()
   modal: string = "";
   @state()
+  toast: string = "";
+  @state()
   closingPage = false;
   @state()
   closingModal = false;
+  @state()
+  closingToast = false;
 
   _clearTimeout: any = null;
   _autosaveTimeout: any = null;
@@ -57,9 +63,28 @@ export class CwApp extends LitElement {
       flex-direction: column;
       box-sizing: border-box;
     }
+    #toast-layer-1 {
+      z-index: 5000;
+    }
+    #toast-layer-2 {
+      z-index: 6000;
+    }
+    .wd-toasts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      pointer-events: none;
+      width: fit-content;
+    }
   `;
 
-  private handleModal(e: CustomEvent) {
+  private handleModal(
+    e: CustomEvent | { detail: { open: boolean; content?: string } }
+  ) {
     const { open = false, content = "" } = e.detail;
     if (open) {
       this.modal = content;
@@ -72,7 +97,14 @@ export class CwApp extends LitElement {
     }
   }
 
-  private handlePage(e: CustomEvent) {
+  private handleToast(e: CustomEvent | { detail: { content: string } }) {
+    const { content = "" } = e.detail;
+    Toast(content);
+  }
+
+  private handlePage(
+    e: CustomEvent | { detail: { open: boolean; content?: string } }
+  ) {
     const { open = false, content = "" } = e.detail;
     if (open) {
       this.page = content;
@@ -144,9 +176,20 @@ export class CwApp extends LitElement {
   private invalidGuess(_guess: string, reason: ValidationReason) {
     this.status = "invalid";
     // Check and handle various reasons here
+    // Toast message the reason
     switch (reason) {
       case ValidationReason.INVALID_CHAR_LEN:
+        this.handleToast({
+          detail: {
+            content: "Not enough letters!",
+          },
+        });
+        break;
       case ValidationReason.INVALID_WORD:
+        this.handleToast({
+          detail: { content: "Not a valid word!" },
+        });
+        break;
       default:
         break;
     }
@@ -162,12 +205,12 @@ export class CwApp extends LitElement {
         reason: ValidationReason.INVALID_CHAR_LEN,
       };
     }
-    // if (validWords.indexOf(guess)) {
-    //   return {
-    //     success: false,
-    //     reason: ValidationReason.INVALID_WORD,
-    //   };
-    // }
+    if (!isValidWord(guess)) {
+      return {
+        success: false,
+        reason: ValidationReason.INVALID_WORD,
+      };
+    }
     return { success: true };
   }
 

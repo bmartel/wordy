@@ -1,10 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-
-// @media (prefers-color-scheme: dark) {
-//   :host {
-//   }
-// }
+import { initToaster, removeToaster } from "./utils";
 
 @customElement("wd-theme")
 export class CwTheme extends LitElement {
@@ -20,6 +16,7 @@ export class CwTheme extends LitElement {
       --color-tone-5: #213d6d;
       --color-tone-6: #142a5a;
       --color-tone-7: #060f1a;
+      --shadow-color: rgba(0, 0, 0, 0.16);
       --opacity-50: rgba(0, 0, 0, 0.5);
       --opacity-70: rgba(0, 0, 0, 0.7);
 
@@ -74,6 +71,7 @@ export class CwTheme extends LitElement {
       --key-bg-absent: var(--color-absent);
       --modal-content-bg: var(--color-tone-7);
       --modal-content-color: var(--color-tone-1);
+      --shadow-color: rgba(255, 255, 255, 0.16);
 
       --wd-background-color: var(--color-tone-7);
       --wd-color: var(--white);
@@ -98,6 +96,53 @@ export class CwTheme extends LitElement {
       background-color: var(--wd-background-color);
       color: var(--wd-color);
     }
+    .toast-layer {
+      position: fixed;
+      z-index: 1;
+      inset-block-end: 0;
+      inset-inline: 0;
+      padding-block-end: 25vh;
+      display: grid;
+      justify-items: center;
+      justify-content: center;
+      gap: 1vh;
+      pointer-events: none;
+    }
+    .toast {
+      --_duration: 3s;
+      --_travel-distance: 0;
+      color: var(--modal-content-color);
+      background-color: var(--modal-content-bg);
+      will-change: transform;
+      animation: fade-in 0.3s ease, slide-in 0.3s ease,
+        fade-out 0.3s ease var(--_duration);
+      max-inline-size: min(25ch, 90vw);
+      padding-block: 0.5ch;
+      padding-inline: 1ch;
+      border-radius: 5px;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-color) 0px 1px 4px;
+    }
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+    }
+    @keyframes fade-out {
+      to {
+        opacity: 0;
+      }
+    }
+    @keyframes slide-in {
+      from {
+        transform: translateY(var(--_travel-distance, 10px));
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .toast {
+        --_travel-distance: 5vh;
+      }
+    }
   `;
 
   constructor() {
@@ -115,8 +160,20 @@ export class CwTheme extends LitElement {
     this.dark = e.detail.on;
   }
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    setTimeout(() => {
+      initToaster(this.renderRoot.querySelector(".toast-layer")!);
+    }, 0);
+  }
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    removeToaster();
+  }
+
   render() {
     return html`
+      <section class="toast-layer"></section>
       <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
