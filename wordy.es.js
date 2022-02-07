@@ -898,21 +898,34 @@ function t$2(t2) {
  */
 var n;
 ((n = window.HTMLSlotElement) === null || n === void 0 ? void 0 : n.prototype.assignedElements) != null ? (o2, n2) => o2.assignedElements(n2) : (o2, n2) => o2.assignedNodes(n2).filter((o3) => o3.nodeType === Node.ELEMENT_NODE);
-var __defProp$a = Object.defineProperty;
-var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-var __decorateClass$a = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
+var __defProp$d = Object.defineProperty;
+var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+var __decorateClass$d = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$a(target, key, result);
+    __defProp$d(target, key, result);
   return result;
 };
 let CwTheme = class extends s {
+  constructor() {
+    super();
+    const darkTheme = localStorage.getItem("theme_dark");
+    if (darkTheme !== null) {
+      this.dark = darkTheme === "on";
+    } else {
+      this.dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      localStorage.setItem("theme_dark", this.dark ? "on" : "");
+    }
+  }
+  updateTheme(e2) {
+    this.dark = e2.detail.on;
+  }
   render() {
     return $`
-      <main>
+      <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
     `;
@@ -951,10 +964,13 @@ CwTheme.styles = r$2`
       --key-bg-present: var(--color-present);
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
+      --modal-content-color: var(--color-tone-7);
       --modal-content-bg: var(--color-tone-1);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-5);
+      --wd-switch-bg: var(--color-tone-2);
       --wd-border-color: var(--color-tone-1);
       --wd-border-color-emphasis: var(--color-tone-2);
       --wd-icon-color: var(--color-tone-7);
@@ -964,26 +980,27 @@ CwTheme.styles = r$2`
       --wd-keyboard-height: 200px;
       --wd-board-font-size: 32px;
     }
-    @media (prefers-color-scheme: dark) {
-      :host {
-        --color-present: var(--darkendYellow);
-        --color-correct: var(--darkendGreen);
-        --color-absent: var(--color-tone-6);
-        --cell-text-color: var(--white);
-        --key-text-color: var(--white);
-        --key-evaluated-text-color: var(--white);
-        --key-bg: var(--color-tone-3);
-        --key-bg-present: var(--color-present);
-        --key-bg-correct: var(--color-correct);
-        --key-bg-absent: var(--color-absent);
-        --modal-content-bg: var(--color-tone-7);
+    :host([dark="true"]) {
+      --color-present: var(--darkendYellow);
+      --color-correct: var(--darkendGreen);
+      --color-absent: var(--color-tone-6);
+      --cell-text-color: var(--white);
+      --key-text-color: var(--white);
+      --key-evaluated-text-color: var(--white);
+      --key-bg: var(--color-tone-3);
+      --key-bg-present: var(--color-present);
+      --key-bg-correct: var(--color-correct);
+      --key-bg-absent: var(--color-absent);
+      --modal-content-bg: var(--color-tone-7);
+      --modal-content-color: var(--color-tone-1);
 
-        --wd-background-color: var(--color-tone-7);
-        --wd-color: var(--white);
-        --wd-border-color: var(--color-tone-6);
-        --wd-border-color-emphasis: var(--color-tone-4);
-        --wd-icon-color: var(--color-tone-1);
-      }
+      --wd-background-color: var(--color-tone-7);
+      --wd-color: var(--white);
+      --wd-color-faded: var(--color-tone-2);
+      --wd-switch-bg: var(--color-tone-5);
+      --wd-border-color: var(--color-tone-6);
+      --wd-border-color-emphasis: var(--color-tone-4);
+      --wd-icon-color: var(--color-tone-1);
     }
     @media (max-height: 600px) {
       :host {
@@ -1001,7 +1018,10 @@ CwTheme.styles = r$2`
       color: var(--wd-color);
     }
   `;
-CwTheme = __decorateClass$a([
+__decorateClass$d([
+  e$2({ reflect: true })
+], CwTheme.prototype, "dark", 2);
+CwTheme = __decorateClass$d([
   n$1("wd-theme")
 ], CwTheme);
 const letterKeyMap = {
@@ -1107,15 +1127,15 @@ class t extends e {
 }
 t.directiveName = "unsafeSVG", t.resultType = 2;
 const o = e$1(t);
-var __defProp$9 = Object.defineProperty;
-var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-var __decorateClass$9 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+var __defProp$c = Object.defineProperty;
+var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
+var __decorateClass$c = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$9(target, key, result);
+    __defProp$c(target, key, result);
   return result;
 };
 const icons = {
@@ -1152,21 +1172,21 @@ CwIcon.styles = r$2`
       user-select: none;
     }
   `;
-__decorateClass$9([
+__decorateClass$c([
   e$2()
 ], CwIcon.prototype, "name", 2);
-CwIcon = __decorateClass$9([
+CwIcon = __decorateClass$c([
   n$1("wd-icon")
 ], CwIcon);
-var __defProp$8 = Object.defineProperty;
-var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-var __decorateClass$8 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+var __defProp$b = Object.defineProperty;
+var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
+var __decorateClass$b = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$8(target, key, result);
+    __defProp$b(target, key, result);
   return result;
 };
 let CwHeader = class extends s {
@@ -1175,6 +1195,28 @@ let CwHeader = class extends s {
     this.dispatchEvent(new CustomEvent("wd-page", {
       detail: {
         content: "help",
+        open: true
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
+  showStats(e2) {
+    e2.preventDefault();
+    this.dispatchEvent(new CustomEvent("wd-modal", {
+      detail: {
+        content: "stats",
+        open: true
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
+  showSettings(e2) {
+    e2.preventDefault();
+    this.dispatchEvent(new CustomEvent("wd-page", {
+      detail: {
+        content: "settings",
         open: true
       },
       bubbles: true,
@@ -1196,10 +1238,20 @@ let CwHeader = class extends s {
         </div>
         <div class="title">🟨🟩🟨🟩🟩</div>
         <div class="menu">
-          <button id="statistics-button" class="icon" aria-label="statistics">
+          <button
+            @click=${this.showStats}
+            id="statistics-button"
+            class="icon"
+            aria-label="statistics"
+          >
             <wd-icon name="stats"></wd-icon>
           </button>
-          <button id="settings-button" class="icon" aria-label="settings">
+          <button
+            @click=${this.showSettings}
+            id="settings-button"
+            class="icon"
+            aria-label="settings"
+          >
             <wd-icon name="settings"></wd-icon>
           </button>
         </div>
@@ -1229,11 +1281,11 @@ CwHeader.styles = r$2`
       right: 0;
       pointer-events: none;
     }
-    button.icon {
+    .icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: inherit;
+      color: var(--wd-icon-color);
       height: 36px;
       width: 36px;
       opacity: 0.5;
@@ -1242,18 +1294,18 @@ CwHeader.styles = r$2`
       cursor: pointer;
     }
   `;
-CwHeader = __decorateClass$8([
+CwHeader = __decorateClass$b([
   n$1("wd-header")
 ], CwHeader);
-var __defProp$7 = Object.defineProperty;
-var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-var __decorateClass$7 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
+var __defProp$a = Object.defineProperty;
+var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+var __decorateClass$a = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$7(target, key, result);
+    __defProp$a(target, key, result);
   return result;
 };
 let Cwcell = class extends s {
@@ -1349,27 +1401,27 @@ Cwcell.styles = r$2`
       }
     }
   `;
-__decorateClass$7([
+__decorateClass$a([
   e$2({ reflect: true })
 ], Cwcell.prototype, "status", 2);
-__decorateClass$7([
+__decorateClass$a([
   e$2({ reflect: true })
 ], Cwcell.prototype, "animation", 2);
-__decorateClass$7([
+__decorateClass$a([
   e$2()
 ], Cwcell.prototype, "letter", 2);
-Cwcell = __decorateClass$7([
+Cwcell = __decorateClass$a([
   n$1("wd-cell")
 ], Cwcell);
-var __defProp$6 = Object.defineProperty;
-var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-var __decorateClass$6 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
+var __defProp$9 = Object.defineProperty;
+var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+var __decorateClass$9 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$6(target, key, result);
+    __defProp$9(target, key, result);
   return result;
 };
 let CwRow = class extends s {
@@ -1490,27 +1542,27 @@ CwRow.styles = r$2`
       }
     }
   `;
-__decorateClass$6([
+__decorateClass$9([
   e$2()
 ], CwRow.prototype, "guess", 2);
-__decorateClass$6([
+__decorateClass$9([
   e$2()
 ], CwRow.prototype, "result", 2);
-__decorateClass$6([
+__decorateClass$9([
   e$2({ reflect: true })
 ], CwRow.prototype, "status", 2);
-CwRow = __decorateClass$6([
+CwRow = __decorateClass$9([
   n$1("wd-row")
 ], CwRow);
-var __defProp$5 = Object.defineProperty;
-var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-var __decorateClass$5 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+var __defProp$8 = Object.defineProperty;
+var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+var __decorateClass$8 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$5(target, key, result);
+    __defProp$8(target, key, result);
   return result;
 };
 let CwBoard = class extends s {
@@ -1578,27 +1630,27 @@ CwBoard.styles = r$2`
       box-sizing: border-box;
     }
   `;
-__decorateClass$5([
+__decorateClass$8([
   e$2()
 ], CwBoard.prototype, "guess", 2);
-__decorateClass$5([
+__decorateClass$8([
   e$2()
 ], CwBoard.prototype, "status", 2);
-__decorateClass$5([
+__decorateClass$8([
   e$2()
 ], CwBoard.prototype, "guesses", 2);
-CwBoard = __decorateClass$5([
+CwBoard = __decorateClass$8([
   n$1("wd-board")
 ], CwBoard);
-var __defProp$4 = Object.defineProperty;
-var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-var __decorateClass$4 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+var __defProp$7 = Object.defineProperty;
+var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
+var __decorateClass$7 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$4(target, key, result);
+    __defProp$7(target, key, result);
   return result;
 };
 let CwKeyboard = class extends s {
@@ -1744,21 +1796,21 @@ CwKeyboard.styles = r$2`
       color: var(--key-evaluated-text-color);
     }
   `;
-__decorateClass$4([
+__decorateClass$7([
   e$2()
 ], CwKeyboard.prototype, "letters", 2);
-CwKeyboard = __decorateClass$4([
+CwKeyboard = __decorateClass$7([
   n$1("wd-keyboard")
 ], CwKeyboard);
-var __defProp$3 = Object.defineProperty;
-var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-var __decorateClass$3 = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+var __defProp$6 = Object.defineProperty;
+var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
+var __decorateClass$6 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
   for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
     if (decorator = decorators[i2])
       result = (kind ? decorator(target, key, result) : decorator(result)) || result;
   if (kind && result)
-    __defProp$3(target, key, result);
+    __defProp$6(target, key, result);
   return result;
 };
 let CwHelp = class extends s {
@@ -1826,14 +1878,17 @@ let CwHelp = class extends s {
   }
 };
 CwHelp.styles = r$2`
+    :host {
+      color: var(--modal-content-color);
+    }
+
     .instructions {
       font-size: 14px;
-      color: var(--color-tone-1);
     }
 
     .examples {
-      border-bottom: 1px solid var(--color-tone-4);
-      border-top: 1px solid var(--color-tone-4);
+      border-bottom: 1px solid var(--wd-border-color);
+      border-top: 1px solid var(--wd-border-color);
     }
 
     .example {
@@ -1851,9 +1906,382 @@ CwHelp.styles = r$2`
       padding-top: 0px;
     }
   `;
-CwHelp = __decorateClass$3([
+CwHelp = __decorateClass$6([
   n$1("wd-help")
 ], CwHelp);
+var __defProp$5 = Object.defineProperty;
+var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+var __decorateClass$5 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$5(target, key, result);
+  return result;
+};
+let CwSwitch = class extends s {
+  constructor() {
+    super(...arguments);
+    this.checked = false;
+    this.disabled = false;
+  }
+  render() {
+    return $`
+      <div class="container">
+        <label><slot></slot></label>
+        <div class="switch">
+          <span class="knob"></span>
+        </div>
+      </div>
+    `;
+  }
+};
+CwSwitch.styles = r$2`
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .switch {
+      height: 20px;
+      width: 32px;
+      vertical-align: middle;
+      background: var(--wd-switch-bg);
+      border-radius: 999px;
+      display: block;
+      position: relative;
+    }
+    .knob {
+      display: block;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      height: calc(100% - 4px);
+      width: 50%;
+      border-radius: 8px;
+      background: var(--white);
+      transform: translateX(0);
+      transition: transform 0.3s;
+    }
+    :host([checked="true"]) .switch {
+      background: var(--color-correct);
+    }
+    :host([checked="true"]) .knob {
+      transform: translateX(calc(100% - 4px));
+    }
+    :host([disabled="true"]) .switch {
+      opacity: 0.5;
+    }
+  `;
+__decorateClass$5([
+  e$2({ reflect: true })
+], CwSwitch.prototype, "checked", 2);
+__decorateClass$5([
+  e$2({ reflect: true })
+], CwSwitch.prototype, "disabled", 2);
+CwSwitch = __decorateClass$5([
+  n$1("wd-switch")
+], CwSwitch);
+var __defProp$4 = Object.defineProperty;
+var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
+var __decorateClass$4 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$4(target, key, result);
+  return result;
+};
+let CwSettings = class extends s {
+  constructor() {
+    super(...arguments);
+    this.darkTheme = localStorage.getItem("theme_dark") || "";
+  }
+  toggleDarkTheme(e2) {
+    e2.preventDefault();
+    this.darkTheme = this.darkTheme === "on" ? "" : "on";
+    localStorage.setItem("theme_dark", this.darkTheme);
+    this.dispatchEvent(new CustomEvent("wd-dark-theme", {
+      detail: { on: this.darkTheme === "on" },
+      bubbles: true,
+      composed: true
+    }));
+  }
+  render() {
+    return $`
+      <div class="sections">
+        <section>
+          <div class="setting">
+            <div class="text">
+              <div class="title">Dark Theme</div>
+            </div>
+            <div class="control">
+              <wd-switch
+                @click=${this.toggleDarkTheme}
+                id="dark-theme"
+                name="dark-theme"
+                .checked=${this.darkTheme === "on"}
+              ></wd-switch>
+            </div>
+          </div>
+        </section>
+      </div>
+    `;
+  }
+};
+CwSettings.styles = r$2`
+    .setting {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--wd-border-color);
+      padding: 16px 0;
+    }
+
+    a,
+    a:visited {
+      color: var(--wd-color-faded);
+    }
+
+    .title {
+      font-size: 18px;
+    }
+    .text {
+      padding-right: 8px;
+    }
+    .description {
+      font-size: 12px;
+      color: var(--wd-color-faded);
+    }
+
+    #footnote {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      color: var(--wd-color-faded);
+      font-size: 12px;
+      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    #privacy-policy,
+    #copyright {
+      text-align: left;
+    }
+
+    @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+      .setting {
+        padding: 16px;
+      }
+    }
+  `;
+__decorateClass$4([
+  t$2()
+], CwSettings.prototype, "darkTheme", 2);
+CwSettings = __decorateClass$4([
+  n$1("wd-settings")
+], CwSettings);
+var __defProp$3 = Object.defineProperty;
+var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
+var __decorateClass$3 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$3(target, key, result);
+  return result;
+};
+let CwStats = class extends s {
+  render() {
+    return $`
+      <div class="container">
+        <h1>Statistics</h1>
+        <div id="statistics">
+          <div class="statistic-container">
+            <div class="statistic">0</div>
+            <div class="label">Played</div>
+          </div>
+
+          <div class="statistic-container">
+            <div class="statistic">0</div>
+            <div class="label">Win %</div>
+          </div>
+
+          <div class="statistic-container">
+            <div class="statistic">0</div>
+            <div class="label">Current Streak</div>
+          </div>
+
+          <div class="statistic-container">
+            <div class="statistic">0</div>
+            <div class="label">Max Streak</div>
+          </div>
+        </div>
+        <h1>Guess Distribution</h1>
+        <div id="guess-distribution"><div class="no-data">No Data</div></div>
+        <div class="footer"></div>
+      </div>
+    `;
+  }
+};
+CwStats.styles = r$2`
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #statistics {
+      display: flex;
+      margin-bottom: ;
+    }
+
+    .statistic-container {
+      flex: 1;
+    }
+
+    .statistic-container .statistic {
+      font-size: 36px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      letter-spacing: 0.05em;
+      font-variant-numeric: proportional-nums;
+    }
+
+    .statistic.timer {
+      font-variant-numeric: initial;
+    }
+
+    .statistic-container .label {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #guess-distribution {
+      width: 80%;
+    }
+
+    .graph-container {
+      width: 100%;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      padding-bottom: 4px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .graph-container .graph {
+      width: 100%;
+      height: 100%;
+      padding-left: 4px;
+    }
+
+    .graph-container .graph .graph-bar {
+      height: 100%;
+      /* Assume no wins */
+      width: 0%;
+      position: relative;
+      background-color: var(--color-absent);
+      display: flex;
+      justify-content: center;
+    }
+
+    .graph-container .graph .graph-bar.highlight {
+      background-color: var(--color-correct);
+    }
+
+    .graph-container .graph .graph-bar.align-right {
+      justify-content: flex-end;
+      padding-right: 8px;
+    }
+
+    .graph-container .graph .num-guesses {
+      font-weight: bold;
+      color: var(--tile-text-color);
+    }
+
+    #statistics,
+    #guess-distribution {
+      padding-bottom: 10px;
+    }
+
+    .footer {
+      display: flex;
+      width: 100%;
+    }
+
+    .countdown {
+      border-right: 1px solid var(--color-tone-1);
+      padding-right: 12px;
+      width: 50%;
+    }
+
+    .share {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 12px;
+      width: 50%;
+    }
+
+    .no-data {
+      text-align: center;
+    }
+
+    button#share-button {
+      background-color: var(--key-bg-correct);
+      color: var(--key-evaluated-text-color);
+      font-family: inherit;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+      width: 80%;
+      font-size: 20px;
+      height: 52px;
+      -webkit-filter: brightness(100%);
+    }
+    button#share-button:hover {
+      opacity: 0.9;
+    }
+    button#share-button game-icon {
+      width: 24px;
+      height: 24px;
+      padding-left: 8px;
+    }
+  `;
+CwStats = __decorateClass$3([
+  n$1("wd-stats")
+], CwStats);
 var __defProp$2 = Object.defineProperty;
 var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
 var __decorateClass$2 = (decorators, target, key, kind) => {
@@ -1927,7 +2355,7 @@ CwPage.styles = r$2`
 
     .content {
       position: relative;
-      color: var(--wd-color);
+      color: var(--modal-content-color);
       padding: 0 32px;
       max-width: var(--wd-max-width);
       width: 100%;
@@ -1964,7 +2392,7 @@ CwPage.styles = r$2`
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--wd-color);
+      color: var(--wd-icon-color);
       height: 36px;
       width: 36px;
       opacity: 0.5;
@@ -2033,17 +2461,22 @@ let CwModal = class extends s {
     this.open = false;
     this.closing = false;
   }
-  closeModal() {
+  closeModal(e2) {
+    e2.preventDefault();
     this.dispatchEvent(new CustomEvent("wd-modal", {
       detail: { open: false },
       composed: true,
       bubbles: true
     }));
   }
+  preventClose(e2) {
+    e2.preventDefault();
+    e2.stopPropagation();
+  }
   render() {
     return $`
-      <div class="overlay">
-        <div class="content">
+      <div class="overlay" @click=${this.closeModal}>
+        <div class="content" @click=${this.preventClose}>
           <slot></slot>
           <button @click=${this.closeModal} class="close-icon">
             <wd-icon name="x"></wd-icon>
@@ -2081,7 +2514,7 @@ CwModal.styles = r$2`
       border-radius: 8px;
       border: 1px solid var(--color-tone-6);
       background-color: var(--modal-content-bg);
-      color: var(--color-tone-1);
+      color: var(--modal-content-color);
       box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
       width: 90%;
       max-height: 90%;
@@ -2161,7 +2594,7 @@ let CwApp = class extends s {
     this.targetWord = "rowdy";
     this.status = "idle";
     this.page = "";
-    this.modal = "";
+    this.modal = localStorage.getItem("shown_help") ? "" : "help";
     this.closingPage = false;
     this.closingModal = false;
     this._clearTimeout = null;
@@ -2319,6 +2752,7 @@ let CwApp = class extends s {
   }
   connectedCallback() {
     super.connectedCallback();
+    localStorage.setItem("shown_help", "1");
     window.addEventListener("keydown", this._handleKeydown);
   }
   disconnectedCallback() {
@@ -2344,6 +2778,8 @@ let CwApp = class extends s {
       >
         ${this.page === "help" ? $`<span>How To Play</span>
               <wd-help page slot="content"></wd-help>` : null}
+        ${this.page === "settings" ? $`<span>Settings</span>
+              <wd-settings page slot="content"></wd-settings>` : null}
       </wd-page>
       <wd-modal
         .open=${this.modal !== ""}
@@ -2351,6 +2787,7 @@ let CwApp = class extends s {
         @wd-modal=${this.handleModal}
       >
         ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
+        ${this.modal === "stats" ? $`<wd-stats></wd-stats>` : null}
       </wd-modal>
     `;
   }
