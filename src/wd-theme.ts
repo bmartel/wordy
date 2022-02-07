@@ -21,6 +21,7 @@ export class CwTheme extends LitElement {
       --color-tone-6: #142a5a;
       --color-tone-7: #060f1a;
       --opacity-50: rgba(0, 0, 0, 0.5);
+      --opacity-70: rgba(0, 0, 0, 0.7);
 
       --green: #6aaa64;
       --darkendGreen: #538d4e;
@@ -45,7 +46,7 @@ export class CwTheme extends LitElement {
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
       --modal-content-color: var(--color-tone-7);
-      --modal-content-bg: var(--color-tone-1);
+      --modal-content-bg: var(--white);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);

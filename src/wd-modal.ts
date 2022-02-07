@@ -19,7 +19,7 @@ export class CwModal extends LitElement {
       left: 0;
       justify-content: center;
       align-items: center;
-      background-color: var(--opacity-50);
+      background-color: var(--opacity-70);
       z-index: 3000;
     }
 
@@ -35,7 +35,7 @@ export class CwModal extends LitElement {
     .content {
       position: relative;
       border-radius: 8px;
-      border: 1px solid var(--color-tone-6);
+      border: 1px solid var(--wd-border-color);
       background-color: var(--modal-content-bg);
       color: var(--modal-content-color);
       box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
