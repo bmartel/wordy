@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import {
-  initializeGuesses,
+  gameInfo,
   Guess,
   LetterKey,
   letterKeyMap,
@@ -27,17 +27,17 @@ export class CwApp extends LitElement {
   @state()
   guess: number = 0;
   @state()
-  guesses: Guess[] = initializeGuesses;
+  guesses: Guess[] = [];
   @state()
   letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
   @state()
-  targetWord: string = "rowdy";
+  targetWord: string = "";
   @state()
   status: GameStatus = "idle";
   @state()
   page: string = "";
   @state()
-  modal: string = localStorage.getItem("shown_help") ? "" : "help";
+  modal: string = "";
   @state()
   closingPage = false;
   @state()
@@ -246,9 +246,15 @@ export class CwApp extends LitElement {
     }
   };
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
-    localStorage.setItem("shown_help", "1");
+    const { active, modal } = await gameInfo;
+    this.guess = active.guess;
+    this.guesses = active.guesses;
+    this.targetWord = active.solution;
+    this.status = active.status;
+    this.letters = active.letters;
+    this.modal = modal;
     window.addEventListener("keydown", this._handleKeydown);
   }
 

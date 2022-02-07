@@ -1,3 +1,11 @@
+import localForage from "localforage";
+import { nanoid } from "nanoid";
+import config from "./config.json";
+
+export const store = localForage.createInstance({
+  name: "wordy",
+});
+
 export const letterKeyMap = {
   q: "empty",
   w: "empty",
@@ -13,7 +21,7 @@ export const letterKeyMap = {
   a: "empty",
   s: "empty",
   d: "empty",
-  f: "empty",
+  f: "em:ty",
   g: "empty",
   h: "empty",
   j: "empty",
@@ -38,6 +46,7 @@ export const allowedKeyMap = {
   ...controlKeyMap,
 };
 
+export const WORD_LIST_SIZE = config.words.length;
 export const WORD_SIZE = 5;
 export const GUESS_SIZE = 6;
 export const INVALID_ANIMATION_DURATION = 600;
@@ -54,11 +63,41 @@ export interface Guess {
   letters: string;
   result: [GuessResult, GuessResult, GuessResult, GuessResult, GuessResult];
 }
+export interface Game {
+  id: string;
+  guess: number;
+  guesses: Guess[];
+  status: GameStatus;
+  solution: string;
+  letters: LetterKeyResultMap;
+  start: number;
+  end?: number;
+}
+export interface GuessDistribution {
+  0: number;
+  1: number;
+  2: number;
+  3: number;
+  4: number;
+  5: number;
+}
+export interface GameStats {
+  wins: number;
+  losses: number;
+  streak: number;
+  distribution: GuessDistribution;
+}
 export const GuessResultSymbols: Record<GuessResult, string> = {
   absent: "🟦",
   present: "🟨",
   correct: "🟩",
 };
+export interface GameInfo {
+  active: Game;
+  games: Record<string, Game>;
+  stats: GameStats;
+  modal: "" | "help";
+}
 export enum ValidationReason {
   INVALID_CHAR_LEN,
   INVALID_WORD,
@@ -81,17 +120,37 @@ export const makeGuesses = (letters = "", result = undefined) =>
 export const initializeGuesses = makeGuesses();
 export const initializeGuess = initializeGuesses[0];
 
-const RANDOM_CHARS =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-const RANDOM_CHARS_LEN = RANDOM_CHARS.length;
-export const random = (length = 8) => {
-  let str = "";
-  for (let i = 0; i < length; i++) {
-    str += RANDOM_CHARS.charAt(Math.floor(Math.random() * RANDOM_CHARS_LEN));
-  }
-  return str;
+export const pickRandomWord = () => {
+  return config.words[Math.floor(Math.random() * WORD_LIST_SIZE)];
 };
-
+export const newGame = (): Game => {
+  return {
+    id: nanoid(),
+    guess: 0,
+    guesses: initializeGuesses,
+    solution: pickRandomWord(),
+    letters: letterKeyMap as LetterKeyResultMap,
+    status: "idle",
+    start: Date.now(),
+  };
+};
+export const gameInfo = (async (): Promise<GameInfo> => {
+  const activeGameId = await store.getItem("activeGameId");
+  const games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
+  const stats = ((await store.getItem("stats")) || {}) as GameStats;
+  const active = ((activeGameId && games[activeGameId as string]) ||
+    newGame()) as Game;
+  const modal = (await store.getItem("shown_help")) ? "" : "help";
+  if (modal === "help") {
+    await store.setItem("shown_help", "1");
+  }
+  return {
+    active,
+    games,
+    stats,
+    modal,
+  };
+})();
 export const IS_TOUCH_DEVICE =
   "ontouchstart" in window ||
   navigator.maxTouchPoints > 0 ||
