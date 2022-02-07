@@ -6289,8 +6289,8 @@ let CwKeyboard = class extends s {
     const dispatchKey = (e2) => {
       var _a;
       e2.preventDefault();
-      const { key = "", state = "empty" } = ((_a = e2 == null ? void 0 : e2.target) == null ? void 0 : _a.dataset) || {};
-      if (state === "empty" && allowedKeyMap[key]) {
+      const { key = "" } = ((_a = e2 == null ? void 0 : e2.target) == null ? void 0 : _a.dataset) || {};
+      if (allowedKeyMap[key]) {
         window.dispatchEvent(new KeyboardEvent("keydown", { key }));
       }
     };
@@ -7313,7 +7313,7 @@ let CwApp = class extends s {
     }
   }
   insertLetter(key) {
-    if (this.activeGuess.length < WORD_SIZE && key in letterKeyMap) {
+    if (this.activeGuess.length < WORD_SIZE && key in letterKeyMap && this.letters[key] !== "absent") {
       this.activeGuess += key;
     }
   }
