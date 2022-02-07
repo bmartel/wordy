@@ -5505,7 +5505,7 @@ const letterKeyMap = {
   a: "empty",
   s: "empty",
   d: "empty",
-  f: "em:ty",
+  f: "empty",
   g: "empty",
   h: "empty",
   j: "empty",
@@ -5553,20 +5553,29 @@ const newGame = () => {
     start: Date.now()
   };
 };
-const gameInfo = (async () => {
+const manager = (async () => {
   const activeGameId = await store.getItem("activeGameId");
   const games = await store.getItem("games") || {};
   const stats = await store.getItem("stats") || {};
-  const active = activeGameId && games[activeGameId] || newGame();
+  let active = activeGameId && games[activeGameId] || newGame();
   const modal = await store.getItem("shown_help") ? "" : "help";
   if (modal === "help") {
     await store.setItem("shown_help", "1");
   }
+  if (!activeGameId) {
+    await store.setItem("activeGameId", active.id);
+  }
+  const saveGame = async (data) => {
+    active = __spreadValues(__spreadValues({}, active), data);
+    games[active.id] = active;
+    await store.setItem("games", games);
+  };
   return {
     active,
     games,
     stats,
-    modal
+    modal,
+    saveGame
   };
 })();
 /**
@@ -7089,14 +7098,15 @@ let CwApp = class extends s {
     this.guess = 0;
     this.guesses = initializeGuesses;
     this.letters = letterKeyMap;
-    this.targetWord = "";
+    this.solution = "";
     this.status = "idle";
     this.page = "";
     this.modal = "";
     this.closingPage = false;
     this.closingModal = false;
     this._clearTimeout = null;
-    this._handleKeydown = (e2) => {
+    this._autosaveTimeout = null;
+    this._handleKeydown = async (e2) => {
       if (e2.isComposing || e2.ctrlKey || e2.altKey || this.status !== "idle")
         return;
       switch (e2.key) {
@@ -7107,7 +7117,7 @@ let CwApp = class extends s {
         case "Backspace":
           return this.removeLetter();
         case "Enter":
-          return this.attemptGuess();
+          return await this.attemptGuess();
         default:
           return this.insertLetter(e2.key.toLowerCase());
       }
@@ -7212,7 +7222,7 @@ let CwApp = class extends s {
     this.letters = __spreadValues(__spreadValues({}, this.letters), letters);
   }
   determineResults(guess) {
-    const word = this.targetWord;
+    const word = this.solution;
     const result = this.activeResult;
     this.status = "reveal";
     for (let c2 = 0; c2 < guess.length; c2++) {
@@ -7236,7 +7246,7 @@ let CwApp = class extends s {
       }
     }, 5 * 500);
   }
-  attemptGuess() {
+  async attemptGuess() {
     if (this._clearTimeout)
       clearTimeout(this._clearTimeout);
     const guess = this.activeGuess;
@@ -7247,13 +7257,28 @@ let CwApp = class extends s {
     } else {
       this.invalidGuess(guess, result.reason);
     }
+    this.saveGame();
+  }
+  async saveGame() {
+    if (this._autosaveTimeout)
+      clearTimeout(this._autosaveTimeout);
+    const { saveGame } = await manager;
+    this._autosaveTimeout = setTimeout(() => {
+      saveGame({
+        guess: this.guess,
+        guesses: this.guesses,
+        letters: this.letters,
+        solution: this.solution,
+        status: this.status
+      });
+    }, 1e3);
   }
   async connectedCallback() {
     super.connectedCallback();
-    const { active, modal } = await gameInfo;
+    const { active, modal } = await manager;
     this.guess = active.guess;
     this.guesses = active.guesses;
-    this.targetWord = active.solution;
+    this.solution = active.solution;
     this.status = active.status;
     this.letters = active.letters;
     this.modal = modal;
@@ -7318,7 +7343,7 @@ __decorateClass([
 ], CwApp.prototype, "letters", 2);
 __decorateClass([
   t$2()
-], CwApp.prototype, "targetWord", 2);
+], CwApp.prototype, "solution", 2);
 __decorateClass([
   t$2()
 ], CwApp.prototype, "status", 2);
