@@ -18,6 +18,8 @@ export class CwRow extends LitElement {
   result: Guess["result"] = initializeGuess.result;
   @property({ reflect: true })
   status: GameStatus = "idle";
+  @property()
+  evaluated = false;
 
   revealed = false;
 
@@ -75,9 +77,14 @@ export class CwRow extends LitElement {
     return html`
       <div class="row">
         <wd-cell
-          style="--transition-delay:${revealing ? "250ms" : "0ms"};"
+          style="--transition-delay:${this.evaluated && this.status !== "win"
+            ? "0ms"
+            : revealing
+            ? "250ms"
+            : "0ms"};"
           .letter=${letters[0]}
           .status=${this.status === "reveal" ||
+          this.evaluated ||
           this.status === "win" ||
           this.revealed
             ? this.result[0]
@@ -85,7 +92,9 @@ export class CwRow extends LitElement {
             ? "tbd"
             : "empty"}
           .animation=${letters[0] !== ""
-            ? revealing
+            ? this.evaluated && this.status !== "win"
+              ? ""
+              : revealing
               ? "flip"
               : this.status === "win"
               ? "bounce"
@@ -95,11 +104,15 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:500ms;--transition-delay:${revealing
+          style="--animation-delay:500ms;--transition-delay:${this.evaluated &&
+          this.status !== "win"
+            ? "0ms"
+            : revealing
             ? "750ms"
             : "0ms"};"
           .letter=${letters[1]}
           .status=${this.status === "reveal" ||
+          this.evaluated ||
           this.status === "win" ||
           this.revealed
             ? this.result[1]
@@ -107,7 +120,9 @@ export class CwRow extends LitElement {
             ? "tbd"
             : "empty"}
           .animation=${letters[1] !== ""
-            ? revealing
+            ? this.evaluated && this.status !== "win"
+              ? ""
+              : revealing
               ? "flip"
               : this.status === "win"
               ? "bounce"
@@ -117,11 +132,15 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1000ms;--transition-delay:${revealing
+          style="--animation-delay:1000ms;--transition-delay:${this.evaluated &&
+          this.status !== "win"
+            ? "0ms"
+            : revealing
             ? "1250ms"
             : "0ms"};"
           .letter=${letters[2]}
           .status=${this.status === "reveal" ||
+          this.evaluated ||
           this.status === "win" ||
           this.revealed
             ? this.result[2]
@@ -129,7 +148,9 @@ export class CwRow extends LitElement {
             ? "tbd"
             : "empty"}
           .animation=${letters[2] !== ""
-            ? revealing
+            ? this.evaluated && this.status !== "win"
+              ? ""
+              : revealing
               ? "flip"
               : this.status === "win"
               ? "bounce"
@@ -139,11 +160,15 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1500ms;--transition-delay:${revealing
+          style="--animation-delay:1500ms;--transition-delay:${this.evaluated &&
+          this.status !== "win"
+            ? "0ms"
+            : revealing
             ? "1750ms"
             : "0ms"};"
           .letter=${letters[3]}
           .status=${this.status === "reveal" ||
+          this.evaluated ||
           this.status === "win" ||
           this.revealed
             ? this.result[3]
@@ -151,7 +176,9 @@ export class CwRow extends LitElement {
             ? "tbd"
             : "empty"}
           .animation=${letters[3] !== ""
-            ? revealing
+            ? this.evaluated && this.status !== "win"
+              ? ""
+              : revealing
               ? "flip"
               : this.status === "win"
               ? "bounce"
@@ -161,11 +188,15 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:2000ms;--transition-delay:${revealing
+          style="--animation-delay:2000ms;--transition-delay:${this.evaluated &&
+          this.status !== "win"
+            ? "0ms"
+            : revealing
             ? "2250ms"
             : "0ms"};"
           .letter=${letters[4]}
           .status=${this.status === "reveal" ||
+          this.evaluated ||
           this.status === "win" ||
           this.revealed
             ? this.result[4]
@@ -173,7 +204,9 @@ export class CwRow extends LitElement {
             ? "tbd"
             : "empty"}
           .animation=${letters[4] !== ""
-            ? revealing
+            ? this.evaluated && this.status !== "win"
+              ? ""
+              : revealing
               ? "flip"
               : this.status === "win"
               ? "bounce"

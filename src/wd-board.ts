@@ -35,7 +35,6 @@ export class CwBoard extends LitElement {
   `;
 
   render() {
-    const gameOver = ["win", "lose"].indexOf(this.status) > -1;
     return html`
       <div class="board">
         <wd-row
@@ -43,54 +42,60 @@ export class CwBoard extends LitElement {
           .result=${this.guesses[0].result}
           .status=${this.guess === 0
             ? this.status
-            : gameOver
+            : this.guesses[0].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[0].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[1].letters}
           .result=${this.guesses[1].result}
           .status=${this.guess === 1
             ? this.status
-            : gameOver
+            : this.guesses[1].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[1].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[2].letters}
           .result=${this.guesses[2].result}
           .status=${this.guess === 2
             ? this.status
-            : gameOver
+            : this.guesses[2].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[2].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[3].letters}
           .result=${this.guesses[3].result}
           .status=${this.guess === 3
             ? this.status
-            : gameOver
+            : this.guesses[3].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[3].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[4].letters}
           .result=${this.guesses[4].result}
           .status=${this.guess === 4
             ? this.status
-            : gameOver
+            : this.guesses[4].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[4].status === "evaluated"}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[5].letters}
           .result=${this.guesses[5].result}
           .status=${this.guess === 5
             ? this.status
-            : gameOver
+            : this.guesses[5].status === "evaluated"
             ? "reveal"
             : undefined}
+          .evaluated=${this.guesses[5].status === "evaluated"}
         ></wd-row>
       </div>
     `;

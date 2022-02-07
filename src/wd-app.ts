@@ -15,6 +15,7 @@ import {
   initializeGuesses,
   isValidWord,
   Toast,
+  RowStatus,
 } from "./utils";
 import "./wd-header.ts";
 import "./wd-board.ts";
@@ -47,8 +48,6 @@ export class CwApp extends LitElement {
   closingPage = false;
   @state()
   closingModal = false;
-  @state()
-  closingToast = false;
 
   _clearTimeout: any = null;
   _autosaveTimeout: any = null;
@@ -140,6 +139,19 @@ export class CwApp extends LitElement {
     const guess = this.guesses[this.guess];
 
     guess.result = value as any;
+
+    this.guesses = this.guesses.map((g, i) => {
+      if (i === this.guess) {
+        return guess;
+      }
+      return g;
+    });
+  }
+
+  set activeStatus(value: RowStatus) {
+    const guess = this.guesses[this.guess];
+
+    guess.status = value as any;
 
     this.guesses = this.guesses.map((g, i) => {
       if (i === this.guess) {
@@ -247,6 +259,7 @@ export class CwApp extends LitElement {
   private updateGameStatus() {
     this._clearTimeout = setTimeout(() => {
       this.updateKeyboard();
+      this.activeStatus = "evaluated";
       if (this.activeResult.some((r) => r !== "correct")) {
         // not a win condition
         if (this.guess < 5) {

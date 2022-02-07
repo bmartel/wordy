@@ -58,9 +58,11 @@ export type GuessResult = "correct" | "present" | "absent";
 export type LetterKeyResult = "empty" | "tbd" | GuessResult;
 export type LetterKeyResultMap = Record<LetterKey, LetterKeyResult>;
 export type CellStatus = "empty" | "tbd" | GuessResult;
+export type RowStatus = "tbd" | "evaluated";
 export type GameStatus = "idle" | "invalid" | "reveal" | "win" | "lose";
 export interface Guess {
   letters: string;
+  status: RowStatus;
   result: [GuessResult, GuessResult, GuessResult, GuessResult, GuessResult];
 }
 export interface Game {
@@ -114,7 +116,11 @@ export const fill = (func: () => any, length = 0) =>
 export const makeGuessResult = () => fill(() => "empty", WORD_SIZE);
 export const makeGuesses = (letters = "", result = undefined) =>
   fill(
-    () => ({ letters, result: result || [...makeGuessResult()] }),
+    () => ({
+      letters,
+      status: "tbd",
+      result: result || [...makeGuessResult()],
+    }),
     GUESS_SIZE
   );
 
