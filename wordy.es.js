@@ -1339,13 +1339,13 @@ Cwcell.styles = r$2`
     }
     @keyframes Flip {
       0% {
-        transform: rotateX(0);
+        transform: rotateY(0);
       }
       50% {
-        transform: rotateX(-90deg);
+        transform: rotateY(-90deg);
       }
       100% {
-        transform: rotateX(0);
+        transform: rotateY(0);
       }
     }
   `;
@@ -1772,7 +1772,7 @@ let CwHelp = class extends s {
             submit.
           </p>
           <p>
-            After each guess, the color of the tiles will change to show how
+            After each guess, the color of the cells will change to show how
             close your guess was to the word.
           </p>
           <p>
@@ -1869,6 +1869,11 @@ let CwPage = class extends s {
   constructor() {
     super(...arguments);
     this.open = false;
+    this.closing = false;
+  }
+  updated() {
+    if (this.open)
+      ;
   }
   closePage() {
     this.dispatchEvent(new CustomEvent("wd-page", {
@@ -1911,8 +1916,13 @@ CwPage.styles = r$2`
       z-index: 2000;
     }
 
-    :host([open="true"]) .overlay {
+    :host([open="true"]) .overlay,
+    :host([closing="true"]) .overlay {
       display: flex;
+    }
+
+    :host([closing="true"]) .overlay {
+      animation: SlideOut 150ms linear;
     }
 
     .content {
@@ -1929,10 +1939,6 @@ CwPage.styles = r$2`
     .content-container {
       flex: 1;
       overflow-y: auto;
-    }
-
-    .overlay.closing {
-      animation: SlideOut 150ms linear;
     }
 
     header {
@@ -1953,7 +1959,8 @@ CwPage.styles = r$2`
 
     .close-icon {
       position: absolute;
-      right: 0;
+      top: 4px;
+      right: 4px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -2003,6 +2010,9 @@ CwPage.styles = r$2`
 __decorateClass$2([
   e$2({ reflect: true })
 ], CwPage.prototype, "open", 2);
+__decorateClass$2([
+  e$2({ reflect: true })
+], CwPage.prototype, "closing", 2);
 CwPage = __decorateClass$2([
   n$1("wd-page")
 ], CwPage);
@@ -2021,6 +2031,7 @@ let CwModal = class extends s {
   constructor() {
     super(...arguments);
     this.open = false;
+    this.closing = false;
   }
   closeModal() {
     this.dispatchEvent(new CustomEvent("wd-modal", {
@@ -2056,8 +2067,13 @@ CwModal.styles = r$2`
       z-index: 3000;
     }
 
-    :host([open="true"]) .overlay {
+    :host([open="true"]) .overlay,
+    :host([closing="true"]) .overlay {
       display: flex;
+    }
+
+    :host([closing="true"]) .content {
+      animation: SlideOut 200ms;
     }
 
     .content {
@@ -2076,21 +2092,19 @@ CwModal.styles = r$2`
       box-sizing: border-box;
     }
 
-    .content.closing {
-      animation: SlideOut 200ms;
-    }
-
     .close-icon {
-      width: 24px;
-      height: 24px;
       position: absolute;
-      top: 16px;
-      right: 16px;
-    }
-
-    wd-icon {
-      position: fixed;
-      user-select: none;
+      top: 4px;
+      right: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wd-color);
+      height: 36px;
+      width: 36px;
+      opacity: 0.5;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 
@@ -2121,6 +2135,9 @@ CwModal.styles = r$2`
 __decorateClass$1([
   e$2({ reflect: true })
 ], CwModal.prototype, "open", 2);
+__decorateClass$1([
+  e$2({ reflect: true })
+], CwModal.prototype, "closing", 2);
 CwModal = __decorateClass$1([
   n$1("wd-modal")
 ], CwModal);
@@ -2145,7 +2162,9 @@ let CwApp = class extends s {
     this.status = "idle";
     this.page = "";
     this.modal = "";
-    this._clearStatus = null;
+    this.closingPage = false;
+    this.closingModal = false;
+    this._clearTimeout = null;
     this._handleKeydown = (e2) => {
       if (e2.isComposing || e2.ctrlKey || e2.altKey || this.status !== "idle")
         return;
@@ -2168,7 +2187,11 @@ let CwApp = class extends s {
     if (open) {
       this.modal = content;
     } else {
-      this.modal = "";
+      this.closingModal = true;
+      setTimeout(() => {
+        this.modal = "";
+        this.closingModal = false;
+      }, 200);
     }
   }
   handlePage(e2) {
@@ -2176,7 +2199,11 @@ let CwApp = class extends s {
     if (open) {
       this.page = content;
     } else {
-      this.page = "";
+      this.closingPage = true;
+      setTimeout(() => {
+        this.page = "";
+        this.closingPage = false;
+      }, 150);
     }
   }
   get activeGuess() {
@@ -2231,7 +2258,7 @@ let CwApp = class extends s {
       case ValidationReason.INVALID_CHAR_LEN:
       case ValidationReason.INVALID_WORD:
     }
-    this._clearStatus = setTimeout(() => {
+    this._clearTimeout = setTimeout(() => {
       this.status = "idle";
     }, INVALID_ANIMATION_DURATION);
   }
@@ -2265,7 +2292,7 @@ let CwApp = class extends s {
     this.activeResult = result;
   }
   updateGameStatus() {
-    this._clearStatus = setTimeout(() => {
+    this._clearTimeout = setTimeout(() => {
       this.updateKeyboard();
       if (this.activeResult.some((r2) => r2 !== "correct")) {
         if (this.guess < 5) {
@@ -2279,8 +2306,8 @@ let CwApp = class extends s {
     }, 5 * 500);
   }
   attemptGuess() {
-    if (this._clearStatus)
-      clearTimeout(this._clearStatus);
+    if (this._clearTimeout)
+      clearTimeout(this._clearTimeout);
     const guess = this.activeGuess;
     const result = this.validate(guess);
     if (result.success) {
@@ -2310,10 +2337,19 @@ let CwApp = class extends s {
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
-      <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
-        ${this.page === "help" ? $`<wd-help page slot="content"></wd-help>` : null}
+      <wd-page
+        .open=${this.page !== ""}
+        .closing=${this.closingPage}
+        @wd-page=${this.handlePage}
+      >
+        ${this.page === "help" ? $`<span>How To Play</span>
+              <wd-help page slot="content"></wd-help>` : null}
       </wd-page>
-      <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
+      <wd-modal
+        .open=${this.modal !== ""}
+        .closing=${this.closingModal}
+        @wd-modal=${this.handleModal}
+      >
         ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
       </wd-modal>
     `;
@@ -2351,6 +2387,12 @@ __decorateClass([
 __decorateClass([
   t$2()
 ], CwApp.prototype, "modal", 2);
+__decorateClass([
+  t$2()
+], CwApp.prototype, "closingPage", 2);
+__decorateClass([
+  t$2()
+], CwApp.prototype, "closingModal", 2);
 CwApp = __decorateClass([
   n$1("wd-app")
 ], CwApp);
