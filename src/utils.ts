@@ -21,7 +21,7 @@ export const letterKeyMap = {
   a: "empty",
   s: "empty",
   d: "empty",
-  f: "em:ty",
+  f: "empty",
   g: "empty",
   h: "empty",
   j: "empty",
@@ -92,11 +92,12 @@ export const GuessResultSymbols: Record<GuessResult, string> = {
   present: "🟨",
   correct: "🟩",
 };
-export interface GameInfo {
+export interface GameManager {
   active: Game;
   games: Record<string, Game>;
   stats: GameStats;
   modal: "" | "help";
+  saveGame(game: Partial<Game>): Promise<void>;
 }
 export enum ValidationReason {
   INVALID_CHAR_LEN,
@@ -134,21 +135,33 @@ export const newGame = (): Game => {
     start: Date.now(),
   };
 };
-export const gameInfo = (async (): Promise<GameInfo> => {
+export const manager = (async (): Promise<GameManager> => {
   const activeGameId = await store.getItem("activeGameId");
   const games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
   const stats = ((await store.getItem("stats")) || {}) as GameStats;
-  const active = ((activeGameId && games[activeGameId as string]) ||
+  let active = ((activeGameId && games[activeGameId as string]) ||
     newGame()) as Game;
   const modal = (await store.getItem("shown_help")) ? "" : "help";
   if (modal === "help") {
     await store.setItem("shown_help", "1");
   }
+  if (!activeGameId) {
+    await store.setItem("activeGameId", active.id);
+  }
+  const saveGame = async (data: Partial<Omit<Game, "id">>) => {
+    active = {
+      ...active,
+      ...data,
+    };
+    games[active.id] = active;
+    await store.setItem("games", games);
+  };
   return {
     active,
     games,
     stats,
     modal,
+    saveGame,
   };
 })();
 export const IS_TOUCH_DEVICE =

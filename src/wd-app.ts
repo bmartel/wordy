@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import {
-  gameInfo,
+  manager,
   Guess,
   LetterKey,
   letterKeyMap,
@@ -32,7 +32,7 @@ export class CwApp extends LitElement {
   @state()
   letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
   @state()
-  targetWord: string = "";
+  solution: string = "";
   @state()
   status: GameStatus = "idle";
   @state()
@@ -45,6 +45,7 @@ export class CwApp extends LitElement {
   closingModal = false;
 
   _clearTimeout: any = null;
+  _autosaveTimeout: any = null;
 
   static styles = css`
     :host {
@@ -183,7 +184,7 @@ export class CwApp extends LitElement {
   }
 
   private determineResults(guess: string) {
-    const word = this.targetWord;
+    const word = this.solution;
     const result = this.activeResult;
 
     // Allow the row cells to animate
@@ -216,7 +217,7 @@ export class CwApp extends LitElement {
     }, 5 * 500);
   }
 
-  private attemptGuess() {
+  private async attemptGuess() {
     if (this._clearTimeout) clearTimeout(this._clearTimeout);
 
     const guess = this.activeGuess;
@@ -227,9 +228,11 @@ export class CwApp extends LitElement {
     } else {
       this.invalidGuess(guess, result.reason!);
     }
+
+    this.saveGame();
   }
 
-  _handleKeydown = (e: KeyboardEvent) => {
+  _handleKeydown = async (e: KeyboardEvent) => {
     if (e.isComposing || e.ctrlKey || e.altKey || this.status !== "idle")
       return;
 
@@ -241,18 +244,32 @@ export class CwApp extends LitElement {
       case "Backspace":
         return this.removeLetter();
       case "Enter":
-        return this.attemptGuess();
+        return await this.attemptGuess();
       default:
         return this.insertLetter(e.key.toLowerCase() as LetterKey);
     }
   };
 
+  private async saveGame() {
+    if (this._autosaveTimeout) clearTimeout(this._autosaveTimeout);
+    const { saveGame } = await manager;
+    this._autosaveTimeout = setTimeout(() => {
+      saveGame({
+        guess: this.guess,
+        guesses: this.guesses,
+        letters: this.letters,
+        solution: this.solution,
+        status: this.status,
+      });
+    }, 1000);
+  }
+
   async connectedCallback() {
     super.connectedCallback();
-    const { active, modal } = await gameInfo;
+    const { active, modal } = await manager;
     this.guess = active.guess;
     this.guesses = active.guesses;
-    this.targetWord = active.solution;
+    this.solution = active.solution;
     this.status = active.status;
     this.letters = active.letters;
     this.modal = modal;
