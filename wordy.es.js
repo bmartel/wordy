@@ -941,6 +941,7 @@ CwTheme.styles = r$2`
       --color-tone-6: #142a5a;
       --color-tone-7: #060f1a;
       --opacity-50: rgba(0, 0, 0, 0.5);
+      --opacity-70: rgba(0, 0, 0, 0.7);
 
       --green: #6aaa64;
       --darkendGreen: #538d4e;
@@ -965,7 +966,7 @@ CwTheme.styles = r$2`
       --key-bg-correct: var(--color-correct);
       --key-bg-absent: var(--color-absent);
       --modal-content-color: var(--color-tone-7);
-      --modal-content-bg: var(--color-tone-1);
+      --modal-content-bg: var(--white);
 
       --wd-background-color: var(--white);
       --wd-color: var(--white);
@@ -2496,7 +2497,7 @@ CwModal.styles = r$2`
       left: 0;
       justify-content: center;
       align-items: center;
-      background-color: var(--opacity-50);
+      background-color: var(--opacity-70);
       z-index: 3000;
     }
 
@@ -2512,7 +2513,7 @@ CwModal.styles = r$2`
     .content {
       position: relative;
       border-radius: 8px;
-      border: 1px solid var(--color-tone-6);
+      border: 1px solid var(--wd-border-color);
       background-color: var(--modal-content-bg);
       color: var(--modal-content-color);
       box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
