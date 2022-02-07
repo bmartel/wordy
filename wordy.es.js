@@ -5819,7 +5819,7 @@ var __decorateClass$a = (decorators, target, key, kind) => {
     __defProp$a(target, key, result);
   return result;
 };
-let Cwcell = class extends s {
+let CwCell = class extends s {
   constructor() {
     super(...arguments);
     this.status = "empty";
@@ -5830,7 +5830,7 @@ let Cwcell = class extends s {
     return $` <div class="cell">${this.letter}</div> `;
   }
 };
-Cwcell.styles = r$2`
+CwCell.styles = r$2`
     :host {
       display: inline-block;
     }
@@ -5883,6 +5883,34 @@ Cwcell.styles = r$2`
       animation-name: PopIn;
       animation-duration: 100ms;
     }
+    :host([animation="bounce"]) > .cell {
+      animation-name: Bounce;
+      animation-duration: ${WIN_ANIMATION_DURATION}ms;
+      animation-delay: var(--animation-delay, 0ms);
+      animation-timing-function: ease-in;
+    }
+
+    @keyframes Bounce {
+      0%,
+      20% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-30px);
+      }
+      50% {
+        transform: translateY(5px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+      80% {
+        transform: translateY(2px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
     @keyframes PopIn {
       from {
         transform: scale(0.8);
@@ -5914,16 +5942,16 @@ Cwcell.styles = r$2`
   `;
 __decorateClass$a([
   e$2({ reflect: true })
-], Cwcell.prototype, "status", 2);
+], CwCell.prototype, "status", 2);
 __decorateClass$a([
   e$2({ reflect: true })
-], Cwcell.prototype, "animation", 2);
+], CwCell.prototype, "animation", 2);
 __decorateClass$a([
   e$2()
-], Cwcell.prototype, "letter", 2);
-Cwcell = __decorateClass$a([
+], CwCell.prototype, "letter", 2);
+CwCell = __decorateClass$a([
   n$1("wd-cell")
-], Cwcell);
+], CwCell);
 var __defProp$9 = Object.defineProperty;
 var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
 var __decorateClass$9 = (decorators, target, key, kind) => {
@@ -5960,32 +5988,32 @@ let CwRow = class extends s {
         <wd-cell
           style="--transition-delay:${revealing ? "250ms" : "0ms"};"
           .letter=${letters[0]}
-          .status=${this.status === "reveal" || this.revealed ? this.result[0] : letters[0] !== "" ? "tbd" : "empty"}
-          .animation=${letters[0] !== "" ? revealing ? "flip" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[0] : letters[0] !== "" ? "tbd" : "empty"}
+          .animation=${letters[0] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
           style="--animation-delay:500ms;--transition-delay:${revealing ? "750ms" : "0ms"};"
           .letter=${letters[1]}
-          .status=${this.status === "reveal" || this.revealed ? this.result[1] : letters[1] !== "" ? "tbd" : "empty"}
-          .animation=${letters[1] !== "" ? revealing ? "flip" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[1] : letters[1] !== "" ? "tbd" : "empty"}
+          .animation=${letters[1] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
           style="--animation-delay:1000ms;--transition-delay:${revealing ? "1250ms" : "0ms"};"
           .letter=${letters[2]}
-          .status=${this.status === "reveal" || this.revealed ? this.result[2] : letters[2] !== "" ? "tbd" : "empty"}
-          .animation=${letters[2] !== "" ? this.status === "reveal" && !this.revealed ? "flip" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[2] : letters[2] !== "" ? "tbd" : "empty"}
+          .animation=${letters[2] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
           style="--animation-delay:1500ms;--transition-delay:${revealing ? "1750ms" : "0ms"};"
           .letter=${letters[3]}
-          .status=${this.status === "reveal" || this.revealed ? this.result[3] : letters[3] !== "" ? "tbd" : "empty"}
-          .animation=${letters[3] !== "" ? this.status === "reveal" && !this.revealed ? "flip" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[3] : letters[3] !== "" ? "tbd" : "empty"}
+          .animation=${letters[3] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
           style="--animation-delay:2000ms;--transition-delay:${revealing ? "2250ms" : "0ms"};"
           .letter=${letters[4]}
-          .status=${this.status === "reveal" || this.revealed ? this.result[4] : letters[4] !== "" ? "tbd" : "empty"}
-          .animation=${letters[4] !== "" ? this.status === "reveal" ? "flip" : this.revealed ? "" : "pop" : ""}
+          .status=${this.status === "reveal" || this.status === "win" || this.revealed ? this.result[4] : letters[4] !== "" ? "tbd" : "empty"}
+          .animation=${letters[4] !== "" ? revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
       </div>
     `;
@@ -6003,32 +6031,6 @@ CwRow.styles = r$2`
       display: grid;
       grid-template-columns: repeat(${WORD_SIZE}, 1fr);
       grid-gap: 5px;
-    }
-    :host([status="win"]) {
-      animation-name: Bounce;
-      animation-duration: ${WIN_ANIMATION_DURATION}ms;
-    }
-
-    @keyframes Bounce {
-      0%,
-      20% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-30px);
-      }
-      50% {
-        transform: translateY(5px);
-      }
-      60% {
-        transform: translateY(-15px);
-      }
-      80% {
-        transform: translateY(2px);
-      }
-      100% {
-        transform: translateY(0);
-      }
     }
     @keyframes Shake {
       10%,
@@ -6084,37 +6086,38 @@ let CwBoard = class extends s {
     this.guesses = initializeGuesses;
   }
   render() {
+    const gameOver = ["win", "lose"].indexOf(this.status) > -1;
     return $`
       <div class="board">
         <wd-row
           .guess=${this.guesses[0].letters}
           .result=${this.guesses[0].result}
-          .status=${this.guess === 0 ? this.status : void 0}
+          .status=${this.guess === 0 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[1].letters}
           .result=${this.guesses[1].result}
-          .status=${this.guess === 1 ? this.status : void 0}
+          .status=${this.guess === 1 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[2].letters}
           .result=${this.guesses[2].result}
-          .status=${this.guess === 2 ? this.status : void 0}
+          .status=${this.guess === 2 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[3].letters}
           .result=${this.guesses[3].result}
-          .status=${this.guess === 3 ? this.status : void 0}
+          .status=${this.guess === 3 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[4].letters}
           .result=${this.guesses[4].result}
-          .status=${this.guess === 4 ? this.status : void 0}
+          .status=${this.guess === 4 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
         <wd-row
           .guess=${this.guesses[5].letters}
           .result=${this.guesses[5].result}
-          .status=${this.guess === 5 ? this.status : void 0}
+          .status=${this.guess === 5 ? this.status : gameOver ? "reveal" : void 0}
         ></wd-row>
       </div>
     `;
@@ -7273,9 +7276,9 @@ let CwApp = class extends s {
         guesses: this.guesses,
         letters: this.letters,
         solution: this.solution,
-        status: this.status
+        status: this.status === "win" || this.status === "lose" ? this.status : "idle"
       });
-    }, 1e3);
+    }, 5 * 500);
   }
   async connectedCallback() {
     super.connectedCallback();
