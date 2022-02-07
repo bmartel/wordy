@@ -12,6 +12,7 @@ import {
   LetterKeyResultMap,
   ValidationResult,
   ValidationReason,
+  initializeGuesses,
 } from "./utils";
 import "./wd-header.ts";
 import "./wd-board.ts";
@@ -27,7 +28,7 @@ export class CwApp extends LitElement {
   @state()
   guess: number = 0;
   @state()
-  guesses: Guess[] = [];
+  guesses: Guess[] = initializeGuesses;
   @state()
   letters: LetterKeyResultMap = letterKeyMap as LetterKeyResultMap;
   @state()

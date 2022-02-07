@@ -43,7 +43,7 @@ export class CwModal extends LitElement {
       max-height: 90%;
       overflow-y: auto;
       animation: SlideIn 200ms;
-      max-width: var(--game-max-width);
+      max-width: var(--wd-max-width);
       padding: 16px;
       box-sizing: border-box;
     }
