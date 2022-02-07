@@ -255,7 +255,9 @@ export class CwApp extends LitElement {
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
       <wd-page .open=${this.page !== ""} @wd-page=${this.handlePage}>
-        ${this.page === "help" ? html`<wd-help page></wd-help>` : null}
+        ${this.page === "help"
+          ? html`<wd-help page slot="content"></wd-help>`
+          : null}
       </wd-page>
       <wd-modal .open=${this.modal !== ""} @wd-modal=${this.handleModal}>
         ${this.modal === "help" ? html`<wd-help></wd-help>` : null}

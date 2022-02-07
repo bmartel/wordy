@@ -15,6 +15,8 @@ export class CwPage extends LitElement {
       height: 100%;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       justify-content: center;
       background-color: var(--wd-background-color);
       animation: SlideIn 100ms linear;
@@ -31,14 +33,14 @@ export class CwPage extends LitElement {
       padding: 0 32px;
       max-width: var(--wd-max-width);
       width: 100%;
-      overflow-y: auto;
       height: 100%;
       display: flex;
       flex-direction: column;
     }
 
     .content-container {
-      height: 100%;
+      flex: 1;
+      overflow-y: auto;
     }
 
     .overlay.closing {
@@ -61,10 +63,18 @@ export class CwPage extends LitElement {
       margin-bottom: 10px;
     }
 
-    wd-icon {
+    .close-icon {
       position: absolute;
       right: 0;
-      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wd-color);
+      height: 36px;
+      width: 36px;
+      opacity: 0.5;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 
