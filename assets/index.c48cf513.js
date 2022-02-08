@@ -501,7 +501,12 @@ var nt=Object.defineProperty,lt=Object.defineProperties;var dt=Object.getOwnProp
           <button data-key="b" data-state=${this.letters.b}>b</button>
           <button data-key="n" data-state=${this.letters.n}>n</button>
           <button data-key="m" data-state=${this.letters.m}>m</button>
-          <button data-key="Backspace" class="one-and-a-half">
+          <button
+            data-key="Backspace"
+            class="one-and-a-half"
+            role="button"
+            aria-label="backspace"
+          >
             <wd-icon name="backspace"></wd-icon>
           </button>
         </div>
@@ -515,6 +520,9 @@ var nt=Object.defineProperty,lt=Object.defineProperties;var dt=Object.getOwnProp
       user-select: none;
     }
 
+    .sr-only {
+      displ
+    }
     .row {
       display: flex;
       width: 100%;
