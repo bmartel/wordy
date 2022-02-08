@@ -5,11 +5,11 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   base: "./",
   build: {
-    lib: {
-      entry: "index.html",
-      name: "Wordy",
-      formats: ["es"],
-    },
+    // lib: {
+    //   entry: "index.html",
+    //   name: "Wordy",
+    //   formats: ["es"],
+    // },
     // rollupOptions: {
     //   external: /^lit/,
     // },
