@@ -200,10 +200,20 @@ export class CwStats extends LitElement {
     await super.connectedCallback();
     const { stats, active } = await manager;
     this.stats = stats();
-    this.activeGameId = active.id;
+    this.activeGameId = active().id;
   }
 
-  graphWidth(index: GuessDistributionKey) {
+  private newGame(e: Event) {
+    e.preventDefault();
+    this.dispatchEvent(
+      new CustomEvent("wd-new-game", {
+        composed: true,
+        bubbles: true,
+      })
+    );
+  }
+
+  private graphWidth(index: GuessDistributionKey) {
     const totalWins = this.stats.wins;
     if (totalWins) {
       return Math.max(
@@ -373,7 +383,7 @@ export class CwStats extends LitElement {
         ${lastGameId === this.activeGameId
           ? html`<div class="footer">
           <div class="refresh">
-            <button id="refresh-button">
+            <button id="refresh-button" @click=${this.newGame}>
               Next word <wd-icon name="refresh"></wd-icon>
             </button>
           </div>

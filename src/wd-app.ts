@@ -29,6 +29,8 @@ import "./wd-modal.ts";
 @customElement("wd-app")
 export class CwApp extends LitElement {
   @state()
+  gameId: string = "";
+  @state()
   guess: number = 0;
   @state()
   guesses: Guess[] = initializeGuesses;
@@ -300,7 +302,7 @@ export class CwApp extends LitElement {
 
   private async saveStats() {
     const { saveStats } = await manager;
-    await saveStats();
+    await saveStats(this.gameId);
   }
 
   private async saveGame() {
@@ -312,6 +314,7 @@ export class CwApp extends LitElement {
           ? Date.now()
           : undefined;
       await saveGame({
+        id: this.gameId,
         guess: this.guess,
         guesses: this.guesses,
         letters: this.letters,
@@ -328,9 +331,23 @@ export class CwApp extends LitElement {
     }, 5 * 500);
   }
 
+  private async startNewGame() {
+    const { generateGame } = await manager;
+    const active = await generateGame();
+    this.gameId = active.id;
+    this.guess = active.guess;
+    this.guesses = active.guesses;
+    this.solution = active.solution;
+    this.status = active.status;
+    this.letters = active.letters;
+    this.handleModal({ detail: { open: false } });
+  }
+
   async connectedCallback() {
     super.connectedCallback();
-    const { active, modal } = await manager;
+    const { active: readActive, modal } = await manager;
+    const active = readActive();
+    this.gameId = active.id;
     this.guess = active.guess;
     this.guesses = active.guesses;
     this.solution = active.solution;
@@ -357,7 +374,6 @@ export class CwApp extends LitElement {
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
-
       ${this.closingPage || this.page
         ? html`<wd-page
             .open=${!this.closingPage && this.page !== ""}
@@ -381,7 +397,9 @@ export class CwApp extends LitElement {
             @wd-modal=${this.handleModal}
           >
             ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
-            ${this.modal === "stats" ? html`<wd-stats></wd-stats>` : null}
+            ${this.modal === "stats"
+              ? html`<wd-stats @wd-new-game=${this.startNewGame}></wd-stats>`
+              : null}
           </wd-modal>`
         : null}
     `;

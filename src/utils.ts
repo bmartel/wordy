@@ -100,12 +100,13 @@ export const GuessResultSymbols: Record<GuessResult, string> = {
   correct: "🟩",
 };
 export interface GameManager {
-  active: Game;
-  games: Record<string, Game>;
+  active(): Game;
+  games(): Record<string, Game>;
   stats(): GameStats;
-  modal: "" | "help";
   saveGame(game: Partial<Game>): Promise<void>;
-  saveStats(): Promise<void>;
+  saveStats(id: string): Promise<void>;
+  generateGame(): Promise<Game>;
+  modal: "" | "help";
 }
 export enum ValidationReason {
   INVALID_CHAR_LEN,
@@ -148,7 +149,7 @@ export const newGame = async (): Promise<Game> => {
   return {
     id: nanoid(),
     guess: 0,
-    guesses: initializeGuesses,
+    guesses: makeGuesses(),
     solution: await pickRandomWord(),
     letters: letterKeyMap as LetterKeyResultMap,
     status: "idle",
@@ -157,7 +158,7 @@ export const newGame = async (): Promise<Game> => {
 };
 export const manager = (async (): Promise<GameManager> => {
   const activeGameId = await store.getItem("activeGameId");
-  const games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
+  let games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
   let stats = ((await store.getItem("stats")) || {}) as GameStats;
   let active = ((activeGameId && games[activeGameId as string]) ||
     (await newGame())) as Game;
@@ -173,64 +174,69 @@ export const manager = (async (): Promise<GameManager> => {
   if (!activeGameId) {
     await store.setItem("activeGameId", active.id);
   }
-  const saveGame = async (data: Partial<Omit<Game, "id">>) => {
-    active = {
-      ...active,
-      ...data,
-    };
-    games[active.id] = active;
+  const saveGame = async (data: Partial<Game>) => {
+    active = { ...games[data.id!], ...data };
+    games[data.id!] = active;
     await store.setItem("games", games);
   };
-  const saveStats = async () => {
+  const saveStats = async (gameId: string) => {
+    const game = games[gameId];
     const distribution = stats.distribution || {};
-    const streak = active.status === "win" ? (stats.streak || 0) + 1 : 0;
+    const streak = game.status === "win" ? (stats.streak || 0) + 1 : 0;
     const maxStreak = stats.maxStreak || 0;
-    const wins = (stats.wins || 0) + (active.status === "win" ? 1 : 0);
-    const losses = (stats.losses || 0) + (active.status === "lose" ? 1 : 0);
+    const wins = (stats.wins || 0) + (game.status === "win" ? 1 : 0);
+    const losses = (stats.losses || 0) + (game.status === "lose" ? 1 : 0);
     stats = {
-      ...stats,
       streak,
-      lastResult: active.status === "win" ? "win" : "lose",
-      lastGameId: active.id,
-      lastGuess: active.guess,
+      lastResult: game.status === "win" ? "win" : "lose",
+      lastGameId: game.id,
+      lastGuess: game.guess,
       maxStreak: Math.max(streak, maxStreak),
       wins,
       losses,
       distribution: {
         0:
           (distribution[0] || 0) +
-          (active.status === "win" && active.guess === 0 ? 1 : 0),
+          (game.status === "win" && game.guess === 0 ? 1 : 0),
         1:
           (distribution[1] || 0) +
-          (active.status === "win" && active.guess === 1 ? 1 : 0),
+          (game.status === "win" && game.guess === 1 ? 1 : 0),
         2:
           (distribution[2] || 0) +
-          (active.status === "win" && active.guess === 2 ? 1 : 0),
+          (game.status === "win" && game.guess === 2 ? 1 : 0),
         3:
           (distribution[3] || 0) +
-          (active.status === "win" && active.guess === 3 ? 1 : 0),
+          (game.status === "win" && game.guess === 3 ? 1 : 0),
         4:
           (distribution[4] || 0) +
-          (active.status === "win" && active.guess === 4 ? 1 : 0),
+          (game.status === "win" && game.guess === 4 ? 1 : 0),
         5:
           (distribution[5] || 0) +
-          (active.status === "win" && active.guess === 5 ? 1 : 0),
+          (game.status === "win" && game.guess === 5 ? 1 : 0),
       },
     };
     await store.setItem("stats", stats);
   };
   if (!activeGameId) {
     await store.setItem("activeGameId", active.id);
-    await saveGame({});
+    await saveGame(active);
   }
 
+  const generateGame = async (): Promise<Game> => {
+    const game = await newGame();
+    await store.setItem("activeGameId", game.id);
+    await saveGame(game);
+    return game;
+  };
+
   return {
-    active,
-    games,
+    games: () => games,
+    active: () => active,
     stats: () => stats,
     modal: modal as any,
     saveGame,
     saveStats,
+    generateGame,
   };
 })();
 export const IS_TOUCH_DEVICE =
