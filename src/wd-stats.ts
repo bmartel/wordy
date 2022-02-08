@@ -9,10 +9,6 @@ export class CwStats extends LitElement {
   @state()
   stats: GameStats = {} as GameStats;
   @state()
-  lastGameId: string = "";
-  @state()
-  lastGuess: number = 0;
-  @state()
   activeGameId: string = "";
 
   static styles = css`
@@ -169,9 +165,7 @@ export class CwStats extends LitElement {
     await super.connectedCallback();
     const { stats, active } = await manager;
     this.stats = stats();
-    this.lastGameId = this.stats.lastGameId || "";
     this.activeGameId = active.id;
-    this.lastGuess = this.stats.lastGuess || -1;
   }
 
   graphWidth(index: GuessDistributionKey) {
@@ -186,6 +180,8 @@ export class CwStats extends LitElement {
   }
 
   render() {
+    const lastGameId = this.stats.lastGameId || "";
+    const lastGuess = this.stats.lastGuess || 0;
     return html`
       <div class="container">
         <h1>Statistics</h1>
@@ -221,7 +217,7 @@ export class CwStats extends LitElement {
         </div>
         <h1>Guess Distribution</h1>
         <div id="guess-distribution">
-          ${this.lastGameId
+          ${lastGameId
             ? html`
                 <div class="graph-container">
                   <div class="guess">1</div>
@@ -229,8 +225,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[0] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 0
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 0
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(0)}%;"
@@ -248,8 +244,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[1] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 1
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 1
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(1)}%;"
@@ -267,8 +263,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[2] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 2
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 2
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(2)}%;"
@@ -286,8 +282,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[3] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 3
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 3
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(3)}%;"
@@ -305,8 +301,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[4] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 4
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 4
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(4)}%;"
@@ -324,8 +320,8 @@ export class CwStats extends LitElement {
                     <div
                       class="graph-bar ${this.stats.distribution[5] > 0
                         ? "align-right"
-                        : ""} ${this.lastGameId === this.activeGameId &&
-                      this.lastGuess === 5
+                        : ""} ${lastGameId === this.activeGameId &&
+                      lastGuess === 5
                         ? "highlight"
                         : ""}"
                       style="width: ${this.graphWidth(5)}%;"
