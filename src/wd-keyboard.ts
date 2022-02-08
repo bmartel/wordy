@@ -17,6 +17,9 @@ export class CwKeyboard extends LitElement {
       user-select: none;
     }
 
+    .sr-only {
+      displ
+    }
     .row {
       display: flex;
       width: 100%;
@@ -140,7 +143,12 @@ export class CwKeyboard extends LitElement {
           <button data-key="b" data-state=${this.letters.b}>b</button>
           <button data-key="n" data-state=${this.letters.n}>n</button>
           <button data-key="m" data-state=${this.letters.m}>m</button>
-          <button data-key="Backspace" class="one-and-a-half">
+          <button
+            data-key="Backspace"
+            class="one-and-a-half"
+            role="button"
+            aria-label="backspace"
+          >
             <wd-icon name="backspace"></wd-icon>
           </button>
         </div>
