@@ -5587,7 +5587,7 @@ CwTheme.styles = r$2`
       --gray: #86888a;
       --darkGray: #939598;
       --white: #fff;
-      --black: #c40000;
+      --black: #000;
       --orange: #f5793a;
       --blue: #85c0f9;
 
@@ -5603,6 +5603,8 @@ CwTheme.styles = r$2`
       --key-bg-absent: var(--color-absent);
       --modal-content-color: var(--color-tone-7);
       --modal-content-bg: var(--white);
+      --toast-content-color: var(--black);
+      --toast-content-bg: var(--white);
       --shadow-color: rgba(0, 0, 0, 0.16);
       --overlay-bg: rgba(255, 255, 255, 0.5);
 
@@ -5634,6 +5636,8 @@ CwTheme.styles = r$2`
       --key-bg-absent: var(--color-absent);
       --modal-content-bg: var(--color-tone-7);
       --modal-content-color: var(--color-tone-1);
+      --toast-content-color: var(--white);
+      --toast-content-bg: var(--black);
       --shadow-color: rgba(255, 255, 255, 0.16);
       --overlay-bg: rgba(0, 0, 0, 0.5);
 
@@ -5677,8 +5681,8 @@ CwTheme.styles = r$2`
     .toast {
       --_duration: 3s;
       --_travel-distance: 0;
-      color: var(--modal-content-color);
-      background-color: var(--modal-content-bg);
+      color: var(--toast-content-color);
+      background-color: var(--toast-content-bg);
       will-change: transform;
       animation: fade-in 0.3s ease, slide-in 0.3s ease,
         fade-out 0.3s ease var(--_duration);
@@ -7161,6 +7165,7 @@ CwPage.styles = r$2`
       bottom: 0;
       justify-content: center;
       background-color: var(--wd-background-color);
+      will-change: opacity, transform;
       animation: SlideIn 100ms linear;
       z-index: 2000;
     }
@@ -7168,10 +7173,11 @@ CwPage.styles = r$2`
     :host([open="true"]) .overlay,
     :host([closing="true"]) .overlay {
       display: flex;
+      opacity: 1;
     }
 
     :host([closing="true"]) .overlay {
-      animation: SlideOut 150ms linear;
+      animation: SlideOut 250ms ease-out;
     }
 
     .content {
@@ -7234,7 +7240,7 @@ CwPage.styles = r$2`
 
     @keyframes SlideIn {
       0% {
-        transform: translateY(30px);
+        transform: translateY(10vh);
         opacity: 0;
       }
       100% {
@@ -7252,7 +7258,7 @@ CwPage.styles = r$2`
       }
       100% {
         opacity: 0;
-        transform: translateY(60px);
+        transform: translateY(12vh);
       }
     }
   `;
@@ -7319,15 +7325,15 @@ CwModal.styles = r$2`
       align-items: center;
       background-color: var(--overlay-bg);
       z-index: 3000;
+      will-change: transform, opacity;
     }
-
     :host([open="true"]) .overlay,
     :host([closing="true"]) .overlay {
       display: flex;
+      opacity: 1;
     }
-
     :host([closing="true"]) .content {
-      animation: SlideOut 200ms;
+      animation: SlideOut 250ms;
     }
 
     .content {
@@ -7344,6 +7350,7 @@ CwModal.styles = r$2`
       max-width: var(--wd-max-width);
       padding: 16px;
       box-sizing: border-box;
+      will-change: transform, opacity;
     }
 
     .close-icon {
@@ -7364,7 +7371,7 @@ CwModal.styles = r$2`
 
     @keyframes SlideIn {
       0% {
-        transform: translateY(30px);
+        transform: translateY(10vh);
         opacity: 0;
       }
       100% {
@@ -7382,7 +7389,7 @@ CwModal.styles = r$2`
       }
       100% {
         opacity: 0;
-        transform: translateY(60px);
+        transform: translateY(6vh);
       }
     }
   `;
@@ -7463,7 +7470,7 @@ let CwApp = class extends s {
       setTimeout(() => {
         this.page = "";
         this.closingPage = false;
-      }, 150);
+      }, 200);
     }
   }
   get activeGuess() {
@@ -7658,24 +7665,25 @@ let CwApp = class extends s {
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
-      <wd-page
-        .open=${this.page !== ""}
-        .closing=${this.closingPage}
-        @wd-page=${this.handlePage}
-      >
-        ${this.page === "help" ? $`<span>How To Play</span>
-              <wd-help page slot="content"></wd-help>` : null}
-        ${this.page === "settings" ? $`<span>Settings</span>
-              <wd-settings page slot="content"></wd-settings>` : null}
-      </wd-page>
-      <wd-modal
-        .open=${this.modal !== ""}
-        .closing=${this.closingModal}
-        @wd-modal=${this.handleModal}
-      >
-        ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
-        ${this.modal === "stats" ? $`<wd-stats></wd-stats>` : null}
-      </wd-modal>
+
+      ${this.closingPage || this.page ? $`<wd-page
+            .open=${!this.closingPage && this.page !== ""}
+            .closing=${this.closingPage}
+            @wd-page=${this.handlePage}
+          >
+            ${this.page === "help" ? $`<span>How To Play</span>
+                  <wd-help page slot="content"></wd-help>` : null}
+            ${this.page === "settings" ? $`<span>Settings</span>
+                  <wd-settings page slot="content"></wd-settings>` : null}
+          </wd-page>` : ""}
+      ${this.closingModal || this.modal ? $`<wd-modal
+            .open=${!this.closingModal && this.modal !== ""}
+            .closing=${this.closingModal}
+            @wd-modal=${this.handleModal}
+          >
+            ${this.modal === "help" ? $`<wd-help></wd-help>` : null}
+            ${this.modal === "stats" ? $`<wd-stats></wd-stats>` : null}
+          </wd-modal>` : null}
     `;
   }
 };
@@ -7688,23 +7696,6 @@ CwApp.styles = r$2`
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-    }
-    #toast-layer-1 {
-      z-index: 5000;
-    }
-    #toast-layer-2 {
-      z-index: 6000;
-    }
-    .wd-toasts {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translate(-50%, 0);
-      pointer-events: none;
-      width: fit-content;
     }
   `;
 __decorateClass([
