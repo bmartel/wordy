@@ -1,8 +1,20 @@
 import { html, css, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
+import { GameStats, GuessDistribution, manager } from "./utils";
+
+type GuessDistributionKey = keyof GuessDistribution;
 
 @customElement("wd-stats")
 export class CwStats extends LitElement {
+  @state()
+  stats: GameStats = {} as GameStats;
+  @state()
+  lastGameId: string = "";
+  @state()
+  lastGuess: number = 0;
+  @state()
+  activeGameId: string = "";
+
   static styles = css`
     .container {
       display: flex;
@@ -153,33 +165,181 @@ export class CwStats extends LitElement {
     }
   `;
 
+  async connectedCallback(): Promise<void> {
+    await super.connectedCallback();
+    const { stats, active } = await manager;
+    this.stats = stats();
+    this.lastGameId = this.stats.lastGameId || "";
+    this.activeGameId = active.id;
+    this.lastGuess = this.stats.lastGuess || -1;
+  }
+
+  graphWidth(index: GuessDistributionKey) {
+    const totalWins = this.stats.wins;
+    if (totalWins) {
+      return Math.max(
+        Math.floor((this.stats.distribution[index] / totalWins) * 100),
+        7
+      );
+    }
+    return 7;
+  }
+
   render() {
     return html`
       <div class="container">
         <h1>Statistics</h1>
         <div id="statistics">
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">
+              ${this.stats.wins || 0 + this.stats.losses || 0}
+            </div>
             <div class="label">Played</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">
+              ${this.stats.wins !== undefined && this.stats.losses !== undefined
+                ? Math.floor(
+                    (this.stats.wins / (this.stats.wins + this.stats.losses)) *
+                      100
+                  )
+                : 0}
+            </div>
             <div class="label">Win %</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">${this.stats.streak || 0}</div>
             <div class="label">Current Streak</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">${this.stats.maxStreak || 0}</div>
             <div class="label">Max Streak</div>
           </div>
         </div>
         <h1>Guess Distribution</h1>
-        <div id="guess-distribution"><div class="no-data">No Data</div></div>
+        <div id="guess-distribution">
+          ${this.lastGameId
+            ? html`
+                <div class="graph-container">
+                  <div class="guess">1</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[0] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 0
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(0)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[0]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">2</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[1] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 1
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(1)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[1]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">3</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[2] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 2
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(2)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[2]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">4</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[3] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 3
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(3)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[3]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">5</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[4] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 4
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(4)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[4]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">6</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[5] > 0
+                        ? "align-right"
+                        : ""} ${this.lastGameId === this.activeGameId &&
+                      this.lastGuess === 5
+                        ? "highlight"
+                        : ""}"
+                      style="width: ${this.graphWidth(5)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[5]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `
+            : html` <div class="no-data">No Data</div> `}
+        </div>
+        <div id="guess-distribution"></div>
         <div class="footer"></div>
       </div>
     `;

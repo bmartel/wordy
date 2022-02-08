@@ -50,7 +50,7 @@ export const WORD_LIST_SIZE = config.words.length;
 export const WORD_SIZE = 5;
 export const GUESS_SIZE = 6;
 export const INVALID_ANIMATION_DURATION = 600;
-export const WIN_ANIMATION_DURATION = 1000;
+export const WIN_ANIMATION_DURATION = 750;
 
 export type LetterKey = keyof typeof letterKeyMap;
 export type AllowedKey = keyof typeof allowedKeyMap;
@@ -84,9 +84,13 @@ export interface GuessDistribution {
   5: number;
 }
 export interface GameStats {
+  lastResult?: "win" | "lose";
+  lastGameId?: string;
+  lastGuess?: number;
   wins: number;
   losses: number;
   streak: number;
+  maxStreak: number;
   distribution: GuessDistribution;
 }
 export const GuessResultSymbols: Record<GuessResult, string> = {
@@ -100,6 +104,7 @@ export interface GameManager {
   stats: GameStats;
   modal: "" | "help";
   saveGame(game: Partial<Game>): Promise<void>;
+  saveStats(): Promise<void>;
 }
 export enum ValidationReason {
   INVALID_CHAR_LEN,
@@ -147,10 +152,15 @@ export const newGame = (): Game => {
 export const manager = (async (): Promise<GameManager> => {
   const activeGameId = await store.getItem("activeGameId");
   const games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
-  const stats = ((await store.getItem("stats")) || {}) as GameStats;
+  let stats = ((await store.getItem("stats")) || {}) as GameStats;
   let active = ((activeGameId && games[activeGameId as string]) ||
     newGame()) as Game;
-  const modal = (await store.getItem("shown_help")) ? "" : "help";
+  const modal =
+    stats.lastGameId === activeGameId
+      ? "stats"
+      : (await store.getItem("shown_help"))
+      ? ""
+      : "help";
   if (modal === "help") {
     await store.setItem("shown_help", "1");
   }
@@ -165,16 +175,56 @@ export const manager = (async (): Promise<GameManager> => {
     games[active.id] = active;
     await store.setItem("games", games);
   };
+  const saveStats = async () => {
+    const distribution = stats.distribution || {};
+    const streak = active.status === "win" ? (stats.streak || 0) + 1 : 0;
+    const maxStreak = stats.maxStreak || 0;
+    const wins = (stats.wins || 0) + (active.status === "win" ? 1 : 0);
+    const losses = (stats.losses || 0) + (active.status === "lose" ? 1 : 0);
+    stats = {
+      ...stats,
+      streak,
+      lastResult: active.status === "win" ? "win" : "lose",
+      lastGameId: active.id,
+      lastGuess: active.guess,
+      maxStreak: Math.max(streak, maxStreak),
+      wins,
+      losses,
+      distribution: {
+        0:
+          (distribution[0] || 0) +
+          (active.status === "win" && active.guess === 0 ? 1 : 0),
+        1:
+          (distribution[1] || 0) +
+          (active.status === "win" && active.guess === 1 ? 1 : 0),
+        2:
+          (distribution[2] || 0) +
+          (active.status === "win" && active.guess === 2 ? 1 : 0),
+        3:
+          (distribution[3] || 0) +
+          (active.status === "win" && active.guess === 3 ? 1 : 0),
+        4:
+          (distribution[4] || 0) +
+          (active.status === "win" && active.guess === 4 ? 1 : 0),
+        5:
+          (distribution[5] || 0) +
+          (active.status === "win" && active.guess === 5 ? 1 : 0),
+      },
+    };
+    await store.setItem("stats", stats);
+  };
   if (!activeGameId) {
     await store.setItem("activeGameId", active.id);
     await saveGame({});
   }
+
   return {
     active,
     games,
-    stats,
-    modal,
+    stats: () => stats,
+    modal: modal as any,
     saveGame,
+    saveStats,
   };
 })();
 export const IS_TOUCH_DEVICE =

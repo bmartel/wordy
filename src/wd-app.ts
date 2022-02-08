@@ -252,8 +252,13 @@ export class CwApp extends LitElement {
     // Determine results
     for (let c = 0; c < guess.length; c++) {
       const char = guess.charAt(c);
-      const w = word.indexOf(char);
-      result[c] = w === c ? "correct" : w > -1 ? "present" : "absent";
+      const wChar = word.charAt(c);
+      result[c] =
+        wChar === char
+          ? "correct"
+          : word.indexOf(char) > -1
+          ? "present"
+          : "absent";
     }
 
     // Set the results so it will be displayed correctly
@@ -274,7 +279,7 @@ export class CwApp extends LitElement {
       } else {
         this.win();
       }
-    }, 5 * 500);
+    }, 5 * 300);
   }
 
   private async attemptGuess() {
@@ -310,20 +315,33 @@ export class CwApp extends LitElement {
     }
   };
 
+  private async saveStats() {
+    const { saveStats } = await manager;
+    await saveStats();
+  }
+
   private async saveGame() {
     if (this._autosaveTimeout) clearTimeout(this._autosaveTimeout);
     const { saveGame } = await manager;
-    this._autosaveTimeout = setTimeout(() => {
-      saveGame({
+    this._autosaveTimeout = setTimeout(async () => {
+      const end =
+        this.status === "win" || this.status === "lose"
+          ? Date.now()
+          : undefined;
+      await saveGame({
         guess: this.guess,
         guesses: this.guesses,
         letters: this.letters,
         solution: this.solution,
-        status:
-          this.status === "win" || this.status === "lose"
-            ? this.status
-            : "idle",
+        status: end ? this.status : "idle",
+        end,
       });
+      if (end) {
+        await this.saveStats();
+        setTimeout(() => {
+          this.modal = "stats";
+        }, 750);
+      }
     }, 5 * 500);
   }
 

@@ -80,7 +80,7 @@ export class CwRow extends LitElement {
           style="--transition-delay:${this.evaluated && this.status !== "win"
             ? "0ms"
             : revealing
-            ? "250ms"
+            ? "150ms"
             : "0ms"};"
           .letter=${letters[0]}
           .status=${this.status === "reveal" ||
@@ -104,11 +104,11 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:500ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:300ms;--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
-            ? "750ms"
+            ? "450ms"
             : "0ms"};"
           .letter=${letters[1]}
           .status=${this.status === "reveal" ||
@@ -132,11 +132,11 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1000ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:600ms;--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
-            ? "1250ms"
+            ? "750ms"
             : "0ms"};"
           .letter=${letters[2]}
           .status=${this.status === "reveal" ||
@@ -160,11 +160,11 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1500ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:900ms;--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
-            ? "1750ms"
+            ? "1050ms"
             : "0ms"};"
           .letter=${letters[3]}
           .status=${this.status === "reveal" ||
@@ -188,11 +188,11 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:2000ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:1200ms;--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
-            ? "2250ms"
+            ? "1350ms"
             : "0ms"};"
           .letter=${letters[4]}
           .status=${this.status === "reveal" ||

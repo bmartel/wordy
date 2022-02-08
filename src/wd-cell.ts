@@ -32,7 +32,7 @@ export class CwCell extends LitElement {
       will-change: color, background-color, border-color;
       transition-property: color, background-color, border-color;
       transition-duration: 0ms;
-      transition-delay: var(--transition-delay, 250ms);
+      transition-delay: var(--transition-delay, 150ms);
       transition-timing-function: ease-out;
     }
     .cell::before {
@@ -104,7 +104,7 @@ export class CwCell extends LitElement {
     }
     :host([animation="flip"]) > .cell {
       animation-name: Flip;
-      animation-duration: 500ms;
+      animation-duration: 300ms;
       animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }
