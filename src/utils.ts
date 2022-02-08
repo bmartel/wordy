@@ -101,7 +101,7 @@ export const GuessResultSymbols: Record<GuessResult, string> = {
 export interface GameManager {
   active: Game;
   games: Record<string, Game>;
-  stats: GameStats;
+  stats(): GameStats;
   modal: "" | "help";
   saveGame(game: Partial<Game>): Promise<void>;
   saveStats(): Promise<void>;
