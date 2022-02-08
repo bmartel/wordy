@@ -6753,17 +6753,13 @@ let CwStats = class extends s {
   constructor() {
     super(...arguments);
     this.stats = {};
-    this.lastGameId = "";
-    this.lastGuess = 0;
     this.activeGameId = "";
   }
   async connectedCallback() {
     await super.connectedCallback();
     const { stats, active } = await manager;
     this.stats = stats();
-    this.lastGameId = this.stats.lastGameId || "";
     this.activeGameId = active.id;
-    this.lastGuess = this.stats.lastGuess || -1;
   }
   graphWidth(index) {
     const totalWins = this.stats.wins;
@@ -6773,6 +6769,8 @@ let CwStats = class extends s {
     return 7;
   }
   render() {
+    const lastGameId = this.stats.lastGameId || "";
+    const lastGuess = this.stats.lastGuess || 0;
     return $`
       <div class="container">
         <h1>Statistics</h1>
@@ -6803,12 +6801,12 @@ let CwStats = class extends s {
         </div>
         <h1>Guess Distribution</h1>
         <div id="guess-distribution">
-          ${this.lastGameId ? $`
+          ${lastGameId ? $`
                 <div class="graph-container">
                   <div class="guess">1</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[0] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 0 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[0] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 0 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(0)}%;"
                     >
                       <div class="num-guesses">
@@ -6822,7 +6820,7 @@ let CwStats = class extends s {
                   <div class="guess">2</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[1] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 1 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[1] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 1 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(1)}%;"
                     >
                       <div class="num-guesses">
@@ -6836,7 +6834,7 @@ let CwStats = class extends s {
                   <div class="guess">3</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[2] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 2 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[2] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 2 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(2)}%;"
                     >
                       <div class="num-guesses">
@@ -6850,7 +6848,7 @@ let CwStats = class extends s {
                   <div class="guess">4</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[3] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 3 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[3] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 3 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(3)}%;"
                     >
                       <div class="num-guesses">
@@ -6864,7 +6862,7 @@ let CwStats = class extends s {
                   <div class="guess">5</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[4] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 4 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[4] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 4 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(4)}%;"
                     >
                       <div class="num-guesses">
@@ -6878,7 +6876,7 @@ let CwStats = class extends s {
                   <div class="guess">6</div>
                   <div class="graph">
                     <div
-                      class="graph-bar ${this.stats.distribution[5] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 5 ? "highlight" : ""}"
+                      class="graph-bar ${this.stats.distribution[5] > 0 ? "align-right" : ""} ${lastGameId === this.activeGameId && lastGuess === 5 ? "highlight" : ""}"
                       style="width: ${this.graphWidth(5)}%;"
                     >
                       <div class="num-guesses">
@@ -7047,12 +7045,6 @@ CwStats.styles = r$2`
 __decorateClass$3([
   t$2()
 ], CwStats.prototype, "stats", 2);
-__decorateClass$3([
-  t$2()
-], CwStats.prototype, "lastGameId", 2);
-__decorateClass$3([
-  t$2()
-], CwStats.prototype, "lastGuess", 2);
 __decorateClass$3([
   t$2()
 ], CwStats.prototype, "activeGameId", 2);
