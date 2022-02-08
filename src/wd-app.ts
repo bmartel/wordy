@@ -197,14 +197,14 @@ export class CwApp extends LitElement {
     }, INVALID_ANIMATION_DURATION);
   }
 
-  private validate(guess: string): ValidationResult {
+  private async validate(guess: string): Promise<ValidationResult> {
     if (guess.length < WORD_SIZE) {
       return {
         success: false,
         reason: ValidationReason.INVALID_CHAR_LEN,
       };
     }
-    if (!isValidWord(guess)) {
+    if (!(await isValidWord(guess))) {
       return {
         success: false,
         reason: ValidationReason.INVALID_WORD,
@@ -269,7 +269,7 @@ export class CwApp extends LitElement {
     if (this._clearTimeout) clearTimeout(this._clearTimeout);
 
     const guess = this.activeGuess;
-    const result = this.validate(guess);
+    const result = await this.validate(guess);
     if (result.success) {
       this.determineResults(guess);
       this.updateGameStatus();
