@@ -1,6 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { GameStats, GuessDistribution, manager } from "./utils";
+import "./wd-icon.ts";
 
 type GuessDistributionKey = keyof GuessDistribution;
 
@@ -30,7 +31,6 @@ export class CwStats extends LitElement {
 
     #statistics {
       display: flex;
-      margin-bottom: ;
     }
 
     .statistic-container {
@@ -82,7 +82,6 @@ export class CwStats extends LitElement {
 
     .graph-container .graph .graph-bar {
       height: 100%;
-      /* Assume no wins */
       width: 0%;
       position: relative;
       background-color: var(--color-absent);
@@ -101,7 +100,7 @@ export class CwStats extends LitElement {
 
     .graph-container .graph .num-guesses {
       font-weight: bold;
-      color: var(--tile-text-color);
+      color: var(--white);
     }
 
     #statistics,
@@ -112,27 +111,35 @@ export class CwStats extends LitElement {
     .footer {
       display: flex;
       width: 100%;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
-    .countdown {
-      border-right: 1px solid var(--color-tone-1);
-      padding-right: 12px;
+    .refresh {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-inline: 4px;
       width: 50%;
     }
-
+    .divider {
+      display: block;
+      height: 48px;
+      width: 1px;
+      background-color: var(--wd-border-color);
+    }
     .share {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding-left: 12px;
+      padding-inline: 4px;
       width: 50%;
     }
 
     .no-data {
       text-align: center;
     }
-
-    button#share-button {
+    button#refresh-button {
       background-color: var(--key-bg-correct);
       color: var(--key-evaluated-text-color);
       font-family: inherit;
@@ -146,7 +153,35 @@ export class CwStats extends LitElement {
       align-items: center;
       text-transform: uppercase;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
-      width: 80%;
+      width: 90%;
+      font-size: 20px;
+      height: 52px;
+      -webkit-filter: brightness(100%);
+    }
+    button#refresh-button:hover {
+      opacity: 0.9;
+    }
+    button#refresh-button wd-icon {
+      width: 24px;
+      height: 24px;
+      padding-left: 8px;
+    }
+
+    button#share-button {
+      background-color: var(--wd-share-bg);
+      color: var(--wd-share-color);
+      font-family: inherit;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+      width: 90%;
       font-size: 20px;
       height: 52px;
       -webkit-filter: brightness(100%);
@@ -154,7 +189,7 @@ export class CwStats extends LitElement {
     button#share-button:hover {
       opacity: 0.9;
     }
-    button#share-button game-icon {
+    button#share-button wd-icon {
       width: 24px;
       height: 24px;
       padding-left: 8px;
@@ -335,8 +370,22 @@ export class CwStats extends LitElement {
               `
             : html` <div class="no-data">No Data</div> `}
         </div>
-        <div id="guess-distribution"></div>
-        <div class="footer"></div>
+        ${lastGameId === this.activeGameId
+          ? html`<div class="footer">
+          <div class="refresh">
+            <button id="refresh-button">
+              Next word <wd-icon name="refresh"></wd-icon>
+            </button>
+          </div>
+          <div class="divider"></div>
+          <div class="share">
+            <button id="share-button">
+              Share <wd-icon name="share"></wd-icon>
+            </button>
+          </div>
+        </div>
+      </div>`
+          : null}
       </div>
     `;
   }

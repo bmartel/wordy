@@ -51,6 +51,8 @@ export class CwTheme extends LitElement {
       --wd-border-color: var(--color-tone-1);
       --wd-border-color-emphasis: var(--color-tone-2);
       --wd-icon-color: var(--color-tone-7);
+      --wd-share-color: var(--color-tone-6);
+      --wd-share-bg: var(--color-tone-1);
 
       --wd-max-width: 500px;
       --wd-header-height: 50px;
@@ -80,6 +82,8 @@ export class CwTheme extends LitElement {
       --wd-border-color: var(--color-tone-6);
       --wd-border-color-emphasis: var(--color-tone-4);
       --wd-icon-color: var(--color-tone-1);
+      --wd-share-color: var(--color-tone-1);
+      --wd-share-bg: var(--color-tone-6);
     }
     @media (max-height: 600px) {
       :host {
