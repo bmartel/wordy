@@ -5401,7 +5401,7 @@ const WORD_LIST_SIZE = config.words.length;
 const WORD_SIZE = 5;
 const GUESS_SIZE = 6;
 const INVALID_ANIMATION_DURATION = 600;
-const WIN_ANIMATION_DURATION = 1e3;
+const WIN_ANIMATION_DURATION = 750;
 var ValidationReason;
 (function(ValidationReason2) {
   ValidationReason2[ValidationReason2["INVALID_CHAR_LEN"] = 0] = "INVALID_CHAR_LEN";
@@ -5436,9 +5436,9 @@ const newGame = () => {
 const manager = (async () => {
   const activeGameId = await store.getItem("activeGameId");
   const games = await store.getItem("games") || {};
-  const stats = await store.getItem("stats") || {};
+  let stats = await store.getItem("stats") || {};
   let active = activeGameId && games[activeGameId] || newGame();
-  const modal = await store.getItem("shown_help") ? "" : "help";
+  const modal = stats.lastGameId === activeGameId ? "stats" : await store.getItem("shown_help") ? "" : "help";
   if (modal === "help") {
     await store.setItem("shown_help", "1");
   }
@@ -5450,6 +5450,31 @@ const manager = (async () => {
     games[active.id] = active;
     await store.setItem("games", games);
   };
+  const saveStats = async () => {
+    const distribution = stats.distribution || {};
+    const streak = active.status === "win" ? (stats.streak || 0) + 1 : 0;
+    const maxStreak = stats.maxStreak || 0;
+    const wins = (stats.wins || 0) + (active.status === "win" ? 1 : 0);
+    const losses = (stats.losses || 0) + (active.status === "lose" ? 1 : 0);
+    stats = __spreadProps(__spreadValues({}, stats), {
+      streak,
+      lastResult: active.status === "win" ? "win" : "lose",
+      lastGameId: active.id,
+      lastGuess: active.guess,
+      maxStreak: Math.max(streak, maxStreak),
+      wins,
+      losses,
+      distribution: {
+        0: (distribution[0] || 0) + (active.status === "win" && active.guess === 0 ? 1 : 0),
+        1: (distribution[1] || 0) + (active.status === "win" && active.guess === 1 ? 1 : 0),
+        2: (distribution[2] || 0) + (active.status === "win" && active.guess === 2 ? 1 : 0),
+        3: (distribution[3] || 0) + (active.status === "win" && active.guess === 3 ? 1 : 0),
+        4: (distribution[4] || 0) + (active.status === "win" && active.guess === 4 ? 1 : 0),
+        5: (distribution[5] || 0) + (active.status === "win" && active.guess === 5 ? 1 : 0)
+      }
+    });
+    await store.setItem("stats", stats);
+  };
   if (!activeGameId) {
     await store.setItem("activeGameId", active.id);
     await saveGame({});
@@ -5457,9 +5482,10 @@ const manager = (async () => {
   return {
     active,
     games,
-    stats,
+    stats: () => stats,
     modal,
-    saveGame
+    saveGame,
+    saveStats
   };
 })();
 let Toaster = null;
@@ -5955,7 +5981,7 @@ CwCell.styles = r$2`
       will-change: color, background-color, border-color;
       transition-property: color, background-color, border-color;
       transition-duration: 0ms;
-      transition-delay: var(--transition-delay, 250ms);
+      transition-delay: var(--transition-delay, 150ms);
       transition-timing-function: ease-out;
     }
     .cell::before {
@@ -6027,7 +6053,7 @@ CwCell.styles = r$2`
     }
     :host([animation="flip"]) > .cell {
       animation-name: Flip;
-      animation-duration: 500ms;
+      animation-duration: 300ms;
       animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }
@@ -6090,31 +6116,31 @@ let CwRow = class extends s {
     return $`
       <div class="row">
         <wd-cell
-          style="--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "250ms" : "0ms"};"
+          style="--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "150ms" : "0ms"};"
           .letter=${letters[0]}
           .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[0] : letters[0] !== "" ? "tbd" : "empty"}
           .animation=${letters[0] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:500ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "750ms" : "0ms"};"
+          style="--animation-delay:300ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "450ms" : "0ms"};"
           .letter=${letters[1]}
           .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[1] : letters[1] !== "" ? "tbd" : "empty"}
           .animation=${letters[1] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1000ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1250ms" : "0ms"};"
+          style="--animation-delay:600ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "750ms" : "0ms"};"
           .letter=${letters[2]}
           .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[2] : letters[2] !== "" ? "tbd" : "empty"}
           .animation=${letters[2] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1500ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1750ms" : "0ms"};"
+          style="--animation-delay:900ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1050ms" : "0ms"};"
           .letter=${letters[3]}
           .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[3] : letters[3] !== "" ? "tbd" : "empty"}
           .animation=${letters[3] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:2000ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "2250ms" : "0ms"};"
+          style="--animation-delay:1200ms;--transition-delay:${this.evaluated && this.status !== "win" ? "0ms" : revealing ? "1350ms" : "0ms"};"
           .letter=${letters[4]}
           .status=${this.status === "reveal" || this.evaluated || this.status === "win" || this.revealed ? this.result[4] : letters[4] !== "" ? "tbd" : "empty"}
           .animation=${letters[4] !== "" ? this.evaluated && this.status !== "win" ? "" : revealing ? "flip" : this.status === "win" ? "bounce" : this.revealed ? "" : "pop" : ""}
@@ -6724,33 +6750,146 @@ var __decorateClass$3 = (decorators, target, key, kind) => {
   return result;
 };
 let CwStats = class extends s {
+  constructor() {
+    super(...arguments);
+    this.stats = {};
+    this.lastGameId = "";
+    this.lastGuess = 0;
+    this.activeGameId = "";
+  }
+  async connectedCallback() {
+    await super.connectedCallback();
+    const { stats, active } = await manager;
+    this.stats = stats();
+    this.lastGameId = this.stats.lastGameId || "";
+    this.activeGameId = active.id;
+    this.lastGuess = this.stats.lastGuess || -1;
+  }
+  graphWidth(index) {
+    const totalWins = this.stats.wins;
+    if (totalWins) {
+      return Math.max(Math.floor(this.stats.distribution[index] / totalWins * 100), 7);
+    }
+    return 7;
+  }
   render() {
     return $`
       <div class="container">
         <h1>Statistics</h1>
         <div id="statistics">
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">
+              ${this.stats.wins || 0 + this.stats.losses || 0}
+            </div>
             <div class="label">Played</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">
+              ${this.stats.wins !== void 0 && this.stats.losses !== void 0 ? Math.floor(this.stats.wins / (this.stats.wins + this.stats.losses) * 100) : 0}
+            </div>
             <div class="label">Win %</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">${this.stats.streak || 0}</div>
             <div class="label">Current Streak</div>
           </div>
 
           <div class="statistic-container">
-            <div class="statistic">0</div>
+            <div class="statistic">${this.stats.maxStreak || 0}</div>
             <div class="label">Max Streak</div>
           </div>
         </div>
         <h1>Guess Distribution</h1>
-        <div id="guess-distribution"><div class="no-data">No Data</div></div>
+        <div id="guess-distribution">
+          ${this.lastGameId ? $`
+                <div class="graph-container">
+                  <div class="guess">1</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[0] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 0 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(0)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[0]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">2</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[1] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 1 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(1)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[1]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">3</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[2] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 2 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(2)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[2]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">4</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[3] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 3 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(3)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[3]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">5</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[4] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 4 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(4)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[4]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="graph-container">
+                  <div class="guess">6</div>
+                  <div class="graph">
+                    <div
+                      class="graph-bar ${this.stats.distribution[5] > 0 ? "align-right" : ""} ${this.lastGameId === this.activeGameId && this.lastGuess === 5 ? "highlight" : ""}"
+                      style="width: ${this.graphWidth(5)}%;"
+                    >
+                      <div class="num-guesses">
+                        ${this.stats.distribution[5]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ` : $` <div class="no-data">No Data</div> `}
+        </div>
+        <div id="guess-distribution"></div>
         <div class="footer"></div>
       </div>
     `;
@@ -6905,6 +7044,18 @@ CwStats.styles = r$2`
       padding-left: 8px;
     }
   `;
+__decorateClass$3([
+  t$2()
+], CwStats.prototype, "stats", 2);
+__decorateClass$3([
+  t$2()
+], CwStats.prototype, "lastGameId", 2);
+__decorateClass$3([
+  t$2()
+], CwStats.prototype, "lastGuess", 2);
+__decorateClass$3([
+  t$2()
+], CwStats.prototype, "activeGameId", 2);
 CwStats = __decorateClass$3([
   n$1("wd-stats")
 ], CwStats);
@@ -7377,8 +7528,8 @@ let CwApp = class extends s {
     this.status = "reveal";
     for (let c2 = 0; c2 < guess.length; c2++) {
       const char = guess.charAt(c2);
-      const w2 = word.indexOf(char);
-      result[c2] = w2 === c2 ? "correct" : w2 > -1 ? "present" : "absent";
+      const wChar = word.charAt(c2);
+      result[c2] = wChar === char ? "correct" : word.indexOf(char) > -1 ? "present" : "absent";
     }
     this.activeResult = result;
   }
@@ -7395,7 +7546,7 @@ let CwApp = class extends s {
       } else {
         this.win();
       }
-    }, 5 * 500);
+    }, 5 * 300);
   }
   async attemptGuess() {
     if (this._clearTimeout)
@@ -7410,18 +7561,30 @@ let CwApp = class extends s {
     }
     this.saveGame();
   }
+  async saveStats() {
+    const { saveStats } = await manager;
+    await saveStats();
+  }
   async saveGame() {
     if (this._autosaveTimeout)
       clearTimeout(this._autosaveTimeout);
     const { saveGame } = await manager;
-    this._autosaveTimeout = setTimeout(() => {
-      saveGame({
+    this._autosaveTimeout = setTimeout(async () => {
+      const end = this.status === "win" || this.status === "lose" ? Date.now() : void 0;
+      await saveGame({
         guess: this.guess,
         guesses: this.guesses,
         letters: this.letters,
         solution: this.solution,
-        status: this.status === "win" || this.status === "lose" ? this.status : "idle"
+        status: end ? this.status : "idle",
+        end
       });
+      if (end) {
+        await this.saveStats();
+        setTimeout(() => {
+          this.modal = "stats";
+        }, 750);
+      }
     }, 5 * 500);
   }
   async connectedCallback() {
