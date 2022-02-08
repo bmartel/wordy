@@ -16,6 +16,7 @@ export default defineConfig({
   },
   plugins: [
     VitePWA({
+      registerType: "autoUpdate",
       includeAssets: [
         "favicon.svg",
         "favicon.ico",

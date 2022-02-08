@@ -1,6 +1,7 @@
 import localForage from "localforage";
 import { nanoid } from "nanoid";
-import config from "./config.json";
+
+const config = import("./config.json");
 
 export const store = localForage.createInstance({
   name: "wordy",
@@ -46,7 +47,7 @@ export const allowedKeyMap = {
   ...controlKeyMap,
 };
 
-export const WORD_LIST_SIZE = config.words.length;
+export let WORD_LIST_SIZE = 0;
 export const WORD_SIZE = 5;
 export const GUESS_SIZE = 6;
 export const INVALID_ANIMATION_DURATION = 600;
@@ -132,18 +133,23 @@ export const makeGuesses = (letters = "", result = undefined) =>
 export const initializeGuesses = makeGuesses();
 export const initializeGuess = initializeGuesses[0];
 
-export const pickRandomWord = () => {
-  return config.words[Math.floor(Math.random() * WORD_LIST_SIZE)];
+export const pickRandomWord = async () => {
+  const { words } = await config;
+  if (!WORD_LIST_SIZE) {
+    WORD_LIST_SIZE = words.length;
+  }
+  return words[Math.floor(Math.random() * WORD_LIST_SIZE)];
 };
-export const isValidWord = (word: string) => {
-  return config.words.indexOf(word) > -1;
+export const isValidWord = async (word: string) => {
+  const { words } = await config;
+  return words.indexOf(word) > -1;
 };
-export const newGame = (): Game => {
+export const newGame = async (): Promise<Game> => {
   return {
     id: nanoid(),
     guess: 0,
     guesses: initializeGuesses,
-    solution: pickRandomWord(),
+    solution: await pickRandomWord(),
     letters: letterKeyMap as LetterKeyResultMap,
     status: "idle",
     start: Date.now(),
@@ -154,7 +160,7 @@ export const manager = (async (): Promise<GameManager> => {
   const games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
   let stats = ((await store.getItem("stats")) || {}) as GameStats;
   let active = ((activeGameId && games[activeGameId as string]) ||
-    newGame()) as Game;
+    (await newGame())) as Game;
   const modal =
     stats.lastGameId === activeGameId
       ? "stats"
