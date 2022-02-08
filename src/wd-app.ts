@@ -62,23 +62,6 @@ export class CwApp extends LitElement {
       flex-direction: column;
       box-sizing: border-box;
     }
-    #toast-layer-1 {
-      z-index: 5000;
-    }
-    #toast-layer-2 {
-      z-index: 6000;
-    }
-    .wd-toasts {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translate(-50%, 0);
-      pointer-events: none;
-      width: fit-content;
-    }
   `;
 
   private handleModal(
@@ -112,7 +95,7 @@ export class CwApp extends LitElement {
       setTimeout(() => {
         this.page = "";
         this.closingPage = false;
-      }, 150);
+      }, 200);
     }
   }
 
@@ -374,28 +357,33 @@ export class CwApp extends LitElement {
         .status=${this.status}
       ></wd-board>
       <wd-keyboard .letters=${this.letters}></wd-keyboard>
-      <wd-page
-        .open=${this.page !== ""}
-        .closing=${this.closingPage}
-        @wd-page=${this.handlePage}
-      >
-        ${this.page === "help"
-          ? html`<span>How To Play</span>
-              <wd-help page slot="content"></wd-help>`
-          : null}
-        ${this.page === "settings"
-          ? html`<span>Settings</span>
-              <wd-settings page slot="content"></wd-settings>`
-          : null}
-      </wd-page>
-      <wd-modal
-        .open=${this.modal !== ""}
-        .closing=${this.closingModal}
-        @wd-modal=${this.handleModal}
-      >
-        ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
-        ${this.modal === "stats" ? html`<wd-stats></wd-stats>` : null}
-      </wd-modal>
+
+      ${this.closingPage || this.page
+        ? html`<wd-page
+            .open=${!this.closingPage && this.page !== ""}
+            .closing=${this.closingPage}
+            @wd-page=${this.handlePage}
+          >
+            ${this.page === "help"
+              ? html`<span>How To Play</span>
+                  <wd-help page slot="content"></wd-help>`
+              : null}
+            ${this.page === "settings"
+              ? html`<span>Settings</span>
+                  <wd-settings page slot="content"></wd-settings>`
+              : null}
+          </wd-page>`
+        : ""}
+      ${this.closingModal || this.modal
+        ? html`<wd-modal
+            .open=${!this.closingModal && this.modal !== ""}
+            .closing=${this.closingModal}
+            @wd-modal=${this.handleModal}
+          >
+            ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
+            ${this.modal === "stats" ? html`<wd-stats></wd-stats>` : null}
+          </wd-modal>`
+        : null}
     `;
   }
 }

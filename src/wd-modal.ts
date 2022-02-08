@@ -21,15 +21,15 @@ export class CwModal extends LitElement {
       align-items: center;
       background-color: var(--overlay-bg);
       z-index: 3000;
+      will-change: transform, opacity;
     }
-
     :host([open="true"]) .overlay,
     :host([closing="true"]) .overlay {
       display: flex;
+      opacity: 1;
     }
-
     :host([closing="true"]) .content {
-      animation: SlideOut 200ms;
+      animation: SlideOut 250ms;
     }
 
     .content {
@@ -46,6 +46,7 @@ export class CwModal extends LitElement {
       max-width: var(--wd-max-width);
       padding: 16px;
       box-sizing: border-box;
+      will-change: transform, opacity;
     }
 
     .close-icon {
@@ -66,7 +67,7 @@ export class CwModal extends LitElement {
 
     @keyframes SlideIn {
       0% {
-        transform: translateY(30px);
+        transform: translateY(10vh);
         opacity: 0;
       }
       100% {
@@ -84,7 +85,7 @@ export class CwModal extends LitElement {
       }
       100% {
         opacity: 0;
-        transform: translateY(60px);
+        transform: translateY(6vh);
       }
     }
   `;

@@ -21,6 +21,7 @@ export class CwPage extends LitElement {
       bottom: 0;
       justify-content: center;
       background-color: var(--wd-background-color);
+      will-change: opacity, transform;
       animation: SlideIn 100ms linear;
       z-index: 2000;
     }
@@ -28,10 +29,11 @@ export class CwPage extends LitElement {
     :host([open="true"]) .overlay,
     :host([closing="true"]) .overlay {
       display: flex;
+      opacity: 1;
     }
 
     :host([closing="true"]) .overlay {
-      animation: SlideOut 150ms linear;
+      animation: SlideOut 250ms ease-out;
     }
 
     .content {
@@ -94,7 +96,7 @@ export class CwPage extends LitElement {
 
     @keyframes SlideIn {
       0% {
-        transform: translateY(30px);
+        transform: translateY(10vh);
         opacity: 0;
       }
       100% {
@@ -112,7 +114,7 @@ export class CwPage extends LitElement {
       }
       100% {
         opacity: 0;
-        transform: translateY(60px);
+        transform: translateY(12vh);
       }
     }
   `;

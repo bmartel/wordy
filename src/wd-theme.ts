@@ -25,7 +25,7 @@ export class CwTheme extends LitElement {
       --gray: #86888a;
       --darkGray: #939598;
       --white: #fff;
-      --black: #c40000;
+      --black: #000;
       --orange: #f5793a;
       --blue: #85c0f9;
 
@@ -41,6 +41,8 @@ export class CwTheme extends LitElement {
       --key-bg-absent: var(--color-absent);
       --modal-content-color: var(--color-tone-7);
       --modal-content-bg: var(--white);
+      --toast-content-color: var(--black);
+      --toast-content-bg: var(--white);
       --shadow-color: rgba(0, 0, 0, 0.16);
       --overlay-bg: rgba(255, 255, 255, 0.5);
 
@@ -72,6 +74,8 @@ export class CwTheme extends LitElement {
       --key-bg-absent: var(--color-absent);
       --modal-content-bg: var(--color-tone-7);
       --modal-content-color: var(--color-tone-1);
+      --toast-content-color: var(--white);
+      --toast-content-bg: var(--black);
       --shadow-color: rgba(255, 255, 255, 0.16);
       --overlay-bg: rgba(0, 0, 0, 0.5);
 
@@ -115,8 +119,8 @@ export class CwTheme extends LitElement {
     .toast {
       --_duration: 3s;
       --_travel-distance: 0;
-      color: var(--modal-content-color);
-      background-color: var(--modal-content-bg);
+      color: var(--toast-content-color);
+      background-color: var(--toast-content-bg);
       will-change: transform;
       animation: fade-in 0.3s ease, slide-in 0.3s ease,
         fade-out 0.3s ease var(--_duration);
