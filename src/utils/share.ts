@@ -12,7 +12,6 @@ export const createShareableResult = (guesses: Guess[]): string => {
 export const share = async (content: string, seed: string) => {
   const url = new URL(location.href);
   url.searchParams.set("seed", seed);
-  console.log(url);
   content = `
 ${url.toString()}
 
