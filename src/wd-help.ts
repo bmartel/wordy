@@ -93,6 +93,9 @@ export class CwHelp extends LitElement {
               </p>
             </div>
           </div>
+          <p>
+            <strong>Solve the word to continue playing!<strong>
+          </p>
         </div>
       </section>
     `;
