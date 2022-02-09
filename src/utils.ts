@@ -314,8 +314,10 @@ export const share = async (content: string) => {
       await navigator.share({
         text: content,
       });
+      Toast("Shared puzzle result");
     } else {
       navigator.clipboard.writeText(content);
+      Toast("Copied puzzle result");
     }
   } catch (err: any) {
     Toast(err.message);
