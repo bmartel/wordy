@@ -94,7 +94,8 @@ export interface GameStats {
   maxStreak: number;
   distribution: GuessDistribution;
 }
-export const GuessResultSymbols: Record<GuessResult, string> = {
+export const GuessResultSymbols: Record<GuessResult | "empty", string> = {
+  empty: "⬛",
   absent: "🟦",
   present: "🟨",
   correct: "🟩",
@@ -297,4 +298,26 @@ export const Toast = (text: string) => {
     Toaster?.removeChild(toast);
     resolve();
   });
+};
+
+export const createShareableResult = (guesses: Guess[]): string => {
+  return guesses
+    .map((guess) =>
+      guess.result.map((result) => GuessResultSymbols[result]).join("")
+    )
+    .join("\n");
+};
+
+export const share = async (content: string) => {
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        text: content,
+      });
+    } else {
+      navigator.clipboard.writeText(content);
+    }
+  } catch (err: any) {
+    Toast(err.message);
+  }
 };

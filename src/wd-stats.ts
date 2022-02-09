@@ -1,6 +1,12 @@
 import { html, css, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { GameStats, GuessDistribution, manager } from "./utils";
+import {
+  createShareableResult,
+  GameStats,
+  GuessDistribution,
+  manager,
+  share,
+} from "./utils";
 import "./wd-icon.ts";
 
 type GuessDistributionKey = keyof GuessDistribution;
@@ -214,6 +220,12 @@ export class CwStats extends LitElement {
     );
   }
 
+  private async share(e: Event) {
+    e.preventDefault();
+    const { active } = await manager;
+    await share(createShareableResult(active().guesses));
+  }
+
   private graphWidth(index: GuessDistributionKey) {
     const totalWins = this.stats.wins;
     if (totalWins) {
@@ -390,7 +402,7 @@ export class CwStats extends LitElement {
           </div>
           <div class="divider"></div>
           <div class="share">
-            <button id="share-button">
+            <button id="share-button" @click=${this.share}>
               Share <wd-icon name="share"></wd-icon>
             </button>
           </div>
