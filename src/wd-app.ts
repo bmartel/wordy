@@ -16,6 +16,8 @@ import {
   isValidWord,
   Toast,
   RowStatus,
+  Game,
+  maybeDecryptSolution,
 } from "./utils";
 import "./wd-header.ts";
 import "./wd-board.ts";
@@ -30,6 +32,8 @@ import "./wd-modal.ts";
 export class CwApp extends LitElement {
   @state()
   gameId: string = "";
+  @state()
+  seed: string = "";
   @state()
   guess: number = 0;
   @state()
@@ -319,6 +323,7 @@ export class CwApp extends LitElement {
         guesses: this.guesses,
         letters: this.letters,
         solution: this.solution,
+        seed: this.seed,
         status: end ? this.status : "idle",
         end,
       });
@@ -331,28 +336,30 @@ export class CwApp extends LitElement {
     }, 5 * 500);
   }
 
+  private async setupGame(game: Game) {
+    try {
+      this.gameId = game.id;
+      this.guess = game.guess;
+      this.guesses = game.guesses;
+      this.solution = await maybeDecryptSolution(game.solution, game.iv);
+      this.seed = game.seed;
+      this.status = game.status;
+      this.letters = game.letters;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   private async startNewGame() {
     const { generateGame } = await manager;
-    const active = await generateGame();
-    this.gameId = active.id;
-    this.guess = active.guess;
-    this.guesses = active.guesses;
-    this.solution = active.solution;
-    this.status = active.status;
-    this.letters = active.letters;
+    await this.setupGame(await generateGame());
     this.handleModal({ detail: { open: false } });
   }
 
   async connectedCallback() {
     super.connectedCallback();
     const { active: readActive, modal } = await manager;
-    const active = readActive();
-    this.gameId = active.id;
-    this.guess = active.guess;
-    this.guesses = active.guesses;
-    this.solution = active.solution;
-    this.status = active.status;
-    this.letters = active.letters;
+    await this.setupGame(readActive());
     this.modal = modal;
     window.addEventListener("keydown", this._handleKeydown);
   }
