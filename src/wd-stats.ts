@@ -126,6 +126,7 @@ export class CwStats extends LitElement {
       display: block;
       height: 48px;
       width: 1px;
+      flex-shrink: 0;
       background-color: var(--wd-border-color);
     }
     .share {
@@ -154,8 +155,8 @@ export class CwStats extends LitElement {
       text-transform: uppercase;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
       width: 90%;
-      font-size: 20px;
-      height: 52px;
+      font-size: 16px;
+      height: 48px;
       -webkit-filter: brightness(100%);
     }
     button#refresh-button:hover {
@@ -182,8 +183,8 @@ export class CwStats extends LitElement {
       text-transform: uppercase;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
       width: 90%;
-      font-size: 20px;
-      height: 52px;
+      font-size: 16px;
+      height: 48px;
       -webkit-filter: brightness(100%);
     }
     button#share-button:hover {
@@ -384,7 +385,7 @@ export class CwStats extends LitElement {
           ? html`<div class="footer">
           <div class="refresh">
             <button id="refresh-button" @click=${this.newGame}>
-              Next word <wd-icon name="refresh"></wd-icon>
+              Next <wd-icon name="refresh"></wd-icon>
             </button>
           </div>
           <div class="divider"></div>
