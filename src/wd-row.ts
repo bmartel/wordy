@@ -64,7 +64,7 @@ export class CwRow extends LitElement {
     if (!this.revealed && this.status === "reveal") {
       this.revealed = true;
     }
-    if (this.revealed && (this.status === "win" || this.status === "lose")) {
+    if (this.revealed && this.evaluated) {
       this.revealed = false;
     }
   }
