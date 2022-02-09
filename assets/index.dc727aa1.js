@@ -650,6 +650,9 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
               </p>
             </div>
           </div>
+          <p>
+            <strong>Solve the word to continue playing!<strong>
+          </p>
         </div>
       </section>
     `}};K.styles=u`
