@@ -9,15 +9,25 @@ export const createShareableResult = (guesses: Guess[]): string => {
     .join("\n");
 };
 
-export const share = async (content: string) => {
+export const share = async (content: string, seed: string) => {
+  const url = new URL(location.href);
+  url.searchParams.set("seed", seed);
+  console.log(url);
+  content = `
+${url.toString()}
+
+${content}
+    `;
   try {
     if (navigator.share) {
       await navigator.share({
+        url: url.toString(),
+        title: `Puzzle ${seed}`,
         text: content,
       });
       Toast("Shared puzzle result");
     } else {
-      navigator.clipboard.writeText(content);
+      await navigator.clipboard.writeText(content);
       Toast("Copied puzzle result");
     }
   } catch (err: any) {

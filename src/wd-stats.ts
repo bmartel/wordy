@@ -223,7 +223,8 @@ export class CwStats extends LitElement {
   private async share(e: Event) {
     e.preventDefault();
     const { active } = await manager;
-    await share(createShareableResult(active().guesses));
+    const { seed, guesses } = active();
+    await share(createShareableResult(guesses), seed);
   }
 
   private graphWidth(index: GuessDistributionKey) {

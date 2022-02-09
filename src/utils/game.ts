@@ -32,8 +32,8 @@ export const isValidWord = async (word: string) => {
   const { words } = config;
   return words.indexOf(word) > -1;
 };
-export const newGame = async (): Promise<Game> => {
-  const { word, seed } = await pickRandomWord();
+export const newGame = async (seed?: string): Promise<Game> => {
+  const { word, seed: genSeed } = await pickRandomWord(seed);
   const [iv, solution] = await encrypt(word);
   return {
     id: nanoid(),
@@ -41,18 +41,19 @@ export const newGame = async (): Promise<Game> => {
     guesses: makeGuesses(),
     solution,
     iv,
-    seed,
+    seed: genSeed,
     letters: letterKeyMap as LetterKeyResultMap,
     status: "idle",
     start: Date.now(),
   };
 };
 export const manager = (async (): Promise<GameManager> => {
+  const seed = new URLSearchParams(location.href).get("seed") || undefined;
   const activeGameId = await store.getItem("activeGameId");
   let games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
   let stats = ((await store.getItem("stats")) || {}) as GameStats;
-  let active = ((activeGameId && games[activeGameId as string]) ||
-    (await newGame())) as Game;
+  let active = ((!seed && activeGameId && games[activeGameId as string]) ||
+    (await newGame(seed))) as Game;
   const modal =
     stats.lastGameId === activeGameId
       ? "stats"

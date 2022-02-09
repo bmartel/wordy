@@ -68,7 +68,37 @@ export class CwApp extends LitElement {
       flex-direction: column;
       box-sizing: border-box;
     }
+    ${import.meta.env.DEV
+      ? css`
+          .debug {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: absolute;
+            color: red;
+            top: 50%;
+            left: 50%;
+          }
+          .debug > span {
+            display: flex;
+            gap: 0.5rem;
+          }
+        `
+      : css``}
   `;
+
+  private debugMode() {
+    if (import.meta.env.DEV) {
+      return html`
+        <div class="debug">
+          <span><span>id:</span><span>${this.gameId}</span></span>
+          <span><span>solution:</span><span>${this.solution}</span></span>
+          <span><span>seed:</span><span>${this.seed}</span></span>
+        </div>
+      `;
+    }
+    return null;
+  }
 
   private handleModal(
     e: CustomEvent | { detail: { open: boolean; content?: string } }
@@ -409,6 +439,7 @@ export class CwApp extends LitElement {
               : null}
           </wd-modal>`
         : null}
+      ${this.debugMode()}
     `;
   }
 }
