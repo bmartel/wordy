@@ -1,9 +1,9 @@
-var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.prototype.hasOwnProperty,pt=Object.prototype.propertyIsEnumerable;var Z=(t,e,a)=>e in t?ht(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,f=(t,e)=>{for(var a in e||(e={}))ut.call(e,a)&&Z(t,a,e[a]);if(U)for(var a of U(e))pt.call(e,a)&&Z(t,a,e[a]);return t};import{v as vt,l as gt,n as mt,r as u,e as d,s as p,$ as n,a as v,o as wt,t as g}from"./vendor.788a2ceb.js";const bt=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))o(s);new MutationObserver(s=>{for(const i of s)if(i.type==="childList")for(const r of i.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&o(r)}).observe(document,{childList:!0,subtree:!0});function a(s){const i={};return s.integrity&&(i.integrity=s.integrity),s.referrerpolicy&&(i.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?i.credentials="include":s.crossorigin==="anonymous"?i.credentials="omit":i.credentials="same-origin",i}function o(s){if(s.ep)return;s.ep=!0;const i=a(s);fetch(s.href,i)}};bt();function ft(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:o,onRegistered:s,onRegisterError:i}=t;let r;const z=async(c=!0)=>{};return"serviceWorker"in navigator&&(r=new vt("./sw.js",{scope:"./",type:"classic"}),r.addEventListener("activated",c=>{c.isUpdate?window.location.reload():o==null||o()}),r.register({immediate:e}).then(c=>{s==null||s(c)}).catch(c=>{i==null||i(c)})),z}const yt="modulepreload",J={},xt="./",$t=function(e,a){return!a||a.length===0?e():Promise.all(a.map(o=>{if(o=`${xt}${o}`,o in J)return;J[o]=!0;const s=o.endsWith(".css"),i=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${o}"]${i}`))return;const r=document.createElement("link");if(r.rel=s?"stylesheet":yt,s||(r.as="script",r.crossOrigin=""),r.href=o,document.head.appendChild(r),s)return new Promise((z,c)=>{r.addEventListener("load",z),r.addEventListener("error",c)})})).then(()=>e())},Q=$t(()=>import("./config.d171c315.js"),[]),b=gt.createInstance({name:"wordy"}),P={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},kt={Enter:!0,Backspace:!0},_t=f(f({},P),kt);let N=0;const O=5,Pt=6,tt=600,Ot=750;var $;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})($||($={}));const W=(t,e=0)=>Array.from({length:e},t),It=()=>W(()=>"empty",O),et=(t="",e=void 0)=>W(()=>({letters:t,status:"tbd",result:e||[...It()]}),Pt),Y=et(),st=Y[0],Ct=async()=>{const{words:t}=await Q;return N||(N=t.length),t[Math.floor(Math.random()*N)]},jt=async t=>{const{words:e}=await Q;return e.indexOf(t)>-1},at=async()=>({id:mt(),guess:0,guesses:et(),solution:await Ct(),letters:P,status:"idle",start:Date.now()}),I=(async()=>{const t=await b.getItem("activeGameId");let e=await b.getItem("games")||{},a=await b.getItem("stats")||{},o=t&&e[t]||await at();const s=a.lastGameId===t?"stats":await b.getItem("shown_help")?"":"help";s==="help"&&await b.setItem("shown_help","1"),t||await b.setItem("activeGameId",o.id);const i=async c=>{o=f(f({},e[c.id]),c),e[c.id]=o,await b.setItem("games",e)},r=async c=>{const h=e[c],x=a.distribution||{},F=h.status==="win"?(a.streak||0)+1:0,lt=a.maxStreak||0,dt=(a.wins||0)+(h.status==="win"?1:0),ct=(a.losses||0)+(h.status==="lose"?1:0);a={streak:F,lastResult:h.status==="win"?"win":"lose",lastGameId:h.id,lastGuess:h.guess,maxStreak:Math.max(F,lt),wins:dt,losses:ct,distribution:{0:(x[0]||0)+(h.status==="win"&&h.guess===0?1:0),1:(x[1]||0)+(h.status==="win"&&h.guess===1?1:0),2:(x[2]||0)+(h.status==="win"&&h.guess===2?1:0),3:(x[3]||0)+(h.status==="win"&&h.guess===3?1:0),4:(x[4]||0)+(h.status==="win"&&h.guess===4?1:0),5:(x[5]||0)+(h.status==="win"&&h.guess===5?1:0)}},await b.setItem("stats",a)};return t||(await b.setItem("activeGameId",o.id),await i(o)),{games:()=>e,active:()=>o,stats:()=>a,modal:s,saveGame:i,saveStats:r,generateGame:async()=>{const c=await at();return await b.setItem("activeGameId",c.id),await i(c),c}}})();let l=null;const Dt=t=>{l=t},Gt=()=>{l=null},St=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},zt=t=>{const e=(l==null?void 0:l.offsetHeight)||0;l==null||l.appendChild(t);const o=((l==null?void 0:l.offsetHeight)||0)-e;l==null||l.animate([{transform:`translateY(${o}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},Et=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(l==null?void 0:l.children.length)&&e?zt(t):l==null||l.appendChild(t)},Mt=t=>{const e=St(t);return Et(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(o=>o.finished)),l==null||l.removeChild(e),a()})};var Tt=Object.defineProperty,Rt=Object.getOwnPropertyDescriptor,ot=(t,e,a,o)=>{for(var s=o>1?void 0:o?Rt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Tt(e,a,s),s};let E=class extends p{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{Dt(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),Gt()}render(){return n`
+var ut=Object.defineProperty;var Z=Object.getOwnPropertySymbols;var pt=Object.prototype.hasOwnProperty,vt=Object.prototype.propertyIsEnumerable;var J=(t,e,a)=>e in t?ut(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,f=(t,e)=>{for(var a in e||(e={}))pt.call(e,a)&&J(t,a,e[a]);if(Z)for(var a of Z(e))vt.call(e,a)&&J(t,a,e[a]);return t};import{v as gt,l as mt,n as wt,r as u,e as d,s as p,$ as n,a as v,o as bt,t as g}from"./vendor.788a2ceb.js";const ft=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))i(s);new MutationObserver(s=>{for(const o of s)if(o.type==="childList")for(const r of o.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&i(r)}).observe(document,{childList:!0,subtree:!0});function a(s){const o={};return s.integrity&&(o.integrity=s.integrity),s.referrerpolicy&&(o.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?o.credentials="include":s.crossorigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function i(s){if(s.ep)return;s.ep=!0;const o=a(s);fetch(s.href,o)}};ft();function yt(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:i,onRegistered:s,onRegisterError:o}=t;let r;const E=async(c=!0)=>{};return"serviceWorker"in navigator&&(r=new gt("./sw.js",{scope:"./",type:"classic"}),r.addEventListener("activated",c=>{c.isUpdate?window.location.reload():i==null||i()}),r.register({immediate:e}).then(c=>{s==null||s(c)}).catch(c=>{o==null||o(c)})),E}const xt="modulepreload",Q={},$t="./",kt=function(e,a){return!a||a.length===0?e():Promise.all(a.map(i=>{if(i=`${$t}${i}`,i in Q)return;Q[i]=!0;const s=i.endsWith(".css"),o=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${i}"]${o}`))return;const r=document.createElement("link");if(r.rel=s?"stylesheet":xt,s||(r.as="script",r.crossOrigin=""),r.href=i,document.head.appendChild(r),s)return new Promise((E,c)=>{r.addEventListener("load",E),r.addEventListener("error",c)})})).then(()=>e())},tt=kt(()=>import("./config.d171c315.js"),[]),b=mt.createInstance({name:"wordy"}),P={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},_t={Enter:!0,Backspace:!0},Pt=f(f({},P),_t);let N=0;const O=5,Ot=6,et=600,It=750;var $;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})($||($={}));const W=(t,e=0)=>Array.from({length:e},t),Ct=()=>W(()=>"empty",O),st=(t="",e=void 0)=>W(()=>({letters:t,status:"tbd",result:e||[...Ct()]}),Ot),Y=st(),at=Y[0],jt=async()=>{const{words:t}=await tt;return N||(N=t.length),t[Math.floor(Math.random()*N)]},Dt=async t=>{const{words:e}=await tt;return e.indexOf(t)>-1},it=async()=>({id:wt(),guess:0,guesses:st(),solution:await jt(),letters:P,status:"idle",start:Date.now()}),I=(async()=>{const t=await b.getItem("activeGameId");let e=await b.getItem("games")||{},a=await b.getItem("stats")||{},i=t&&e[t]||await it();const s=a.lastGameId===t?"stats":await b.getItem("shown_help")?"":"help";s==="help"&&await b.setItem("shown_help","1"),t||await b.setItem("activeGameId",i.id);const o=async c=>{i=f(f({},e[c.id]),c),e[c.id]=i,await b.setItem("games",e)},r=async c=>{const h=e[c],x=a.distribution||{},U=h.status==="win"?(a.streak||0)+1:0,dt=a.maxStreak||0,ct=(a.wins||0)+(h.status==="win"?1:0),ht=(a.losses||0)+(h.status==="lose"?1:0);a={streak:U,lastResult:h.status==="win"?"win":"lose",lastGameId:h.id,lastGuess:h.guess,maxStreak:Math.max(U,dt),wins:ct,losses:ht,distribution:{0:(x[0]||0)+(h.status==="win"&&h.guess===0?1:0),1:(x[1]||0)+(h.status==="win"&&h.guess===1?1:0),2:(x[2]||0)+(h.status==="win"&&h.guess===2?1:0),3:(x[3]||0)+(h.status==="win"&&h.guess===3?1:0),4:(x[4]||0)+(h.status==="win"&&h.guess===4?1:0),5:(x[5]||0)+(h.status==="win"&&h.guess===5?1:0)}},await b.setItem("stats",a)};return t||(await b.setItem("activeGameId",i.id),await o(i)),{games:()=>e,active:()=>i,stats:()=>a,modal:s,saveGame:o,saveStats:r,generateGame:async()=>{const c=await it();return await b.setItem("activeGameId",c.id),await o(c),c}}})();let l=null;const Gt=t=>{l=t},St=()=>{l=null},zt=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},Et=t=>{const e=(l==null?void 0:l.offsetHeight)||0;l==null||l.appendChild(t);const i=((l==null?void 0:l.offsetHeight)||0)-e;l==null||l.animate([{transform:`translateY(${i}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},Mt=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(l==null?void 0:l.children.length)&&e?Et(t):l==null||l.appendChild(t)},Tt=t=>{const e=zt(t);return Mt(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(i=>i.finished)),l==null||l.removeChild(e),a()})};var Rt=Object.defineProperty,Lt=Object.getOwnPropertyDescriptor,ot=(t,e,a,i)=>{for(var s=i>1?void 0:i?Lt(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Rt(e,a,s),s};let M=class extends p{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{Gt(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),St()}render(){return n`
       <section class="toast-layer"></section>
       <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
-    `}};E.styles=u`
+    `}};M.styles=u`
     :host {
       --color-tone-1: #d7e9f8;
       --color-tone-2: #81a8d5;
@@ -147,24 +147,24 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         --_travel-distance: 5vh;
       }
     }
-  `;ot([d({reflect:!0})],E.prototype,"dark",2);E=ot([v("wd-theme")],E);var Lt=Object.defineProperty,At=Object.getOwnPropertyDescriptor,it=(t,e,a,o)=>{for(var s=o>1?void 0:o?At(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Lt(e,a,s),s};const Nt={backspace:'<path fill="currentColor" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'};let M=class extends p{constructor(){super(...arguments);this.name=""}render(){return n`
+  `;ot([d({reflect:!0})],M.prototype,"dark",2);M=ot([v("wd-theme")],M);var At=Object.defineProperty,Nt=Object.getOwnPropertyDescriptor,H=(t,e,a,i)=>{for(var s=i>1?void 0:i?Nt(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&At(e,a,s),s};const Wt={backspace:'<path stroke-linecap="round" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'},rt={sm:20,md:24,lg:28};let C=class extends p{constructor(){super(...arguments);this.name="",this.size="md"}render(){return n`
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        height="24"
+        height=${rt[this.size]}
+        width=${rt[this.size]}
         viewBox="0 0 24 24"
-        width="24"
       >
-        ${wt(Nt[this.name])}
+        ${bt(Wt[this.name])}
       </svg>
-    `}};M.styles=u`
+    `}};C.styles=u`
     :host {
-      display: block;
+      display: inline-block;
       height: 24px;
       width: 24px;
       pointer-events: none;
       user-select: none;
     }
-  `;it([d()],M.prototype,"name",2);M=it([v("wd-icon")],M);var Wt=Object.defineProperty,Yt=Object.getOwnPropertyDescriptor,Ht=(t,e,a,o)=>{for(var s=o>1?void 0:o?Yt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Wt(e,a,s),s};let H=class extends p{showHelp(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"help",open:!0},bubbles:!0,composed:!0}))}showStats(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{content:"stats",open:!0},bubbles:!0,composed:!0}))}showSettings(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"settings",open:!0},bubbles:!0,composed:!0}))}render(){return n`
+  `;H([d()],C.prototype,"name",2);H([d()],C.prototype,"size",2);C=H([v("wd-icon")],C);var Yt=Object.defineProperty,Ht=Object.getOwnPropertyDescriptor,Kt=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ht(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Yt(e,a,s),s};let K=class extends p{showHelp(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"help",open:!0},bubbles:!0,composed:!0}))}showStats(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{content:"stats",open:!0},bubbles:!0,composed:!0}))}showSettings(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"settings",open:!0},bubbles:!0,composed:!0}))}render(){return n`
       <header>
         <div class="menu">
           <button
@@ -196,7 +196,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
           </button>
         </div>
       </header>
-    `}};H.styles=u`
+    `}};K.styles=u`
     header {
       display: flex;
       justify-content: space-between;
@@ -230,7 +230,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       border: none;
       cursor: pointer;
     }
-  `;H=Ht([v("wd-header")],H);var Kt=Object.defineProperty,Vt=Object.getOwnPropertyDescriptor,T=(t,e,a,o)=>{for(var s=o>1?void 0:o?Vt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Kt(e,a,s),s};let k=class extends p{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};k.styles=u`
+  `;K=Kt([v("wd-header")],K);var Vt=Object.defineProperty,Bt=Object.getOwnPropertyDescriptor,T=(t,e,a,i)=>{for(var s=i>1?void 0:i?Bt(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Vt(e,a,s),s};let k=class extends p{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};k.styles=u`
     :host {
       display: inline-block;
     }
@@ -284,7 +284,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
     }
     :host([animation="bounce"]) > .cell {
       animation-name: Bounce;
-      animation-duration: ${Ot}ms;
+      animation-duration: ${It}ms;
       animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }
@@ -338,7 +338,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         transform: rotateY(0);
       }
     }
-  `;T([d({reflect:!0})],k.prototype,"status",2);T([d({reflect:!0})],k.prototype,"animation",2);T([d()],k.prototype,"letter",2);k=T([v("wd-cell")],k);var Bt=Object.defineProperty,qt=Object.getOwnPropertyDescriptor,C=(t,e,a,o)=>{for(var s=o>1?void 0:o?qt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Bt(e,a,s),s};let y=class extends p{constructor(){super(...arguments);this.guess=st.letters,this.result=st.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0)}render(){let t=this.guess.split("");t=[...t,...W(()=>"",O-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
+  `;T([d({reflect:!0})],k.prototype,"status",2);T([d({reflect:!0})],k.prototype,"animation",2);T([d()],k.prototype,"letter",2);k=T([v("wd-cell")],k);var qt=Object.defineProperty,Xt=Object.getOwnPropertyDescriptor,j=(t,e,a,i)=>{for(var s=i>1?void 0:i?Xt(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&qt(e,a,s),s};let y=class extends p{constructor(){super(...arguments);this.guess=at.letters,this.result=at.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0),this.revealed&&(this.status==="win"||this.status==="lose")&&(this.revealed=!1)}render(){let t=this.guess.split("");t=[...t,...W(()=>"",O-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
       <div class="row">
         <wd-cell
           style="--transition-delay:${this.evaluated&&this.status!=="win"?"0ms":e?"150ms":"0ms"};"
@@ -377,7 +377,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
     }
     :host([status="invalid"]) {
       animation-name: Shake;
-      animation-duration: ${tt}ms;
+      animation-duration: ${et}ms;
     }
     .row {
       display: grid;
@@ -406,7 +406,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         transform: translateX(4px);
       }
     }
-  `;C([d()],y.prototype,"guess",2);C([d()],y.prototype,"result",2);C([d({reflect:!0})],y.prototype,"status",2);C([d()],y.prototype,"evaluated",2);y=C([v("wd-row")],y);var Xt=Object.defineProperty,Ft=Object.getOwnPropertyDescriptor,R=(t,e,a,o)=>{for(var s=o>1?void 0:o?Ft(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Xt(e,a,s),s};let _=class extends p{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=Y}render(){return n`
+  `;j([d()],y.prototype,"guess",2);j([d()],y.prototype,"result",2);j([d({reflect:!0})],y.prototype,"status",2);j([d()],y.prototype,"evaluated",2);y=j([v("wd-row")],y);var Ft=Object.defineProperty,Ut=Object.getOwnPropertyDescriptor,R=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ut(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Ft(e,a,s),s};let _=class extends p{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=Y}render(){return n`
       <div class="board">
         <wd-row
           .guess=${this.guesses[0].letters}
@@ -465,49 +465,52 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       padding: 10px;
       box-sizing: border-box;
     }
-  `;R([d()],_.prototype,"guess",2);R([d()],_.prototype,"status",2);R([d()],_.prototype,"guesses",2);_=R([v("wd-board")],_);var Ut=Object.defineProperty,Zt=Object.getOwnPropertyDescriptor,rt=(t,e,a,o)=>{for(var s=o>1?void 0:o?Zt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Ut(e,a,s),s};let L=class extends p{constructor(){super(...arguments);this.letters=P}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:o=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};_t[o]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:o}))};return t.addEventListener("click",e),t}render(){return n`
+  `;R([d()],_.prototype,"guess",2);R([d()],_.prototype,"status",2);R([d()],_.prototype,"guesses",2);_=R([v("wd-board")],_);var Zt=Object.defineProperty,Jt=Object.getOwnPropertyDescriptor,nt=(t,e,a,i)=>{for(var s=i>1?void 0:i?Jt(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Zt(e,a,s),s};let L=class extends p{constructor(){super(...arguments);this.letters=P}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:i=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};Pt[i]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:i}))};return t.addEventListener("click",e),t}render(){return n`
       <div id="keyboard">
         <div class="row">
-          <button data-key="q" data-state=${this.letters.q}>q</button>
-          <button data-key="w" data-state=${this.letters.w}>w</button>
-          <button data-key="e" data-state=${this.letters.e}>e</button>
-          <button data-key="r" data-state=${this.letters.r}>r</button>
-          <button data-key="t" data-state=${this.letters.t}>t</button>
-          <button data-key="y" data-state=${this.letters.y}>y</button>
-          <button data-key="u" data-state=${this.letters.u}>u</button>
-          <button data-key="i" data-state=${this.letters.i}>i</button>
-          <button data-key="o" data-state=${this.letters.o}>o</button>
-          <button data-key="p" data-state=${this.letters.p}>p</button>
+          <button title="Q" data-key="q" data-state=${this.letters.q}>q</button>
+          <button title="W" data-key="w" data-state=${this.letters.w}>w</button>
+          <button title="E" data-key="e" data-state=${this.letters.e}>e</button>
+          <button title="R" data-key="r" data-state=${this.letters.r}>r</button>
+          <button title="T" data-key="t" data-state=${this.letters.t}>t</button>
+          <button title="Y" data-key="y" data-state=${this.letters.y}>y</button>
+          <button title="U" data-key="u" data-state=${this.letters.u}>u</button>
+          <button title="I" data-key="i" data-state=${this.letters.i}>i</button>
+          <button title="O" data-key="o" data-state=${this.letters.o}>o</button>
+          <button title="P" data-key="p" data-state=${this.letters.p}>p</button>
         </div>
         <div class="row">
           <div class="spacer half"></div>
-          <button data-key="a" data-state=${this.letters.a}>a</button>
-          <button data-key="s" data-state=${this.letters.s}>s</button>
-          <button data-key="d" data-state=${this.letters.d}>d</button>
-          <button data-key="f" data-state=${this.letters.f}>f</button>
-          <button data-key="g" data-state=${this.letters.g}>g</button>
-          <button data-key="h" data-state=${this.letters.h}>h</button>
-          <button data-key="j" data-state=${this.letters.j}>j</button>
-          <button data-key="k" data-state=${this.letters.k}>k</button>
-          <button data-key="l" data-state=${this.letters.l}>l</button>
+          <button title="A" data-key="a" data-state=${this.letters.a}>a</button>
+          <button title="S" data-key="s" data-state=${this.letters.s}>s</button>
+          <button title="D" data-key="d" data-state=${this.letters.d}>d</button>
+          <button title="F" data-key="f" data-state=${this.letters.f}>f</button>
+          <button title="G" data-key="g" data-state=${this.letters.g}>g</button>
+          <button title="H" data-key="h" data-state=${this.letters.h}>h</button>
+          <button title="J" data-key="j" data-state=${this.letters.j}>j</button>
+          <button title="K" data-key="k" data-state=${this.letters.k}>k</button>
+          <button title="L" data-key="l" data-state=${this.letters.l}>l</button>
           <div class="spacer half"></div>
         </div>
         <div class="row">
-          <button data-key="Enter" class="one-and-a-half">enter</button
-          ><button data-key="z" data-state=${this.letters.z}>z</button>
-          <button data-key="x" data-state=${this.letters.x}>x</button>
-          <button data-key="c" data-state=${this.letters.c}>c</button>
-          <button data-key="v" data-state=${this.letters.v}>v</button>
-          <button data-key="b" data-state=${this.letters.b}>b</button>
-          <button data-key="n" data-state=${this.letters.n}>n</button>
-          <button data-key="m" data-state=${this.letters.m}>m</button>
+          <button title="Enter" data-key="Enter" class="one-and-a-half">
+            enter
+          </button>
+          <button title="Z" data-key="z" data-state=${this.letters.z}>z</button>
+          <button title="X" data-key="x" data-state=${this.letters.x}>x</button>
+          <button title="C" data-key="c" data-state=${this.letters.c}>c</button>
+          <button title="V" data-key="v" data-state=${this.letters.v}>v</button>
+          <button title="B" data-key="b" data-state=${this.letters.b}>b</button>
+          <button title="N" data-key="n" data-state=${this.letters.n}>n</button>
+          <button title="M" data-key="m" data-state=${this.letters.m}>m</button>
           <button
+            title="Backspace"
             data-key="Backspace"
             class="one-and-a-half"
             role="button"
             aria-label="backspace"
           >
-            <wd-icon name="backspace"></wd-icon>
+            <wd-icon name="backspace" size="lg"></wd-icon>
           </button>
         </div>
       </div>
@@ -579,6 +582,11 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       flex: 2;
     }
 
+    wd-icon[name="backspace"] {
+      height: 28px;
+      width: 28px;
+    }
+
     button[data-state="correct"] {
       background-color: var(--key-bg-correct);
       color: var(--key-evaluated-text-color);
@@ -593,7 +601,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       background-color: var(--key-bg-absent);
       color: var(--key-evaluated-text-color);
     }
-  `;rt([d()],L.prototype,"letters",2);L=rt([v("wd-keyboard")],L);var Jt=Object.defineProperty,Qt=Object.getOwnPropertyDescriptor,te=(t,e,a,o)=>{for(var s=o>1?void 0:o?Qt(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&Jt(e,a,s),s};let K=class extends p{render(){return n`
+  `;nt([d()],L.prototype,"letters",2);L=nt([v("wd-keyboard")],L);var Qt=Object.defineProperty,te=Object.getOwnPropertyDescriptor,ee=(t,e,a,i)=>{for(var s=i>1?void 0:i?te(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&Qt(e,a,s),s};let V=class extends p{render(){return n`
       <section>
         <div class="instructions">
           <p>Guess the <strong>WORD</strong> in 6 tries.</p>
@@ -655,7 +663,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
           </p>
         </div>
       </section>
-    `}};K.styles=u`
+    `}};V.styles=u`
     :host {
       color: var(--modal-content-color);
     }
@@ -683,14 +691,14 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       padding: 16px;
       padding-top: 0px;
     }
-  `;K=te([v("wd-help")],K);var ee=Object.defineProperty,se=Object.getOwnPropertyDescriptor,V=(t,e,a,o)=>{for(var s=o>1?void 0:o?se(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&ee(e,a,s),s};let j=class extends p{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
+  `;V=ee([v("wd-help")],V);var se=Object.defineProperty,ae=Object.getOwnPropertyDescriptor,B=(t,e,a,i)=>{for(var s=i>1?void 0:i?ae(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&se(e,a,s),s};let D=class extends p{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
       <div class="container">
         <label><slot></slot></label>
         <div class="switch">
           <span class="knob"></span>
         </div>
       </div>
-    `}};j.styles=u`
+    `}};D.styles=u`
     .container {
       display: flex;
       justify-content: space-between;
@@ -725,7 +733,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
     :host([disabled="true"]) .switch {
       opacity: 0.5;
     }
-  `;V([d({reflect:!0})],j.prototype,"checked",2);V([d({reflect:!0})],j.prototype,"disabled",2);j=V([v("wd-switch")],j);var ae=Object.defineProperty,oe=Object.getOwnPropertyDescriptor,nt=(t,e,a,o)=>{for(var s=o>1?void 0:o?oe(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&ae(e,a,s),s};let A=class extends p{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
+  `;B([d({reflect:!0})],D.prototype,"checked",2);B([d({reflect:!0})],D.prototype,"disabled",2);D=B([v("wd-switch")],D);var ie=Object.defineProperty,oe=Object.getOwnPropertyDescriptor,lt=(t,e,a,i)=>{for(var s=i>1?void 0:i?oe(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&ie(e,a,s),s};let A=class extends p{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
       <div class="sections">
         <section>
           <div class="setting">
@@ -792,7 +800,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         padding: 16px;
       }
     }
-  `;nt([g()],A.prototype,"darkTheme",2);A=nt([v("wd-settings")],A);var ie=Object.defineProperty,re=Object.getOwnPropertyDescriptor,B=(t,e,a,o)=>{for(var s=o>1?void 0:o?re(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&ie(e,a,s),s};let D=class extends p{constructor(){super(...arguments);this.stats={},this.activeGameId=""}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await I;this.stats=t(),this.activeGameId=e().id}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0;return n`
+  `;lt([g()],A.prototype,"darkTheme",2);A=lt([v("wd-settings")],A);var re=Object.defineProperty,ne=Object.getOwnPropertyDescriptor,q=(t,e,a,i)=>{for(var s=i>1?void 0:i?ne(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&re(e,a,s),s};let G=class extends p{constructor(){super(...arguments);this.stats={},this.activeGameId=""}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await I;this.stats=t(),this.activeGameId=e().id}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0;return n`
       <div class="container">
         <h1>Statistics</h1>
         <div id="statistics">
@@ -923,7 +931,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         </div>
       </div>`:null}
       </div>
-    `}};D.styles=u`
+    `}};G.styles=u`
     .container {
       display: flex;
       flex-direction: column;
@@ -1105,7 +1113,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       height: 24px;
       padding-left: 8px;
     }
-  `;B([g()],D.prototype,"stats",2);B([g()],D.prototype,"activeGameId",2);D=B([v("wd-stats")],D);var ne=Object.defineProperty,le=Object.getOwnPropertyDescriptor,q=(t,e,a,o)=>{for(var s=o>1?void 0:o?le(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&ne(e,a,s),s};let G=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
+  `;q([g()],G.prototype,"stats",2);q([g()],G.prototype,"activeGameId",2);G=q([v("wd-stats")],G);var le=Object.defineProperty,de=Object.getOwnPropertyDescriptor,X=(t,e,a,i)=>{for(var s=i>1?void 0:i?de(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&le(e,a,s),s};let S=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
       <div class="overlay">
         <div class="content">
           <header>
@@ -1119,7 +1127,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
           </div>
         </div>
       </div>
-    `}};G.styles=u`
+    `}};S.styles=u`
     .overlay {
       display: none;
       position: absolute;
@@ -1227,7 +1235,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         transform: translateY(12vh);
       }
     }
-  `;q([d({reflect:!0})],G.prototype,"open",2);q([d({reflect:!0})],G.prototype,"closing",2);G=q([v("wd-page")],G);var de=Object.defineProperty,ce=Object.getOwnPropertyDescriptor,X=(t,e,a,o)=>{for(var s=o>1?void 0:o?ce(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&de(e,a,s),s};let S=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
+  `;X([d({reflect:!0})],S.prototype,"open",2);X([d({reflect:!0})],S.prototype,"closing",2);S=X([v("wd-page")],S);var ce=Object.defineProperty,he=Object.getOwnPropertyDescriptor,F=(t,e,a,i)=>{for(var s=i>1?void 0:i?he(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&ce(e,a,s),s};let z=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
       <div class="overlay" @click=${this.closeModal}>
         <div class="content" @click=${this.preventClose}>
           <slot></slot>
@@ -1236,7 +1244,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
           </button>
         </div>
       </div>
-    `}};S.styles=u`
+    `}};z.styles=u`
     .overlay {
       display: none;
       position: absolute;
@@ -1315,7 +1323,7 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
         transform: translateY(6vh);
       }
     }
-  `;X([d({reflect:!0})],S.prototype,"open",2);X([d({reflect:!0})],S.prototype,"closing",2);S=X([v("wd-modal")],S);var he=Object.defineProperty,ue=Object.getOwnPropertyDescriptor,w=(t,e,a,o)=>{for(var s=o>1?void 0:o?ue(e,a):e,i=t.length-1,r;i>=0;i--)(r=t[i])&&(s=(o?r(e,a,s):r(s))||s);return o&&s&&he(e,a,s),s};let m=class extends p{constructor(){super(...arguments);this.gameId="",this.guess=0,this.guesses=Y,this.letters=P,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;Mt(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,o)=>o===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,o)=>o===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,o)=>o===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<O&&t in P&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case $.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case $.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},tt)}async validate(t){return t.length<O?{success:!1,reason:$.INVALID_CHAR_LEN}:await jt(t)?{success:!0}:{success:!1,reason:$.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let o=0;o<e.length;o++)a[t.charAt(o)]=e[o];this.letters=f(f({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let o=0;o<t.length;o++){const s=t.charAt(o),i=e.charAt(o);a[o]=i===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await I;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await I;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},750))},5*500)}async startNewGame(){const{generateGame:t}=await I,e=await t();this.gameId=e.id,this.guess=e.guess,this.guesses=e.guesses,this.solution=e.solution,this.status=e.status,this.letters=e.letters,this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await I,a=t();this.gameId=a.id,this.guess=a.guess,this.guesses=a.guesses,this.solution=a.solution,this.status=a.status,this.letters=a.letters,this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){window.removeEventListener("keydown",this._handleKeydown),super.disconnectedCallback()}render(){return n`
+  `;F([d({reflect:!0})],z.prototype,"open",2);F([d({reflect:!0})],z.prototype,"closing",2);z=F([v("wd-modal")],z);var ue=Object.defineProperty,pe=Object.getOwnPropertyDescriptor,w=(t,e,a,i)=>{for(var s=i>1?void 0:i?pe(e,a):e,o=t.length-1,r;o>=0;o--)(r=t[o])&&(s=(i?r(e,a,s):r(s))||s);return i&&s&&ue(e,a,s),s};let m=class extends p{constructor(){super(...arguments);this.gameId="",this.guess=0,this.guesses=Y,this.letters=P,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;Tt(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<O&&t in P&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case $.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case $.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},et)}async validate(t){return t.length<O?{success:!1,reason:$.INVALID_CHAR_LEN}:await Dt(t)?{success:!0}:{success:!1,reason:$.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let i=0;i<e.length;i++)a[t.charAt(i)]=e[i];this.letters=f(f({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let i=0;i<t.length;i++){const s=t.charAt(i),o=e.charAt(i);a[i]=o===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await I;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await I;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},750))},5*500)}async startNewGame(){const{generateGame:t}=await I,e=await t();this.gameId=e.id,this.guess=e.guess,this.guesses=e.guesses,this.solution=e.solution,this.status=e.status,this.letters=e.letters,this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await I,a=t();this.gameId=a.id,this.guess=a.guess,this.guesses=a.guesses,this.solution=a.solution,this.status=a.status,this.letters=a.letters,this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){window.removeEventListener("keydown",this._handleKeydown),super.disconnectedCallback()}render(){return n`
       <wd-header
         @wd-modal=${this.handleModal}
         @wd-page=${this.handlePage}
@@ -1354,4 +1362,4 @@ var ht=Object.defineProperty;var U=Object.getOwnPropertySymbols;var ut=Object.pr
       flex-direction: column;
       box-sizing: border-box;
     }
-  `;w([g()],m.prototype,"gameId",2);w([g()],m.prototype,"guess",2);w([g()],m.prototype,"guesses",2);w([g()],m.prototype,"letters",2);w([g()],m.prototype,"solution",2);w([g()],m.prototype,"status",2);w([g()],m.prototype,"page",2);w([g()],m.prototype,"modal",2);w([g()],m.prototype,"toast",2);w([g()],m.prototype,"closingPage",2);w([g()],m.prototype,"closingModal",2);m=w([v("wd-app")],m);ft({});
+  `;w([g()],m.prototype,"gameId",2);w([g()],m.prototype,"guess",2);w([g()],m.prototype,"guesses",2);w([g()],m.prototype,"letters",2);w([g()],m.prototype,"solution",2);w([g()],m.prototype,"status",2);w([g()],m.prototype,"page",2);w([g()],m.prototype,"modal",2);w([g()],m.prototype,"toast",2);w([g()],m.prototype,"closingPage",2);w([g()],m.prototype,"closingModal",2);m=w([v("wd-app")],m);yt({});
