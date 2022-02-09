@@ -919,7 +919,7 @@ var ut=Object.defineProperty;var Z=Object.getOwnPropertySymbols;var pt=Object.pr
         ${t===this.activeGameId?n`<div class="footer">
           <div class="refresh">
             <button id="refresh-button" @click=${this.newGame}>
-              Next word <wd-icon name="refresh"></wd-icon>
+              Next <wd-icon name="refresh"></wd-icon>
             </button>
           </div>
           <div class="divider"></div>
@@ -1045,6 +1045,7 @@ var ut=Object.defineProperty;var Z=Object.getOwnPropertySymbols;var pt=Object.pr
       display: block;
       height: 48px;
       width: 1px;
+      flex-shrink: 0;
       background-color: var(--wd-border-color);
     }
     .share {
@@ -1073,8 +1074,8 @@ var ut=Object.defineProperty;var Z=Object.getOwnPropertySymbols;var pt=Object.pr
       text-transform: uppercase;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
       width: 90%;
-      font-size: 20px;
-      height: 52px;
+      font-size: 16px;
+      height: 48px;
       -webkit-filter: brightness(100%);
     }
     button#refresh-button:hover {
@@ -1101,8 +1102,8 @@ var ut=Object.defineProperty;var Z=Object.getOwnPropertySymbols;var pt=Object.pr
       text-transform: uppercase;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
       width: 90%;
-      font-size: 20px;
-      height: 52px;
+      font-size: 16px;
+      height: 48px;
       -webkit-filter: brightness(100%);
     }
     button#share-button:hover {
