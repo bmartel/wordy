@@ -14,9 +14,11 @@ This intends not to compete or replace the original in any way, shape or form. T
 ## Changes
 
 - You cannot reuse letters which have been revealed as not present in the hidden word.
-- Uses indexeddb for storage.
 - Puzzles are pseudorandom generated along with a seed that can be shared with your puzzle results so other people may play the same puzzle.
 - You can generate a new puzzle only once you have won/lost, streaks are treated like a rogue-like condition. (original gauntlet anyone?)
+- Uses indexeddb for storage.
+- Uses WebCrypto for obfuscating solutions in indexeddb. **Not for secure purposes, this was added just for my own and others sakes that makes it just mildly more work than just solving the puzzle!**
+- Fully offline PWA.
 
 ## Built with
 
