@@ -62,7 +62,7 @@ export const manager = (async (): Promise<GameManager> => {
   const canLoadSeed = !seedPlayedPreviously && !gameInProgress;
   let stats = ((await store.getItem("stats")) || {}) as GameStats;
   let active = (
-    gameInProgress || activeGamePlayable
+    gameInProgress || (!seed && activeGamePlayable)
       ? games[activeGameId as string]
       : await newGame(seedPlayedPreviously ? undefined : seed)
   ) as Game;
