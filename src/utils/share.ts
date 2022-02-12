@@ -12,11 +12,6 @@ export const createShareableResult = (guesses: Guess[]): string => {
 export const share = async (content: string, seed: string) => {
   const url = new URL(location.href);
   url.searchParams.set("seed", seed);
-  content = `
-${url.toString()}
-
-${content}
-    `;
   try {
     if (navigator.share) {
       await navigator.share({
@@ -26,6 +21,11 @@ ${content}
       });
       Toast("Shared puzzle result");
     } else {
+      content = `
+${url.toString()}
+
+${content}
+    `;
       await navigator.clipboard.writeText(content);
       Toast("Copied puzzle result");
     }
