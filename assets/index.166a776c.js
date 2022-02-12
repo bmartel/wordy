@@ -1031,6 +1031,7 @@ ${t}
       flex: 1;
     }
     .statistic-tile {
+      color: var(--cell-text-color);
       aspect-ratio: 1;
       font-weight: 700 !important;
       letter-spacing: -0.05em !important;
