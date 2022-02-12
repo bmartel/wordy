@@ -46,28 +46,35 @@ export const newGame = async (seed?: string): Promise<Game> => {
 };
 export const manager = (async (): Promise<GameManager> => {
   const seed = new URLSearchParams(location.search).get("seed") || undefined;
-  const activeGameId = await store.getItem("activeGameId");
+  const activeGameId = ((await store.getItem("activeGameId")) || "") as string;
   let games = ((await store.getItem("games")) || {}) as Record<string, Game>; // should be a list of historical and active games
   const gameInProgress = !!(
-    activeGameId && !games?.[activeGameId as string]?.end
+    activeGameId &&
+    games?.[activeGameId as string]?.start &&
+    !games?.[activeGameId as string]?.end
   );
   const seedPlayedPreviously = !!(seed && seed in games && games[seed]?.end);
+  const activeGamePlayable = !!(
+    activeGameId &&
+    activeGameId in games &&
+    !games[activeGameId]?.end
+  );
   const canLoadSeed = !seedPlayedPreviously && !gameInProgress;
   let stats = ((await store.getItem("stats")) || {}) as GameStats;
   let active = (
-    gameInProgress
+    gameInProgress || activeGamePlayable
       ? games[activeGameId as string]
       : await newGame(seedPlayedPreviously ? undefined : seed)
   ) as Game;
   const modal =
-    stats.lastGameId === activeGameId
+    seed && gameInProgress
+      ? "game-in-progress"
+      : seed && seedPlayedPreviously
+      ? "seed-played"
+      : activeGameId && stats.lastGameId === activeGameId
       ? "stats"
       : (await store.getItem("shown_help"))
-      ? seed && gameInProgress
-        ? "game-in-progress"
-        : seed && seedPlayedPreviously
-        ? "seed-played"
-        : ""
+      ? ""
       : "help";
 
   if (modal === "help") {

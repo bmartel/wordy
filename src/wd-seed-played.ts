@@ -20,6 +20,9 @@ export class CwSeedPlayed extends LitElement {
       text-align: center;
       margin-bottom: 10px;
     }
+    p {
+      margin: 12px 0;
+    }
     .content {
       flex: 1;
     }
@@ -30,11 +33,15 @@ export class CwSeedPlayed extends LitElement {
       <div class="container">
         <h1>Game Already Played</h1>
         <div class="content">
-          You have already played the game generated from the shared link. Each
-          game is uniquely generated for the user. Upon completion (win or lose)
-          you may share this game with others, and each player is allowed to
-          play the shared game only once. You are not allowed to replay your own
-          shared game link.
+          <p>
+            You have already played the game generated from the shared link.
+            Each game is uniquely generated for the user.
+          </p>
+          <p>
+            Upon completion (win or lose) you may share this game with others,
+            and each player is allowed to play the shared game only once.
+          </p>
+          <p>You are not allowed to replay your own shared game link.</p>
         </div>
       </div>
     `;
