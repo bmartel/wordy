@@ -20,6 +20,9 @@ export class CwGameInProgress extends LitElement {
       text-align: center;
       margin-bottom: 10px;
     }
+    p {
+      margin: 12px 0;
+    }
     .content {
       flex: 1;
     }
@@ -30,8 +33,10 @@ export class CwGameInProgress extends LitElement {
       <div class="container">
         <h1>Game In Progress</h1>
         <div class="content">
-          You are currently in the middle of an active game. To load a game from
-          a shared link, you must first complete the current game.
+          <p>
+            You are currently in the middle of an active game. To load a game
+            from a shared link, you must first complete the current game.
+          </p>
         </div>
       </div>
     `;
