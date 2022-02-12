@@ -38,10 +38,7 @@ export const allowedKeyMap = {
   ...controlKeyMap,
 };
 
-export let WORD_LIST_SIZE = 0;
-export const setWordListSize = (size: number) => {
-  WORD_LIST_SIZE = size;
-};
+export const TARGET_DURATION = 60 * 10 * 1000;
 export const WORD_SIZE = 5;
 export const GUESS_SIZE = 6;
 export const INVALID_ANIMATION_DURATION = 600;
@@ -72,7 +69,7 @@ export interface Game {
   iv: Uint8Array;
   seed: string;
   letters: LetterKeyResultMap;
-  start: number;
+  start?: number;
   end?: number;
 }
 export interface GuessDistribution {
@@ -87,10 +84,13 @@ export interface GameStats {
   lastResult?: "win" | "lose";
   lastGameId?: string;
   lastGuess?: number;
+  avgGuess?: number;
+  avgDuration?: number;
   wins: number;
   losses: number;
   streak: number;
   maxStreak: number;
+  rating: number;
   distribution: GuessDistribution;
 }
 export const GuessResultSymbols: Record<GuessResult | "empty", string> = {

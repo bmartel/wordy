@@ -23,6 +23,8 @@ import "./wd-header.ts";
 import "./wd-board.ts";
 import "./wd-keyboard.ts";
 import "./wd-help.ts";
+import "./wd-seed-played.ts";
+import "./wd-game-in-progress.ts";
 import "./wd-settings.ts";
 import "./wd-stats.ts";
 import "./wd-page.ts";
@@ -433,6 +435,13 @@ export class CwApp extends LitElement {
             .closing=${this.closingModal}
             @wd-modal=${this.handleModal}
           >
+            ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
+            ${this.modal === "game-in-progress"
+              ? html`<wd-game-in-progress></wd-game-in-progress>`
+              : null}
+            ${this.modal === "seed-played"
+              ? html`<wd-seed-played></wd-seed-played>`
+              : null}
             ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
             ${this.modal === "stats"
               ? html`<wd-stats @wd-new-game=${this.startNewGame}></wd-stats>`

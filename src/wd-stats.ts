@@ -37,13 +37,34 @@ export class CwStats extends LitElement {
 
     #statistics {
       display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .statistic-container {
       flex: 1;
     }
+    .statistic-tile {
+      aspect-ratio: 1;
+      font-weight: 700 !important;
+      letter-spacing: -0.05em !important;
+      flex-shrink: 0;
+      flex-grow: 0;
+      background-color: var(--color-absent);
+    }
+    .s-tile {
+      background-color: var(--color-correct);
+    }
+    .a-tile {
+      background-color: var(--color-present);
+    }
+
+    .statistic-container.tile-container {
+      margin-right: 4px;
+    }
 
     .statistic-container .statistic {
+      height: 54px;
       font-size: 36px;
       font-weight: 400;
       display: flex;
@@ -57,7 +78,6 @@ export class CwStats extends LitElement {
     .statistic.timer {
       font-variant-numeric: initial;
     }
-
     .statistic-container .label {
       font-size: 12px;
       display: flex;
@@ -227,6 +247,22 @@ export class CwStats extends LitElement {
     await share(createShareableResult(guesses), seed);
   }
 
+  get ratingGrade() {
+    const rating = this.stats.rating;
+    if (rating >= 0) {
+      return "S";
+    } else if (rating >= -500) {
+      return "A";
+    } else if (rating >= -1000) {
+      return "B";
+    } else if (rating >= -2000) {
+      return "C";
+    } else if (rating >= -5000) {
+      return "D";
+    }
+    return "E";
+  }
+
   private graphWidth(index: GuessDistributionKey) {
     const totalWins = this.stats.wins;
     if (totalWins) {
@@ -241,15 +277,22 @@ export class CwStats extends LitElement {
   render() {
     const lastGameId = this.stats.lastGameId || "";
     const lastGuess = this.stats.lastGuess || 0;
+    const grade = this.ratingGrade;
     return html`
       <div class="container">
         <h1>Statistics</h1>
         <div id="statistics">
-          <div class="statistic-container">
-            <div class="statistic">
-              ${this.stats.wins || 0 + this.stats.losses || 0}
+          <div class="statistic-container tile-container">
+            <div
+              class="statistic statistic-tile ${grade === "S"
+                ? "s-tile"
+                : grade === "A"
+                ? "a-tile"
+                : ""}"
+            >
+              ${grade}
             </div>
-            <div class="label">Played</div>
+            <div class="label">Rating</div>
           </div>
 
           <div class="statistic-container">
@@ -272,6 +315,13 @@ export class CwStats extends LitElement {
           <div class="statistic-container">
             <div class="statistic">${this.stats.maxStreak || 0}</div>
             <div class="label">Max Streak</div>
+          </div>
+
+          <div class="statistic-container">
+            <div class="statistic">
+              ${this.stats.wins || 0 + this.stats.losses || 0}
+            </div>
+            <div class="label">Played</div>
           </div>
         </div>
         <h1>Guess Distribution</h1>
