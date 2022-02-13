@@ -1,14 +1,14 @@
-var zt=Object.defineProperty,Et=Object.defineProperties;var Rt=Object.getOwnPropertyDescriptors;var gt=Object.getOwnPropertySymbols;var Mt=Object.prototype.hasOwnProperty,Tt=Object.prototype.propertyIsEnumerable;var mt=(t,e,a)=>e in t?zt(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,$=(t,e)=>{for(var a in e||(e={}))Mt.call(e,a)&&mt(t,a,e[a]);if(gt)for(var a of gt(e))Tt.call(e,a)&&mt(t,a,e[a]);return t},wt=(t,e)=>Et(t,Rt(e));import{v as At,n as Lt,l as Nt,r as h,e as c,s as f,$ as n,a as v,o as Yt,t as m}from"./vendor.8e6c5f1b.js";const Wt=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))i(s);new MutationObserver(s=>{for(const r of s)if(r.type==="childList")for(const o of r.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function a(s){const r={};return s.integrity&&(r.integrity=s.integrity),s.referrerpolicy&&(r.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?r.credentials="include":s.crossorigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(s){if(s.ep)return;s.ep=!0;const r=a(s);fetch(s.href,r)}};Wt();function Kt(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:i,onRegistered:s,onRegisterError:r}=t;let o;const g=async(u=!0)=>{};return"serviceWorker"in navigator&&(o=new At("./sw.js",{scope:"./",type:"classic"}),o.addEventListener("activated",u=>{u.isUpdate?window.location.reload():i==null||i()}),o.register({immediate:e}).then(u=>{s==null||s(u)}).catch(u=>{r==null||r(u)})),g}const Ht="modulepreload",bt={},Vt="./",Bt=function(e,a){return!a||a.length===0?e():Promise.all(a.map(i=>{if(i=`${Vt}${i}`,i in bt)return;bt[i]=!0;const s=i.endsWith(".css"),r=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${i}"]${r}`))return;const o=document.createElement("link");if(o.rel=s?"stylesheet":Ht,s||(o.as="script",o.crossOrigin=""),o.href=i,document.head.appendChild(o),s)return new Promise((g,u)=>{o.addEventListener("load",g),o.addEventListener("error",u)})})).then(()=>e())},Ut=Bt(()=>import("./config.d171c315.js"),[]);let q={};(async()=>{q=await Ut})();const z={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},Ft={Enter:!0,Backspace:!0},qt=$($({},z),Ft),yt=60*10*1e3,E=5,X=6,xt=600,Xt=750,Zt={empty:"\u2B1B",absent:"\u{1F7E6}",present:"\u{1F7E8}",correct:"\u{1F7E9}"};var I;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})(I||(I={}));let d=null;const Jt=t=>{d=t},Qt=()=>{d=null},te=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},ee=t=>{const e=(d==null?void 0:d.offsetHeight)||0;d==null||d.appendChild(t);const i=((d==null?void 0:d.offsetHeight)||0)-e;d==null||d.animate([{transform:`translateY(${i}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},se=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(d==null?void 0:d.children.length)&&e?ee(t):d==null||d.appendChild(t)},Y=t=>{const e=te(t);return se(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(i=>i.finished)),d==null||d.removeChild(e),a()})};function ae(t,e,a,i){return function(){t>>>=0,e>>>=0,a>>>=0,i>>>=0;let s=t+e|0;return t=e^e>>>9,e=a+(a<<3)|0,a=a<<21|a>>>11,i=i+1|0,s=s+i|0,a=a+s|0,(s>>>0)/4294967296}}function ie(t){for(var e=0,a=1779033703^t.length;e<t.length;e++)a=Math.imul(a^t.charCodeAt(e),3432918353),a=a<<13|a>>>19;return function(){return a=Math.imul(a^a>>>16,2246822507),a=Math.imul(a^a>>>13,3266489909),(a^=a>>>16)>>>0}}const re={alg:"A256GCM",ext:!0,k:"6KWvelTztanQl8-rJ1a1f2B_VcuIZDIrjBsoUiOY-sc",key_ops:["encrypt","decrypt"],kty:"oct"};let W=null;(async()=>{W||(W=await crypto.subtle.importKey("jwk",re,"AES-GCM",!0,["encrypt","decrypt"]))})();const oe=t=>new TextEncoder().encode(t),ne=t=>new TextDecoder().decode(t),$t=async t=>{const e=oe(t),a=crypto.getRandomValues(new Uint8Array(12)),i=await crypto.subtle.encrypt({name:"AES-GCM",iv:a},W,e);return[a,i]},le=async(t,e)=>{if(!e||!t)return"";const a=await crypto.subtle.decrypt({name:"AES-GCM",iv:e},W,t);return ne(new Uint8Array(a))},de=async(t,e)=>typeof t=="string"?t:await le(t,e),ce=async(t,e)=>typeof t=="string"?await $t(t):[e||new Uint8Array(12),t],ue=()=>Lt(),pe=t=>{const e=ie(t);return ae(e(),e(),e(),e())},Z=(t,e=0)=>Array.from({length:e},t),he=()=>Z(()=>"empty",E),kt=(t="",e=void 0)=>Z(()=>({letters:t,status:"tbd",result:e||[...he()]}),X),J=kt(),_t=J[0],x=Nt.createInstance({name:"wordy"});let Q=0;const fe=async t=>{const{words:e}=q;t=t||ue(),Q||(Q=e.length);const a=pe(t);return{word:e[Math.floor(a()*Q)],seed:t}},ve=async t=>{const{words:e}=q;return e.indexOf(t)>-1},Pt=async t=>{const{word:e,seed:a}=await fe(t),[i,s]=await $t(e);return{id:a,guess:0,guesses:kt(),solution:s,iv:i,seed:a,letters:z,status:"idle"}},C=(async()=>{var ut,pt,ht,ft;const t=new URLSearchParams(location.search).get("seed")||void 0,e=await x.getItem("activeGameId")||"";let a=await x.getItem("games")||{};const i=!!(e&&((ut=a==null?void 0:a[e])==null?void 0:ut.start)&&!((pt=a==null?void 0:a[e])==null?void 0:pt.end)),s=!!(t&&t in a&&((ht=a[t])==null?void 0:ht.end)),r=!!(e&&e in a&&!((ft=a[e])==null?void 0:ft.end)),o=!s&&!i;let g=await x.getItem("stats")||{},u=i||!t&&r?a[e]:await Pt(s?void 0:t);const ct=t&&i?"game-in-progress":t&&s?"seed-played":e&&g.lastGameId===e?"stats":await x.getItem("shown_help")?"":"help";if(ct==="help"&&await x.setItem("shown_help","1"),t){const p=new URL(window.location.href);p.searchParams.delete("seed"),history.pushState({path:p.href},"",p.href)}const F=async(p,l=!0)=>{var O,S;u=$($({},a[p.id]),p),l&&!u.start&&(u.start=Date.now());const y=((O=a[p.id])==null?void 0:O.solution)||u.solution,_=((S=a[p.id])==null?void 0:S.iv)||u.iv,[P,D]=await ce(y,_);a[p.id]=wt($({},u),{solution:D,iv:P}),await x.setItem("games",a)},Gt=(p,l,y,_)=>{const P=l-X/X;return(p-p*P)*_*100*((yt-y)/yt)},Dt=async p=>{const l=a[p],y=g.distribution||{},_=(l.guess+(g.avgGuess||0))/2,P=l.status==="win"?(g.streak||0)+1:0,D=Math.max(P,g.maxStreak||0),O=(g.wins||0)+(l.status==="win"?1:0),S=(g.losses||0)+(l.status==="lose"?1:0),St=O/(O+S),vt=((l.end||0)-(l.start||0)+(g.avgDuration||0))/2;g={streak:P,lastResult:l.status==="win"?"win":"lose",lastGameId:l.id,lastGuess:l.guess,avgGuess:_,avgDuration:vt,maxStreak:D,wins:O,losses:S,rating:Gt(D,_,vt,St),distribution:{0:(y[0]||0)+(l.status==="win"&&l.guess===0?1:0),1:(y[1]||0)+(l.status==="win"&&l.guess===1?1:0),2:(y[2]||0)+(l.status==="win"&&l.guess===2?1:0),3:(y[3]||0)+(l.status==="win"&&l.guess===3?1:0),4:(y[4]||0)+(l.status==="win"&&l.guess===4?1:0),5:(y[5]||0)+(l.status==="win"&&l.guess===5?1:0)}},await x.setItem("stats",g)};return(!e||o)&&(await x.setItem("activeGameId",u.id),await F(u,!1)),{games:()=>a,active:()=>u,stats:()=>g,modal:ct,saveGame:F,saveStats:Dt,generateGame:async()=>{const p=await Pt();return await x.setItem("activeGameId",p.id),await F(p,!1),p}}})(),ge=t=>t.map(e=>e.result.map(a=>Zt[a]).join("")).join(`
-`),me=async(t,e)=>{const a=new URL(location.href);a.searchParams.set("seed",e);try{navigator.share?(await navigator.share({url:a.toString(),title:`Puzzle ${e}`,text:t}),Y("Shared puzzle result")):(t=`
+var zt=Object.defineProperty,Et=Object.defineProperties;var Rt=Object.getOwnPropertyDescriptors;var ft=Object.getOwnPropertySymbols;var Mt=Object.prototype.hasOwnProperty,Tt=Object.prototype.propertyIsEnumerable;var gt=(t,e,a)=>e in t?zt(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,k=(t,e)=>{for(var a in e||(e={}))Mt.call(e,a)&&gt(t,a,e[a]);if(ft)for(var a of ft(e))Tt.call(e,a)&&gt(t,a,e[a]);return t},mt=(t,e)=>Et(t,Rt(e));import{v as At,n as Lt,l as Nt,r as p,e as c,s as v,$ as n,a as w,o as Yt,t as g}from"./vendor.8e6c5f1b.js";const Wt=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))r(s);new MutationObserver(s=>{for(const o of s)if(o.type==="childList")for(const i of o.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function a(s){const o={};return s.integrity&&(o.integrity=s.integrity),s.referrerpolicy&&(o.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?o.credentials="include":s.crossorigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(s){if(s.ep)return;s.ep=!0;const o=a(s);fetch(s.href,o)}};Wt();function Kt(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:r,onRegistered:s,onRegisterError:o}=t;let i;const f=async(u=!0)=>{};return"serviceWorker"in navigator&&(i=new At("./sw.js",{scope:"./",type:"classic"}),i.addEventListener("activated",u=>{u.isUpdate?window.location.reload():r==null||r()}),i.register({immediate:e}).then(u=>{s==null||s(u)}).catch(u=>{o==null||o(u)})),f}const Ht="modulepreload",bt={},Vt="./",Bt=function(e,a){return!a||a.length===0?e():Promise.all(a.map(r=>{if(r=`${Vt}${r}`,r in bt)return;bt[r]=!0;const s=r.endsWith(".css"),o=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${r}"]${o}`))return;const i=document.createElement("link");if(i.rel=s?"stylesheet":Ht,s||(i.as="script",i.crossOrigin=""),i.href=r,document.head.appendChild(i),s)return new Promise((f,u)=>{i.addEventListener("load",f),i.addEventListener("error",u)})})).then(()=>e())},Ut=Bt(()=>import("./config.d171c315.js"),[]);let q={};(async()=>{q=await Ut})();const z={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},Ft={Enter:!0,Backspace:!0},qt=k(k({},z),Ft),yt=60*10*1e3,E=5,X=6,xt=600,Xt=750,Zt={empty:"\u2B1B",absent:"\u{1F7E6}",present:"\u{1F7E8}",correct:"\u{1F7E9}"};var I;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})(I||(I={}));let d=null;const Jt=t=>{d=t},Qt=()=>{d=null},te=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},ee=t=>{const e=(d==null?void 0:d.offsetHeight)||0;d==null||d.appendChild(t);const r=((d==null?void 0:d.offsetHeight)||0)-e;d==null||d.animate([{transform:`translateY(${r}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},se=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(d==null?void 0:d.children.length)&&e?ee(t):d==null||d.appendChild(t)},Y=t=>{const e=te(t);return se(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(r=>r.finished)),d==null||d.removeChild(e),a()})};function ae(t,e,a,r){return function(){t>>>=0,e>>>=0,a>>>=0,r>>>=0;let s=t+e|0;return t=e^e>>>9,e=a+(a<<3)|0,a=a<<21|a>>>11,r=r+1|0,s=s+r|0,a=a+s|0,(s>>>0)/4294967296}}function re(t){for(var e=0,a=1779033703^t.length;e<t.length;e++)a=Math.imul(a^t.charCodeAt(e),3432918353),a=a<<13|a>>>19;return function(){return a=Math.imul(a^a>>>16,2246822507),a=Math.imul(a^a>>>13,3266489909),(a^=a>>>16)>>>0}}const oe={alg:"A256GCM",ext:!0,k:"6KWvelTztanQl8-rJ1a1f2B_VcuIZDIrjBsoUiOY-sc",key_ops:["encrypt","decrypt"],kty:"oct"};let W=null;(async()=>{W||(W=await crypto.subtle.importKey("jwk",oe,"AES-GCM",!0,["encrypt","decrypt"]))})();const ie=t=>new TextEncoder().encode(t),ne=t=>new TextDecoder().decode(t),kt=async t=>{const e=ie(t),a=crypto.getRandomValues(new Uint8Array(12)),r=await crypto.subtle.encrypt({name:"AES-GCM",iv:a},W,e);return[a,r]},le=async(t,e)=>{if(!e||!t)return"";const a=await crypto.subtle.decrypt({name:"AES-GCM",iv:e},W,t);return ne(new Uint8Array(a))},de=async(t,e)=>typeof t=="string"?t:await le(t,e),ce=async(t,e)=>typeof t=="string"?await kt(t):[e||new Uint8Array(12),t],ue=()=>Lt(),he=t=>{const e=re(t);return ae(e(),e(),e(),e())},Z=(t,e=0)=>Array.from({length:e},t),pe=()=>Z(()=>"empty",E),$t=(t="",e=void 0)=>Z(()=>({letters:t,status:"tbd",result:e||[...pe()]}),X),J=$t(),_t=J[0],x=Nt.createInstance({name:"wordy"});let Q=0;const ve=async t=>{const{words:e}=q;t=t||ue(),Q||(Q=e.length);const a=he(t);return{word:e[Math.floor(a()*Q)],seed:t}},we=async t=>{const{words:e}=q;return e.indexOf(t)>-1},Pt=async t=>{const{word:e,seed:a}=await ve(t),[r,s]=await kt(e);return{id:a,guess:0,guesses:$t(),solution:s,iv:r,seed:a,letters:z,status:"idle"}},C=(async()=>{var ut,ht,pt,vt;const t=new URLSearchParams(location.search).get("seed")||void 0,e=await x.getItem("activeGameId")||"";let a=await x.getItem("games")||{};const r=!!(e&&((ut=a==null?void 0:a[e])==null?void 0:ut.start)&&!((ht=a==null?void 0:a[e])==null?void 0:ht.end)),s=!!(t&&t in a&&((pt=a[t])==null?void 0:pt.end)),o=!!(e&&e in a&&!((vt=a[e])==null?void 0:vt.end)),i=!s&&!r;let f=await x.getItem("stats")||{},u=r||!t&&o?a[e]:await Pt(s?void 0:t);const ct=t&&r?"game-in-progress":t&&s?"seed-played":e&&f.lastGameId===e?"stats":await x.getItem("shown_help")?"":"help";if(ct==="help"&&await x.setItem("shown_help","1"),t){const h=new URL(window.location.href);h.searchParams.delete("seed"),history.pushState({path:h.href},"",h.href)}const F=async(h,l=!0)=>{var O,S;u=k(k({},a[h.id]),h),l&&!u.start&&(u.start=Date.now());const y=((O=a[h.id])==null?void 0:O.solution)||u.solution,_=((S=a[h.id])==null?void 0:S.iv)||u.iv,[P,D]=await ce(y,_);a[h.id]=mt(k({},u),{solution:D,iv:P}),await x.setItem("games",a)},Gt=(h,l,y,_)=>{const P=l-X/X;return(h-h*P)*_*100*((yt-y)/yt)},Dt=async h=>{const l=a[h],y=f.distribution||{},_=(l.guess+(f.avgGuess||0))/2,P=l.status==="win"?(f.streak||0)+1:0,D=Math.max(P,f.maxStreak||0),O=(f.wins||0)+(l.status==="win"?1:0),S=(f.losses||0)+(l.status==="lose"?1:0),St=O/(O+S),wt=((l.end||0)-(l.start||0)+(f.avgDuration||0))/2;f={streak:P,lastResult:l.status==="win"?"win":"lose",lastGameId:l.id,lastGuess:l.guess,avgGuess:_,avgDuration:wt,maxStreak:D,wins:O,losses:S,rating:Gt(D,_,wt,St),distribution:{0:(y[0]||0)+(l.status==="win"&&l.guess===0?1:0),1:(y[1]||0)+(l.status==="win"&&l.guess===1?1:0),2:(y[2]||0)+(l.status==="win"&&l.guess===2?1:0),3:(y[3]||0)+(l.status==="win"&&l.guess===3?1:0),4:(y[4]||0)+(l.status==="win"&&l.guess===4?1:0),5:(y[5]||0)+(l.status==="win"&&l.guess===5?1:0)}},await x.setItem("stats",f)};return(!e||i)&&(await x.setItem("activeGameId",u.id),await F(u,!1)),{games:()=>a,active:()=>u,stats:()=>f,modal:ct,saveGame:F,saveStats:Dt,generateGame:async()=>{const h=await Pt();return await x.setItem("activeGameId",h.id),await F(h,!1),h}}})(),fe=t=>t.map(e=>e.result.map(a=>Zt[a]).join("")).join(`
+`),ge=async(t,e)=>{const a=new URL(location.href);a.searchParams.set("seed",e);try{navigator.share?(await navigator.share({url:a.toString(),title:`Puzzle ${e}`,text:t}),Y("Shared puzzle result")):(t=`
 ${a.toString()}
 
 ${t}
-    `,await navigator.clipboard.writeText(t),Y("Copied puzzle result"))}catch(i){Y(i.message)}};var we=Object.defineProperty,be=Object.getOwnPropertyDescriptor,Ot=(t,e,a,i)=>{for(var s=i>1?void 0:i?be(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&we(e,a,s),s};let K=class extends f{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{Jt(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),Qt()}render(){return n`
+    `,await navigator.clipboard.writeText(t),Y("Copied puzzle result"))}catch(r){Y(r.message)}};var me=Object.defineProperty,be=Object.getOwnPropertyDescriptor,Ot=(t,e,a,r)=>{for(var s=r>1?void 0:r?be(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&me(e,a,s),s};let K=class extends v{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{Jt(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),Qt()}render(){return n`
       <section class="toast-layer"></section>
       <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
-    `}};K.styles=h`
+    `}};K.styles=p`
     :host {
       --color-tone-1: #d7e9f8;
       --color-tone-2: #81a8d5;
@@ -56,6 +56,7 @@ ${t}
       --wd-icon-color: var(--color-tone-7);
       --wd-share-color: var(--color-tone-6);
       --wd-share-bg: var(--color-tone-1);
+      --wd-fireworks-base-color: #fff9a3;
 
       --wd-max-width: 500px;
       --wd-header-height: 50px;
@@ -89,6 +90,7 @@ ${t}
       --wd-icon-color: var(--color-tone-1);
       --wd-share-color: var(--color-tone-1);
       --wd-share-bg: var(--color-tone-6);
+      --wd-fireworks-base-color: var(--white);
     }
     @media (max-height: 600px) {
       :host {
@@ -152,16 +154,16 @@ ${t}
         --_travel-distance: 5vh;
       }
     }
-  `;Ot([c({reflect:!0})],K.prototype,"dark",2);K=Ot([v("wd-theme")],K);var ye=Object.defineProperty,xe=Object.getOwnPropertyDescriptor,tt=(t,e,a,i)=>{for(var s=i>1?void 0:i?xe(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&ye(e,a,s),s};const $e={backspace:'<path stroke-linecap="round" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'},It={sm:20,md:24,lg:28};let R=class extends f{constructor(){super(...arguments);this.name="",this.size="md"}render(){return n`
+  `;Ot([c({reflect:!0})],K.prototype,"dark",2);K=Ot([w("wd-theme")],K);var ye=Object.defineProperty,xe=Object.getOwnPropertyDescriptor,tt=(t,e,a,r)=>{for(var s=r>1?void 0:r?xe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ye(e,a,s),s};const ke={backspace:'<path stroke-linecap="round" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'},It={sm:20,md:24,lg:28};let R=class extends v{constructor(){super(...arguments);this.name="",this.size="md"}render(){return n`
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height=${It[this.size]}
         width=${It[this.size]}
         viewBox="0 0 24 24"
       >
-        ${Yt($e[this.name])}
+        ${Yt(ke[this.name])}
       </svg>
-    `}};R.styles=h`
+    `}};R.styles=p`
     :host {
       display: inline-block;
       height: 24px;
@@ -169,7 +171,7 @@ ${t}
       pointer-events: none;
       user-select: none;
     }
-  `;tt([c()],R.prototype,"name",2);tt([c()],R.prototype,"size",2);R=tt([v("wd-icon")],R);var ke=Object.defineProperty,_e=Object.getOwnPropertyDescriptor,Pe=(t,e,a,i)=>{for(var s=i>1?void 0:i?_e(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&ke(e,a,s),s};let et=class extends f{showHelp(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"help",open:!0},bubbles:!0,composed:!0}))}showStats(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{content:"stats",open:!0},bubbles:!0,composed:!0}))}showSettings(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"settings",open:!0},bubbles:!0,composed:!0}))}render(){return n`
+  `;tt([c()],R.prototype,"name",2);tt([c()],R.prototype,"size",2);R=tt([w("wd-icon")],R);var $e=Object.defineProperty,_e=Object.getOwnPropertyDescriptor,Pe=(t,e,a,r)=>{for(var s=r>1?void 0:r?_e(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&$e(e,a,s),s};let et=class extends v{showHelp(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"help",open:!0},bubbles:!0,composed:!0}))}showStats(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{content:"stats",open:!0},bubbles:!0,composed:!0}))}showSettings(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"settings",open:!0},bubbles:!0,composed:!0}))}render(){return n`
       <header>
         <div class="menu">
           <button
@@ -201,7 +203,7 @@ ${t}
           </button>
         </div>
       </header>
-    `}};et.styles=h`
+    `}};et.styles=p`
     header {
       display: flex;
       justify-content: space-between;
@@ -235,7 +237,7 @@ ${t}
       border: none;
       cursor: pointer;
     }
-  `;et=Pe([v("wd-header")],et);var Oe=Object.defineProperty,Ie=Object.getOwnPropertyDescriptor,H=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ie(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Oe(e,a,s),s};let j=class extends f{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};j.styles=h`
+  `;et=Pe([w("wd-header")],et);var Oe=Object.defineProperty,Ie=Object.getOwnPropertyDescriptor,H=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ie(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Oe(e,a,s),s};let j=class extends v{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};j.styles=p`
     :host {
       display: inline-block;
     }
@@ -343,7 +345,7 @@ ${t}
         transform: rotateY(0);
       }
     }
-  `;H([c({reflect:!0})],j.prototype,"status",2);H([c({reflect:!0})],j.prototype,"animation",2);H([c()],j.prototype,"letter",2);j=H([v("wd-cell")],j);var Ce=Object.defineProperty,je=Object.getOwnPropertyDescriptor,M=(t,e,a,i)=>{for(var s=i>1?void 0:i?je(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ce(e,a,s),s};let k=class extends f{constructor(){super(...arguments);this.guess=_t.letters,this.result=_t.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0),this.revealed&&this.evaluated&&(this.revealed=!1)}render(){let t=this.guess.split("");t=[...t,...Z(()=>"",E-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
+  `;H([c({reflect:!0})],j.prototype,"status",2);H([c({reflect:!0})],j.prototype,"animation",2);H([c()],j.prototype,"letter",2);j=H([w("wd-cell")],j);var Ce=Object.defineProperty,je=Object.getOwnPropertyDescriptor,M=(t,e,a,r)=>{for(var s=r>1?void 0:r?je(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ce(e,a,s),s};let $=class extends v{constructor(){super(...arguments);this.guess=_t.letters,this.result=_t.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0),this.revealed&&this.evaluated&&(this.revealed=!1)}render(){let t=this.guess.split("");t=[...t,...Z(()=>"",E-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
       <div class="row">
         <wd-cell
           style="--transition-delay:${this.evaluated&&this.status!=="win"?"0ms":e?"150ms":"0ms"};"
@@ -376,7 +378,7 @@ ${t}
           .animation=${t[4]!==""?this.evaluated&&this.status!=="win"?"":e?"flip":this.status==="win"?"bounce":this.revealed?"":"pop":""}
         ></wd-cell>
       </div>
-    `}};k.styles=h`
+    `}};$.styles=p`
     :host {
       display: block;
     }
@@ -411,7 +413,7 @@ ${t}
         transform: translateX(4px);
       }
     }
-  `;M([c()],k.prototype,"guess",2);M([c()],k.prototype,"result",2);M([c({reflect:!0})],k.prototype,"status",2);M([c()],k.prototype,"evaluated",2);k=M([v("wd-row")],k);var Ge=Object.defineProperty,De=Object.getOwnPropertyDescriptor,V=(t,e,a,i)=>{for(var s=i>1?void 0:i?De(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ge(e,a,s),s};let G=class extends f{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=J}render(){return n`
+  `;M([c()],$.prototype,"guess",2);M([c()],$.prototype,"result",2);M([c({reflect:!0})],$.prototype,"status",2);M([c()],$.prototype,"evaluated",2);$=M([w("wd-row")],$);var Ge=Object.defineProperty,De=Object.getOwnPropertyDescriptor,V=(t,e,a,r)=>{for(var s=r>1?void 0:r?De(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ge(e,a,s),s};let G=class extends v{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=J}render(){return n`
       <div class="board">
         <wd-row
           .guess=${this.guesses[0].letters}
@@ -450,7 +452,7 @@ ${t}
           .evaluated=${this.guesses[5].status==="evaluated"}
         ></wd-row>
       </div>
-    `}};G.styles=h`
+    `}};G.styles=p`
     :host {
       display: flex;
       justify-content: center;
@@ -470,7 +472,7 @@ ${t}
       padding: 10px;
       box-sizing: border-box;
     }
-  `;V([c()],G.prototype,"guess",2);V([c()],G.prototype,"status",2);V([c()],G.prototype,"guesses",2);G=V([v("wd-board")],G);var Se=Object.defineProperty,ze=Object.getOwnPropertyDescriptor,Ct=(t,e,a,i)=>{for(var s=i>1?void 0:i?ze(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Se(e,a,s),s};let B=class extends f{constructor(){super(...arguments);this.letters=z}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:i=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};qt[i]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:i}))};return t.addEventListener("click",e),t}render(){return n`
+  `;V([c()],G.prototype,"guess",2);V([c()],G.prototype,"status",2);V([c()],G.prototype,"guesses",2);G=V([w("wd-board")],G);var Se=Object.defineProperty,ze=Object.getOwnPropertyDescriptor,Ct=(t,e,a,r)=>{for(var s=r>1?void 0:r?ze(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Se(e,a,s),s};let B=class extends v{constructor(){super(...arguments);this.letters=z}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:r=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};qt[r]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:r}))};return t.addEventListener("click",e),t}render(){return n`
       <div id="keyboard">
         <div class="row">
           <button title="Q" data-key="q" data-state=${this.letters.q}>q</button>
@@ -519,7 +521,7 @@ ${t}
           </button>
         </div>
       </div>
-    `}};B.styles=h`
+    `}};B.styles=p`
     :host {
       height: var(--keyboard-height);
     }
@@ -606,7 +608,7 @@ ${t}
       background-color: var(--key-bg-absent);
       color: var(--key-evaluated-text-color);
     }
-  `;Ct([c()],B.prototype,"letters",2);B=Ct([v("wd-keyboard")],B);var Ee=Object.defineProperty,Re=Object.getOwnPropertyDescriptor,Me=(t,e,a,i)=>{for(var s=i>1?void 0:i?Re(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ee(e,a,s),s};let st=class extends f{render(){return n`
+  `;Ct([c()],B.prototype,"letters",2);B=Ct([w("wd-keyboard")],B);var Ee=Object.defineProperty,Re=Object.getOwnPropertyDescriptor,Me=(t,e,a,r)=>{for(var s=r>1?void 0:r?Re(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ee(e,a,s),s};let st=class extends v{render(){return n`
       <section>
         <div class="instructions">
           <p>Guess the <strong>WORD</strong> in 6 tries.</p>
@@ -668,7 +670,7 @@ ${t}
           </p>
         </div>
       </section>
-    `}};st.styles=h`
+    `}};st.styles=p`
     :host {
       color: var(--modal-content-color);
     }
@@ -696,7 +698,7 @@ ${t}
       padding: 16px;
       padding-top: 0px;
     }
-  `;st=Me([v("wd-help")],st);var Te=Object.defineProperty,Ae=Object.getOwnPropertyDescriptor,Le=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ae(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Te(e,a,s),s};let at=class extends f{render(){return n`
+  `;st=Me([w("wd-help")],st);var Te=Object.defineProperty,Ae=Object.getOwnPropertyDescriptor,Le=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ae(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Te(e,a,s),s};let at=class extends v{render(){return n`
       <div class="container">
         <h1>Game Already Played</h1>
         <div class="content">
@@ -711,7 +713,7 @@ ${t}
           <p>You are not allowed to replay your own shared game link.</p>
         </div>
       </div>
-    `}};at.styles=h`
+    `}};at.styles=p`
     .container {
       display: flex;
       flex-direction: column;
@@ -734,7 +736,7 @@ ${t}
     .content {
       flex: 1;
     }
-  `;at=Le([v("wd-seed-played")],at);var Ne=Object.defineProperty,Ye=Object.getOwnPropertyDescriptor,We=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ye(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ne(e,a,s),s};let it=class extends f{render(){return n`
+  `;at=Le([w("wd-seed-played")],at);var Ne=Object.defineProperty,Ye=Object.getOwnPropertyDescriptor,We=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ye(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ne(e,a,s),s};let rt=class extends v{render(){return n`
       <div class="container">
         <h1>Game In Progress</h1>
         <div class="content">
@@ -744,7 +746,7 @@ ${t}
           </p>
         </div>
       </div>
-    `}};it.styles=h`
+    `}};rt.styles=p`
     .container {
       display: flex;
       flex-direction: column;
@@ -767,14 +769,14 @@ ${t}
     .content {
       flex: 1;
     }
-  `;it=We([v("wd-game-in-progress")],it);var Ke=Object.defineProperty,He=Object.getOwnPropertyDescriptor,rt=(t,e,a,i)=>{for(var s=i>1?void 0:i?He(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ke(e,a,s),s};let T=class extends f{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
+  `;rt=We([w("wd-game-in-progress")],rt);var Ke=Object.defineProperty,He=Object.getOwnPropertyDescriptor,ot=(t,e,a,r)=>{for(var s=r>1?void 0:r?He(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ke(e,a,s),s};let T=class extends v{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
       <div class="container">
         <label><slot></slot></label>
         <div class="switch">
           <span class="knob"></span>
         </div>
       </div>
-    `}};T.styles=h`
+    `}};T.styles=p`
     .container {
       display: flex;
       justify-content: space-between;
@@ -809,7 +811,7 @@ ${t}
     :host([disabled="true"]) .switch {
       opacity: 0.5;
     }
-  `;rt([c({reflect:!0})],T.prototype,"checked",2);rt([c({reflect:!0})],T.prototype,"disabled",2);T=rt([v("wd-switch")],T);var Ve=Object.defineProperty,Be=Object.getOwnPropertyDescriptor,jt=(t,e,a,i)=>{for(var s=i>1?void 0:i?Be(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ve(e,a,s),s};let U=class extends f{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
+  `;ot([c({reflect:!0})],T.prototype,"checked",2);ot([c({reflect:!0})],T.prototype,"disabled",2);T=ot([w("wd-switch")],T);var Ve=Object.defineProperty,Be=Object.getOwnPropertyDescriptor,jt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Be(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ve(e,a,s),s};let U=class extends v{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
       <div class="sections">
         <section>
           <div class="setting">
@@ -827,7 +829,7 @@ ${t}
           </div>
         </section>
       </div>
-    `}};U.styles=h`
+    `}};U.styles=p`
     .setting {
       display: flex;
       justify-content: space-between;
@@ -876,33 +878,52 @@ ${t}
         padding: 16px;
       }
     }
-  `;jt([m()],U.prototype,"darkTheme",2);U=jt([v("wd-settings")],U);var Ue=Object.defineProperty,Fe=Object.getOwnPropertyDescriptor,qe=(t,e,a,i)=>{for(var s=i>1?void 0:i?Fe(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Ue(e,a,s),s};let ot=class extends f{render(){return n`
+  `;jt([g()],U.prototype,"darkTheme",2);U=jt([w("wd-settings")],U);var Ue=Object.defineProperty,Fe=Object.getOwnPropertyDescriptor,qe=(t,e,a,r)=>{for(var s=r>1?void 0:r?Fe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ue(e,a,s),s};let it=class extends v{render(){return n`
       <div class="overlay">
         <div class="before"></div>
         <div class="after"></div>
       </div>
-    `}};ot.styles=h`
+    `}};it.styles=p`
     .overlay > .before,
     .overlay > .after {
       position: absolute;
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff;
-      animation: 1s bang ease-out infinite backwards,
-        1s gravity ease-in infinite backwards,
-        5s position linear infinite backwards;
+      box-shadow: 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color);
+      animation: 1.25s bang ease-out infinite backwards,
+        1.25s gravity ease-in infinite backwards,
+        6.25s position linear infinite backwards;
+      will-change: margin, transform, opacity, box-shadow;
     }
     .overlay > .after {
-      animation-delay: 1.25s, 1.25s, 1.25s;
-      animation-duration: 1.25s, 1.25s, 6.25s;
+      animation-delay: 1.5s, 1.5s, 1.5s;
+      animation-duration: 1.5s, 1.5s, 7.5s;
     }
 
     @keyframes bang {
@@ -968,7 +989,7 @@ ${t}
         margin-left: 80%;
       }
     }
-  `;ot=qe([v("wd-fireworks")],ot);var Xe=Object.defineProperty,Ze=Object.getOwnPropertyDescriptor,nt=(t,e,a,i)=>{for(var s=i>1?void 0:i?Ze(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Xe(e,a,s),s};let A=class extends f{constructor(){super(...arguments);this.stats={},this.activeGameId="",this.winResult=!1}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await C;this.stats=t(),this.activeGameId=e().id,this.winResult=this.stats.lastGameId===this.activeGameId&&this.stats.lastResult==="win"}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}async share(t){t.preventDefault();const{active:e}=await C,{seed:a,guesses:i}=e();await me(ge(i),a)}get ratingGrade(){const t=this.stats.rating;return t>=0?"S":t>=-500?"A":t>=-1e3?"B":t>=-2e3?"C":t>=-5e3?"D":"E"}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0,a=this.ratingGrade;return n`
+  `;it=qe([w("wd-fireworks")],it);var Xe=Object.defineProperty,Ze=Object.getOwnPropertyDescriptor,nt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ze(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Xe(e,a,s),s};let A=class extends v{constructor(){super(...arguments);this.stats={},this.activeGameId="",this.winResult=!1}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await C;this.stats=t(),this.activeGameId=e().id,this.winResult=this.stats.lastGameId===this.activeGameId&&this.stats.lastResult==="win"}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}async share(t){t.preventDefault();const{active:e}=await C,{seed:a,guesses:r}=e();await ge(fe(r),a)}get ratingGrade(){const t=this.stats.rating;return t>=0?"S":t>=-500?"A":t>=-1e3?"B":t>=-2e3?"C":t>=-5e3?"D":"E"}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0,a=this.ratingGrade;return n`
       ${this.winResult?n`<wd-fireworks></wd-fireworks>`:""}
       <div class="container">
         <h1>Statistics</h1>
@@ -1109,7 +1130,7 @@ ${t}
         </div>
       </div>`:null}
       </div>
-    `}};A.styles=h`
+    `}};A.styles=p`
     .container {
       display: flex;
       flex-direction: column;
@@ -1313,7 +1334,7 @@ ${t}
       height: 24px;
       padding-left: 8px;
     }
-  `;nt([m()],A.prototype,"stats",2);nt([m()],A.prototype,"activeGameId",2);A=nt([v("wd-stats")],A);var Je=Object.defineProperty,Qe=Object.getOwnPropertyDescriptor,lt=(t,e,a,i)=>{for(var s=i>1?void 0:i?Qe(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&Je(e,a,s),s};let L=class extends f{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
+  `;nt([g()],A.prototype,"stats",2);nt([g()],A.prototype,"activeGameId",2);A=nt([w("wd-stats")],A);var Je=Object.defineProperty,Qe=Object.getOwnPropertyDescriptor,lt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Qe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Je(e,a,s),s};let L=class extends v{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
       <div class="overlay">
         <div class="content">
           <header>
@@ -1327,7 +1348,7 @@ ${t}
           </div>
         </div>
       </div>
-    `}};L.styles=h`
+    `}};L.styles=p`
     .overlay {
       display: none;
       position: absolute;
@@ -1435,7 +1456,7 @@ ${t}
         transform: translateY(12vh);
       }
     }
-  `;lt([c({reflect:!0})],L.prototype,"open",2);lt([c({reflect:!0})],L.prototype,"closing",2);L=lt([v("wd-page")],L);var ts=Object.defineProperty,es=Object.getOwnPropertyDescriptor,dt=(t,e,a,i)=>{for(var s=i>1?void 0:i?es(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&ts(e,a,s),s};let N=class extends f{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
+  `;lt([c({reflect:!0})],L.prototype,"open",2);lt([c({reflect:!0})],L.prototype,"closing",2);L=lt([w("wd-page")],L);var ts=Object.defineProperty,es=Object.getOwnPropertyDescriptor,dt=(t,e,a,r)=>{for(var s=r>1?void 0:r?es(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ts(e,a,s),s};let N=class extends v{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
       <div class="overlay" @click=${this.closeModal}>
         <div class="content" @click=${this.preventClose}>
           <slot></slot>
@@ -1444,7 +1465,7 @@ ${t}
           </button>
         </div>
       </div>
-    `}};N.styles=h`
+    `}};N.styles=p`
     .overlay {
       display: none;
       position: absolute;
@@ -1523,7 +1544,7 @@ ${t}
         transform: translateY(6vh);
       }
     }
-  `;dt([c({reflect:!0})],N.prototype,"open",2);dt([c({reflect:!0})],N.prototype,"closing",2);N=dt([v("wd-modal")],N);var ss=Object.defineProperty,as=Object.getOwnPropertyDescriptor,b=(t,e,a,i)=>{for(var s=i>1?void 0:i?as(e,a):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(i?o(e,a,s):o(s))||s);return i&&s&&ss(e,a,s),s};let w=class extends f{constructor(){super(...arguments);this.gameId="",this.seed="",this.guess=0,this.guesses=J,this.letters=z,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}debugMode(){return null}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;Y(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,i)=>i===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<E&&t in z&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case I.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case I.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},xt)}async validate(t){return t.length<E?{success:!1,reason:I.INVALID_CHAR_LEN}:await ve(t)?{success:!0}:{success:!1,reason:I.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let i=0;i<e.length;i++)a[t.charAt(i)]=e[i];this.letters=$($({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let i=0;i<t.length;i++){const s=t.charAt(i),r=e.charAt(i);a[i]=r===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await C;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await C;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,seed:this.seed,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},750))},5*500)}async setupGame(t){try{this.gameId=t.id,this.guess=t.guess,this.guesses=t.guesses,this.solution=await de(t.solution,t.iv),this.seed=t.seed,this.status=t.status,this.letters=t.letters}catch(e){console.log(e)}}async startNewGame(){const{generateGame:t}=await C;await this.setupGame(await t()),this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await C;await this.setupGame(t()),this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){window.removeEventListener("keydown",this._handleKeydown),super.disconnectedCallback()}render(){return n`
+  `;dt([c({reflect:!0})],N.prototype,"open",2);dt([c({reflect:!0})],N.prototype,"closing",2);N=dt([w("wd-modal")],N);var ss=Object.defineProperty,as=Object.getOwnPropertyDescriptor,b=(t,e,a,r)=>{for(var s=r>1?void 0:r?as(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ss(e,a,s),s};let m=class extends v{constructor(){super(...arguments);this.gameId="",this.seed="",this.guess=0,this.guesses=J,this.letters=z,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}debugMode(){return null}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;Y(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<E&&t in z&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case I.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case I.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},xt)}async validate(t){return t.length<E?{success:!1,reason:I.INVALID_CHAR_LEN}:await we(t)?{success:!0}:{success:!1,reason:I.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let r=0;r<e.length;r++)a[t.charAt(r)]=e[r];this.letters=k(k({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let r=0;r<t.length;r++){const s=t.charAt(r),o=e.charAt(r);a[r]=o===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await C;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await C;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,seed:this.seed,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},750))},5*500)}async setupGame(t){try{this.gameId=t.id,this.guess=t.guess,this.guesses=t.guesses,this.solution=await de(t.solution,t.iv),this.seed=t.seed,this.status=t.status,this.letters=t.letters}catch(e){console.log(e)}}async startNewGame(){const{generateGame:t}=await C;await this.setupGame(await t()),this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await C;await this.setupGame(t()),this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){window.removeEventListener("keydown",this._handleKeydown),super.disconnectedCallback()}render(){return n`
       <wd-header
         @wd-modal=${this.handleModal}
         @wd-page=${this.handlePage}
@@ -1556,7 +1577,7 @@ ${t}
             ${this.modal==="stats"?n`<wd-stats @wd-new-game=${this.startNewGame}></wd-stats>`:null}
           </wd-modal>`:null}
       ${this.debugMode()}
-    `}};w.styles=h`
+    `}};m.styles=p`
     :host {
       width: 100%;
       max-width: var(--wd-max-width);
@@ -1566,5 +1587,5 @@ ${t}
       flex-direction: column;
       box-sizing: border-box;
     }
-    ${h``}
-  `;b([m()],w.prototype,"gameId",2);b([m()],w.prototype,"seed",2);b([m()],w.prototype,"guess",2);b([m()],w.prototype,"guesses",2);b([m()],w.prototype,"letters",2);b([m()],w.prototype,"solution",2);b([m()],w.prototype,"status",2);b([m()],w.prototype,"page",2);b([m()],w.prototype,"modal",2);b([m()],w.prototype,"toast",2);b([m()],w.prototype,"closingPage",2);b([m()],w.prototype,"closingModal",2);w=b([v("wd-app")],w);Kt({});
+    ${p``}
+  `;b([g()],m.prototype,"gameId",2);b([g()],m.prototype,"seed",2);b([g()],m.prototype,"guess",2);b([g()],m.prototype,"guesses",2);b([g()],m.prototype,"letters",2);b([g()],m.prototype,"solution",2);b([g()],m.prototype,"status",2);b([g()],m.prototype,"page",2);b([g()],m.prototype,"modal",2);b([g()],m.prototype,"toast",2);b([g()],m.prototype,"closingPage",2);b([g()],m.prototype,"closingModal",2);m=b([w("wd-app")],m);Kt({});
