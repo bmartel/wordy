@@ -10,21 +10,40 @@ export class CwFireworks extends LitElement {
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
-        0 0 #fff, 0 0 #fff, 0 0 #fff;
-      animation: 1s bang ease-out infinite backwards,
-        1s gravity ease-in infinite backwards,
-        5s position linear infinite backwards;
+      box-shadow: 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color),
+        0 0 var(--wd-fireworks-base-color), 0 0 var(--wd-fireworks-base-color);
+      animation: 1.25s bang ease-out infinite backwards,
+        1.25s gravity ease-in infinite backwards,
+        6.25s position linear infinite backwards;
+      will-change: margin, transform, opacity, box-shadow;
     }
     .overlay > .after {
-      animation-delay: 1.25s, 1.25s, 1.25s;
-      animation-duration: 1.25s, 1.25s, 6.25s;
+      animation-delay: 1.5s, 1.5s, 1.5s;
+      animation-duration: 1.5s, 1.5s, 7.5s;
     }
 
     @keyframes bang {
