@@ -8,6 +8,7 @@ import {
   share,
 } from "./utils";
 import "./wd-icon.ts";
+import "./wd-fireworks.ts";
 
 type GuessDistributionKey = keyof GuessDistribution;
 
@@ -17,6 +18,8 @@ export class CwStats extends LitElement {
   stats: GameStats = {} as GameStats;
   @state()
   activeGameId: string = "";
+
+  winResult = false;
 
   static styles = css`
     .container {
@@ -229,6 +232,9 @@ export class CwStats extends LitElement {
     const { stats, active } = await manager;
     this.stats = stats();
     this.activeGameId = active().id;
+    this.winResult =
+      this.stats.lastGameId === this.activeGameId &&
+      this.stats.lastResult === "win";
   }
 
   private newGame(e: Event) {
@@ -280,6 +286,7 @@ export class CwStats extends LitElement {
     const lastGuess = this.stats.lastGuess || 0;
     const grade = this.ratingGrade;
     return html`
+      ${this.winResult ? html`<wd-fireworks></wd-fireworks>` : ""}
       <div class="container">
         <h1>Statistics</h1>
         <div id="statistics">
