@@ -17,6 +17,7 @@ export class CwPage extends LitElement {
       box-sizing: border-box;
       display: none;
       position: absolute;
+      overflow: hidden;
       width: 100%;
       height: 100%;
       top: 0;

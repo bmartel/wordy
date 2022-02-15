@@ -17,7 +17,7 @@ export class CwHistory extends LitElement {
       gap: 1rem;
       padding: 1rem 0.5rem;
       box-sizing: border-box;
-      overflow-x: hidden;
+      overflow: hidden;
     }
   `;
 

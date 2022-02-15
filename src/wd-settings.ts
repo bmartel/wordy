@@ -21,6 +21,14 @@ export class CwSettings extends LitElement {
   }
 
   static styles = css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
     .setting {
       display: flex;
       justify-content: space-between;

@@ -152,15 +152,15 @@ export class CwHistoryItem extends LitElement {
       return "< 1s";
     }
     if (ms < 60) {
-      return `${ms}s`;
+      return `${Math.floor(ms)}s`;
     }
     if (ms / 60 < 60) {
       return `${Math.floor(ms / 60)}m`;
     }
-    if (ms / 60 / 24 < 24) {
-      return `${Math.floor(ms)}h`;
+    if (ms / 360 < 24) {
+      return `${Math.floor(ms / 360)}h`;
     }
-    return `${Math.floor(ms / 60 / 24)}d`;
+    return `${Math.floor(ms / 360 / 24)}d`;
   }
 
   render() {
@@ -183,7 +183,7 @@ export class CwHistoryItem extends LitElement {
               : "circlex"}"
             name=${this.game.status === "win" ? "circlecheck" : "circlex"}
           ></wd-icon>
-          <h3>${this.game.seed}</h3>
+          <h3>${this.game.seed || null}</h3>
           <button class="share" @click=${this.share}>
             <wd-icon name="share" size="sm"></wd-icon>
           </button>

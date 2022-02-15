@@ -9,6 +9,8 @@ export class CwTheme extends LitElement {
 
   static styles = css`
     :host {
+      display: block;
+      box-sizing: border-box;
       --color-tone-1: #d7e9f8;
       --color-tone-2: #81a8d5;
       --color-tone-3: #577bac;
