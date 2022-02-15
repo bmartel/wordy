@@ -1,14 +1,14 @@
-var Et=Object.defineProperty,Rt=Object.defineProperties;var Mt=Object.getOwnPropertyDescriptors;var ft=Object.getOwnPropertySymbols;var Tt=Object.prototype.hasOwnProperty,At=Object.prototype.propertyIsEnumerable;var gt=(t,e,a)=>e in t?Et(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,k=(t,e)=>{for(var a in e||(e={}))Tt.call(e,a)&&gt(t,a,e[a]);if(ft)for(var a of ft(e))At.call(e,a)&&gt(t,a,e[a]);return t},mt=(t,e)=>Rt(t,Mt(e));import{v as Lt,n as Nt,l as Yt,r as p,e as c,s as v,$ as n,a as w,o as Wt,t as g}from"./vendor.8e6c5f1b.js";const Kt=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))r(s);new MutationObserver(s=>{for(const o of s)if(o.type==="childList")for(const i of o.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function a(s){const o={};return s.integrity&&(o.integrity=s.integrity),s.referrerpolicy&&(o.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?o.credentials="include":s.crossorigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(s){if(s.ep)return;s.ep=!0;const o=a(s);fetch(s.href,o)}};Kt();function Ht(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:r,onRegistered:s,onRegisterError:o}=t;let i;const f=async(u=!0)=>{};return"serviceWorker"in navigator&&(i=new Lt("./sw.js",{scope:"./",type:"classic"}),i.addEventListener("activated",u=>{u.isUpdate?window.location.reload():r==null||r()}),i.register({immediate:e}).then(u=>{s==null||s(u)}).catch(u=>{o==null||o(u)})),f}const Vt="modulepreload",bt={},Bt="./",Ut=function(e,a){return!a||a.length===0?e():Promise.all(a.map(r=>{if(r=`${Bt}${r}`,r in bt)return;bt[r]=!0;const s=r.endsWith(".css"),o=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${r}"]${o}`))return;const i=document.createElement("link");if(i.rel=s?"stylesheet":Vt,s||(i.as="script",i.crossOrigin=""),i.href=r,document.head.appendChild(i),s)return new Promise((f,u)=>{i.addEventListener("load",f),i.addEventListener("error",u)})})).then(()=>e())},Ft=Ut(()=>import("./config.d171c315.js"),[]);let q={};(async()=>{q=await Ft})();const z={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},qt={Enter:!0,Backspace:!0},Xt=k(k({},z),qt),yt=60*10*1e3,E=5,X=6,xt=600,kt=750,Zt={empty:"\u2B1B",absent:"\u{1F7E6}",present:"\u{1F7E8}",correct:"\u{1F7E9}"};var I;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})(I||(I={}));let d=null;const Jt=t=>{d=t},Qt=()=>{d=null},te=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},ee=t=>{const e=(d==null?void 0:d.offsetHeight)||0;d==null||d.appendChild(t);const r=((d==null?void 0:d.offsetHeight)||0)-e;d==null||d.animate([{transform:`translateY(${r}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},se=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(d==null?void 0:d.children.length)&&e?ee(t):d==null||d.appendChild(t)},Y=t=>{const e=te(t);return se(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(r=>r.finished)),d==null||d.removeChild(e),a()})};function ae(t,e,a,r){return function(){t>>>=0,e>>>=0,a>>>=0,r>>>=0;let s=t+e|0;return t=e^e>>>9,e=a+(a<<3)|0,a=a<<21|a>>>11,r=r+1|0,s=s+r|0,a=a+s|0,(s>>>0)/4294967296}}function re(t){for(var e=0,a=1779033703^t.length;e<t.length;e++)a=Math.imul(a^t.charCodeAt(e),3432918353),a=a<<13|a>>>19;return function(){return a=Math.imul(a^a>>>16,2246822507),a=Math.imul(a^a>>>13,3266489909),(a^=a>>>16)>>>0}}const oe={alg:"A256GCM",ext:!0,k:"6KWvelTztanQl8-rJ1a1f2B_VcuIZDIrjBsoUiOY-sc",key_ops:["encrypt","decrypt"],kty:"oct"};let W=null;(async()=>{W||(W=await crypto.subtle.importKey("jwk",oe,"AES-GCM",!0,["encrypt","decrypt"]))})();const ie=t=>new TextEncoder().encode(t),ne=t=>new TextDecoder().decode(t),$t=async t=>{const e=ie(t),a=crypto.getRandomValues(new Uint8Array(12)),r=await crypto.subtle.encrypt({name:"AES-GCM",iv:a},W,e);return[a,r]},le=async(t,e)=>{if(!e||!t)return"";const a=await crypto.subtle.decrypt({name:"AES-GCM",iv:e},W,t);return ne(new Uint8Array(a))},de=async(t,e)=>typeof t=="string"?t:await le(t,e),ce=async(t,e)=>typeof t=="string"?await $t(t):[e||new Uint8Array(12),t],ue=()=>Nt(),he=t=>{const e=re(t);return ae(e(),e(),e(),e())},Z=(t,e=0)=>Array.from({length:e},t),pe=()=>Z(()=>"empty",E),_t=(t="",e=void 0)=>Z(()=>({letters:t,status:"tbd",result:e||[...pe()]}),X),J=_t(),Pt=J[0],x=Yt.createInstance({name:"wordy"});let Q=0;const ve=async t=>{const{words:e}=q;t=t||ue(),Q||(Q=e.length);const a=he(t);return{word:e[Math.floor(a()*Q)],seed:t}},we=async t=>{const{words:e}=q;return e.indexOf(t)>-1},Ot=async t=>{const{word:e,seed:a}=await ve(t),[r,s]=await $t(e);return{id:a,guess:0,guesses:_t(),solution:s,iv:r,seed:a,letters:z,status:"idle"}},C=(async()=>{var ut,ht,pt,vt;const t=new URLSearchParams(location.search).get("seed")||void 0,e=await x.getItem("activeGameId")||"";let a=await x.getItem("games")||{};const r=!!(e&&((ut=a==null?void 0:a[e])==null?void 0:ut.start)&&!((ht=a==null?void 0:a[e])==null?void 0:ht.end)),s=!!(t&&t in a&&((pt=a[t])==null?void 0:pt.end)),o=!!(e&&e in a&&!((vt=a[e])==null?void 0:vt.end)),i=!s&&!r;let f=await x.getItem("stats")||{},u=r||!t&&o?a[e]:await Ot(s?void 0:t);const ct=t&&r?"game-in-progress":t&&s?"seed-played":e&&f.lastGameId===e?"stats":await x.getItem("shown_help")?"":"help";if(ct==="help"&&await x.setItem("shown_help","1"),t){const h=new URL(window.location.href);h.searchParams.delete("seed"),history.pushState({path:h.href},"",h.href)}const F=async(h,l=!0)=>{var O,S;u=k(k({},a[h.id]),h),l&&!u.start&&(u.start=Date.now());const y=((O=a[h.id])==null?void 0:O.solution)||u.solution,_=((S=a[h.id])==null?void 0:S.iv)||u.iv,[P,G]=await ce(y,_);a[h.id]=mt(k({},u),{solution:G,iv:P}),await x.setItem("games",a)},Gt=(h,l,y,_)=>{const P=l-X/X;return(h-h*P)*_*100*((yt-y)/yt)},St=async h=>{const l=a[h],y=f.distribution||{},_=(l.guess+(f.avgGuess||0))/2,P=l.status==="win"?(f.streak||0)+1:0,G=Math.max(P,f.maxStreak||0),O=(f.wins||0)+(l.status==="win"?1:0),S=(f.losses||0)+(l.status==="lose"?1:0),zt=O/(O+S),wt=((l.end||0)-(l.start||0)+(f.avgDuration||0))/2;f={streak:P,lastResult:l.status==="win"?"win":"lose",lastGameId:l.id,lastGuess:l.guess,avgGuess:_,avgDuration:wt,maxStreak:G,wins:O,losses:S,rating:Gt(G,_,wt,zt),distribution:{0:(y[0]||0)+(l.status==="win"&&l.guess===0?1:0),1:(y[1]||0)+(l.status==="win"&&l.guess===1?1:0),2:(y[2]||0)+(l.status==="win"&&l.guess===2?1:0),3:(y[3]||0)+(l.status==="win"&&l.guess===3?1:0),4:(y[4]||0)+(l.status==="win"&&l.guess===4?1:0),5:(y[5]||0)+(l.status==="win"&&l.guess===5?1:0)}},await x.setItem("stats",f)};return(!e||i)&&(await x.setItem("activeGameId",u.id),await F(u,!1)),{games:()=>a,active:()=>u,stats:()=>f,modal:ct,saveGame:F,saveStats:St,generateGame:async()=>{const h=await Ot();return await x.setItem("activeGameId",h.id),await F(h,!1),h}}})(),fe=t=>t.map(e=>e.result.map(a=>Zt[a]).join("")).join(`
-`),ge=async(t,e)=>{const a=new URL(location.href);a.searchParams.set("seed",e);try{navigator.share?(await navigator.share({url:a.toString(),title:`Puzzle ${e}`,text:t}),Y("Shared puzzle result")):(t=`
+var Nt=Object.defineProperty,Yt=Object.defineProperties;var Wt=Object.getOwnPropertyDescriptors;var bt=Object.getOwnPropertySymbols;var Ht=Object.prototype.hasOwnProperty,Kt=Object.prototype.propertyIsEnumerable;var yt=(t,e,a)=>e in t?Nt(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,x=(t,e)=>{for(var a in e||(e={}))Ht.call(e,a)&&yt(t,a,e[a]);if(bt)for(var a of bt(e))Kt.call(e,a)&&yt(t,a,e[a]);return t},J=(t,e)=>Yt(t,Wt(e));import{v as Vt,n as Bt,l as Ut,r as u,e as h,s as p,$ as n,a as v,o as Ft,t as w}from"./vendor.8e6c5f1b.js";const qt=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))r(s);new MutationObserver(s=>{for(const o of s)if(o.type==="childList")for(const i of o.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function a(s){const o={};return s.integrity&&(o.integrity=s.integrity),s.referrerpolicy&&(o.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?o.credentials="include":s.crossorigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(s){if(s.ep)return;s.ep=!0;const o=a(s);fetch(s.href,o)}};qt();function Xt(t={}){const{immediate:e=!1,onNeedRefresh:a,onOfflineReady:r,onRegistered:s,onRegisterError:o}=t;let i;const f=async(g=!0)=>{};return"serviceWorker"in navigator&&(i=new Vt("./sw.js",{scope:"./",type:"classic"}),i.addEventListener("activated",g=>{g.isUpdate?window.location.reload():r==null||r()}),i.register({immediate:e}).then(g=>{s==null||s(g)}).catch(g=>{o==null||o(g)})),f}const Zt="modulepreload",xt={},Jt="./",Qt=function(e,a){return!a||a.length===0?e():Promise.all(a.map(r=>{if(r=`${Jt}${r}`,r in xt)return;xt[r]=!0;const s=r.endsWith(".css"),o=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${r}"]${o}`))return;const i=document.createElement("link");if(i.rel=s?"stylesheet":Zt,s||(i.as="script",i.crossOrigin=""),i.href=r,document.head.appendChild(i),s)return new Promise((f,g)=>{i.addEventListener("load",f),i.addEventListener("error",g)})})).then(()=>e())},te=Qt(()=>import("./config.d171c315.js"),[]);let Q={};(async()=>{Q=await te})();const M={q:"empty",w:"empty",e:"empty",r:"empty",t:"empty",y:"empty",u:"empty",i:"empty",o:"empty",p:"empty",a:"empty",s:"empty",d:"empty",f:"empty",g:"empty",h:"empty",j:"empty",k:"empty",l:"empty",z:"empty",x:"empty",c:"empty",v:"empty",b:"empty",n:"empty",m:"empty"},ee={Enter:!0,Backspace:!0},se=x(x({},M),ee),kt=60*10*1e3,$=5,Y=6,$t=600,_t=750,ae={empty:"\u2B1B",absent:"\u{1F7E6}",present:"\u{1F7E8}",correct:"\u{1F7E9}"};var I;(function(t){t[t.INVALID_CHAR_LEN=0]="INVALID_CHAR_LEN",t[t.INVALID_WORD=1]="INVALID_WORD"})(I||(I={}));let d=null;const re=t=>{d=t},oe=()=>{d=null},ie=t=>{const e=document.createElement("output");return e.innerText=t,e.classList.add("toast"),e.setAttribute("role","status"),e},ne=t=>{const e=(d==null?void 0:d.offsetHeight)||0;d==null||d.appendChild(t);const r=((d==null?void 0:d.offsetHeight)||0)-e;d==null||d.animate([{transform:`translateY(${r}px)`},{transform:"translateY(0)"}],{duration:150,easing:"ease-out"})},le=t=>{const{matches:e}=window.matchMedia("(prefers-reduced-motion: no-preference)");(d==null?void 0:d.children.length)&&e?ne(t):d==null||d.appendChild(t)},W=t=>{const e=ie(t);return le(e),new Promise(async a=>{await Promise.allSettled(e.getAnimations().map(r=>r.finished)),d==null||d.removeChild(e),a()})};function de(t,e,a,r){return function(){t>>>=0,e>>>=0,a>>>=0,r>>>=0;let s=t+e|0;return t=e^e>>>9,e=a+(a<<3)|0,a=a<<21|a>>>11,r=r+1|0,s=s+r|0,a=a+s|0,(s>>>0)/4294967296}}function ce(t){for(var e=0,a=1779033703^t.length;e<t.length;e++)a=Math.imul(a^t.charCodeAt(e),3432918353),a=a<<13|a>>>19;return function(){return a=Math.imul(a^a>>>16,2246822507),a=Math.imul(a^a>>>13,3266489909),(a^=a>>>16)>>>0}}const he={alg:"A256GCM",ext:!0,k:"6KWvelTztanQl8-rJ1a1f2B_VcuIZDIrjBsoUiOY-sc",key_ops:["encrypt","decrypt"],kty:"oct"};let H=null;(async()=>{H||(H=await crypto.subtle.importKey("jwk",he,"AES-GCM",!0,["encrypt","decrypt"]))})();const ue=t=>new TextEncoder().encode(t),pe=t=>new TextDecoder().decode(t),Pt=async t=>{const e=ue(t),a=crypto.getRandomValues(new Uint8Array(12)),r=await crypto.subtle.encrypt({name:"AES-GCM",iv:a},H,e);return[a,r]},ve=async(t,e)=>{if(!e||!t)return"";const a=await crypto.subtle.decrypt({name:"AES-GCM",iv:e},H,t);return pe(new Uint8Array(a))},ge=async(t,e)=>typeof t=="string"?t:await ve(t,e),we=async(t,e)=>typeof t=="string"?await Pt(t):[e||new Uint8Array(12),t],fe=()=>Bt(),me=t=>{const e=ce(t);return de(e(),e(),e(),e())},tt=(t,e=0)=>Array.from({length:e},t),be=()=>tt(()=>"empty",$),Ot=(t="",e=void 0)=>tt(()=>({letters:t,status:"tbd",result:e||[...be()]}),Y),et=Ot(),jt=et[0],k=Ut.createInstance({name:"wordy"});let st=0;const ye=async t=>{const{words:e}=Q;t=t||fe(),st||(st=e.length);const a=me(t);return{word:e[Math.floor(a()*st)],seed:t}},xe=async t=>{const{words:e}=Q;return e.indexOf(t)>-1},Ct=async t=>{const{word:e,seed:a}=await ye(t),[r,s]=await Pt(e);return{id:a,guess:0,guesses:Ot(),solution:s,iv:r,seed:a,letters:M,status:"idle"}},_=(async()=>{var vt,gt,wt,ft;const t=new URLSearchParams(location.search).get("seed")||void 0,e=await k.getItem("activeGameId")||"";let a=await k.getItem("games")||{};const r=!!(e&&((vt=a==null?void 0:a[e])==null?void 0:vt.start)&&!((gt=a==null?void 0:a[e])==null?void 0:gt.end)),s=!!(t&&t in a&&((wt=a[t])==null?void 0:wt.end)),o=!!(e&&e in a&&!((ft=a[e])==null?void 0:ft.end)),i=!s&&!r;let f=await k.getItem("stats")||{},g=r||!t&&o?a[e]:await Ct(s?void 0:t);const pt=t&&r?"game-in-progress":t&&s?"seed-played":e&&f.lastGameId===e?"stats":await k.getItem("shown_help")?"":"help";if(pt==="help"&&await k.setItem("shown_help","1"),t){const c=new URL(window.location.href);c.searchParams.delete("seed"),history.pushState({path:c.href},"",c.href)}const Z=async(c,l=!0)=>{var C,S;g=x(x({},a[c.id]),c),l&&!g.start&&(g.start=Date.now());const y=((C=a[c.id])==null?void 0:C.solution)||g.solution,O=((S=a[c.id])==null?void 0:S.iv)||g.iv,[j,G]=await we(y,O);a[c.id]=J(x({},g),{solution:G,iv:j}),await k.setItem("games",a)},Tt=(c,l,y,O)=>{const j=l-Y/Y;return(c-c*j)*O*100*((kt-y)/kt)},At=async c=>{const l=a[c],y=f.distribution||{},O=(l.guess+(f.avgGuess||0))/2,j=l.status==="win"?(f.streak||0)+1:0,G=Math.max(j,f.maxStreak||0),C=(f.wins||0)+(l.status==="win"?1:0),S=(f.losses||0)+(l.status==="lose"?1:0),Lt=C/(C+S),mt=((l.end||0)-(l.start||0)+(f.avgDuration||0))/2;f={streak:j,lastResult:l.status==="win"?"win":"lose",lastGameId:l.id,lastGuess:l.guess,avgGuess:O,avgDuration:mt,maxStreak:G,wins:C,losses:S,rating:Tt(G,O,mt,Lt),distribution:{0:(y[0]||0)+(l.status==="win"&&l.guess===0?1:0),1:(y[1]||0)+(l.status==="win"&&l.guess===1?1:0),2:(y[2]||0)+(l.status==="win"&&l.guess===2?1:0),3:(y[3]||0)+(l.status==="win"&&l.guess===3?1:0),4:(y[4]||0)+(l.status==="win"&&l.guess===4?1:0),5:(y[5]||0)+(l.status==="win"&&l.guess===5?1:0)}},await k.setItem("stats",f)};return(!e||i)&&(await k.setItem("activeGameId",g.id),await Z(g,!1)),{games:()=>a,active:()=>g,stats:()=>f,history:()=>Object.values(a).filter(c=>!!c.end).sort((c,l)=>l.end-c.end),modal:pt,saveGame:Z,saveStats:At,generateGame:async()=>{const c=await Ct();return await k.setItem("activeGameId",c.id),await Z(c,!1),c}}})(),It=t=>t.map(e=>e.result.map(a=>ae[a]).join("")).join(`
+`),zt=async(t,e)=>{const a=new URL(location.href);a.searchParams.set("seed",e);try{navigator.share?(await navigator.share({url:a.toString(),title:`Puzzle ${e}`,text:t}),W("Shared puzzle result")):(t=`
 ${a.toString()}
 
 ${t}
-    `,await navigator.clipboard.writeText(t),Y("Copied puzzle result"))}catch(r){Y(r.message)}};var me=Object.defineProperty,be=Object.getOwnPropertyDescriptor,It=(t,e,a,r)=>{for(var s=r>1?void 0:r?be(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&me(e,a,s),s};let K=class extends v{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{Jt(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),Qt()}render(){return n`
+    `,await navigator.clipboard.writeText(t),W("Copied puzzle result"))}catch(r){W(r.message)}};var ke=Object.defineProperty,$e=Object.getOwnPropertyDescriptor,Dt=(t,e,a,r)=>{for(var s=r>1?void 0:r?$e(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ke(e,a,s),s};let K=class extends p{constructor(){super();const t=localStorage.getItem("theme_dark");t!==null?this.dark=t==="on":(this.dark=window.matchMedia("(prefers-color-scheme: dark)").matches,localStorage.setItem("theme_dark",this.dark?"on":""))}updateTheme(t){this.dark=t.detail.on}connectedCallback(){super.connectedCallback(),setTimeout(()=>{re(this.renderRoot.querySelector(".toast-layer"))},0)}disconnectedCallback(){super.disconnectedCallback(),oe()}render(){return n`
       <section class="toast-layer"></section>
       <main @wd-dark-theme=${this.updateTheme}>
         <slot></slot>
       </main>
-    `}};K.styles=p`
+    `}};K.styles=u`
     :host {
       --color-tone-1: #d7e9f8;
       --color-tone-2: #81a8d5;
@@ -22,12 +22,14 @@ ${t}
       --darkendGreen: #538d4e;
       --yellow: #c9b458;
       --darkendYellow: #b39200;
+      --red: #fd5731;
       --white: #fff;
       --black: #000;
 
       --color-present: var(--yellow);
       --color-correct: var(--green);
       --color-absent: var(--color-tone-3);
+      --color-error: var(--red);
       --cell-text-color: var(--color-tone-7);
       --key-text-color: var(--color-tone-7);
       --key-evaluated-text-color: var(--white);
@@ -149,16 +151,16 @@ ${t}
         --_travel-distance: 5vh;
       }
     }
-  `;It([c({reflect:!0})],K.prototype,"dark",2);K=It([w("wd-theme")],K);var ye=Object.defineProperty,xe=Object.getOwnPropertyDescriptor,tt=(t,e,a,r)=>{for(var s=r>1?void 0:r?xe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ye(e,a,s),s};const ke={backspace:'<path stroke-linecap="round" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'},Ct={sm:20,md:24,lg:28};let R=class extends v{constructor(){super(...arguments);this.name="",this.size="md"}render(){return n`
+  `;Dt([h({reflect:!0})],K.prototype,"dark",2);K=Dt([v("wd-theme")],K);var _e=Object.defineProperty,Pe=Object.getOwnPropertyDescriptor,at=(t,e,a,r)=>{for(var s=r>1?void 0:r?Pe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&_e(e,a,s),s};const Oe={puzzle:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>',backspace:'<path stroke-linecap="round" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>',stats:'<path fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',settings:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',help:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',refresh:'<path fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>',share:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>',x:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>',circlex:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>',circlecheck:'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>'},Gt={sm:20,md:24,lg:28};let R=class extends p{constructor(){super(...arguments);this.name="",this.size="md"}render(){return n`
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        height=${Ct[this.size]}
-        width=${Ct[this.size]}
+        height=${Gt[this.size]}
+        width=${Gt[this.size]}
         viewBox="0 0 24 24"
       >
-        ${Wt(ke[this.name])}
+        ${Ft(Oe[this.name])}
       </svg>
-    `}};R.styles=p`
+    `}};R.styles=u`
     :host {
       display: inline-block;
       height: 24px;
@@ -166,7 +168,7 @@ ${t}
       pointer-events: none;
       user-select: none;
     }
-  `;tt([c()],R.prototype,"name",2);tt([c()],R.prototype,"size",2);R=tt([w("wd-icon")],R);var $e=Object.defineProperty,_e=Object.getOwnPropertyDescriptor,Pe=(t,e,a,r)=>{for(var s=r>1?void 0:r?_e(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&$e(e,a,s),s};let et=class extends v{showHelp(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"help",open:!0},bubbles:!0,composed:!0}))}showStats(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{content:"stats",open:!0},bubbles:!0,composed:!0}))}showSettings(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-page",{detail:{content:"settings",open:!0},bubbles:!0,composed:!0}))}render(){return n`
+  `;at([h()],R.prototype,"name",2);at([h()],R.prototype,"size",2);R=at([v("wd-icon")],R);var je=Object.defineProperty,Ce=Object.getOwnPropertyDescriptor,Ie=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ce(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&je(e,a,s),s};let rt=class extends p{showOverlay(t,e,a){t.preventDefault(),this.dispatchEvent(new CustomEvent(`wd-${e}`,{detail:J(x({},a),{open:!0}),bubbles:!0,composed:!0}))}showHelp(t){this.showOverlay(t,"page",{content:"help"})}showStats(t){this.showOverlay(t,"modal",{content:"stats"})}showSettings(t){this.showOverlay(t,"page",{content:"settings"})}showHistory(t){this.showOverlay(t,"page",{content:"history"})}render(){return n`
       <header>
         <div class="menu">
           <button
@@ -176,6 +178,14 @@ ${t}
             aria-label="help"
           >
             <wd-icon name="help"></wd-icon>
+          </button>
+          <button
+            @click=${this.showHistory}
+            id="statistics-button"
+            class="icon"
+            aria-label="statistics"
+          >
+            <wd-icon name="puzzle"></wd-icon>
           </button>
         </div>
         <div class="title">🟨🟩🟨🟩🟩</div>
@@ -198,7 +208,7 @@ ${t}
           </button>
         </div>
       </header>
-    `}};et.styles=p`
+    `}};rt.styles=u`
     header {
       display: flex;
       justify-content: space-between;
@@ -232,7 +242,7 @@ ${t}
       border: none;
       cursor: pointer;
     }
-  `;et=Pe([w("wd-header")],et);var Oe=Object.defineProperty,Ie=Object.getOwnPropertyDescriptor,H=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ie(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Oe(e,a,s),s};let j=class extends v{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};j.styles=p`
+  `;rt=Ie([v("wd-header")],rt);var ze=Object.defineProperty,De=Object.getOwnPropertyDescriptor,V=(t,e,a,r)=>{for(var s=r>1?void 0:r?De(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ze(e,a,s),s};let z=class extends p{constructor(){super(...arguments);this.status="empty",this.animation="",this.letter=""}render(){return n` <div class="cell">${this.letter}</div> `}};z.styles=u`
     :host {
       display: inline-block;
     }
@@ -286,7 +296,7 @@ ${t}
     }
     :host([animation="bounce"]) > .cell {
       animation-name: Bounce;
-      animation-duration: ${kt}ms;
+      animation-duration: ${_t}ms;
       animation-delay: var(--animation-delay, 0ms);
       animation-timing-function: ease-in;
     }
@@ -340,7 +350,7 @@ ${t}
         transform: rotateY(0);
       }
     }
-  `;H([c({reflect:!0})],j.prototype,"status",2);H([c({reflect:!0})],j.prototype,"animation",2);H([c()],j.prototype,"letter",2);j=H([w("wd-cell")],j);var Ce=Object.defineProperty,je=Object.getOwnPropertyDescriptor,M=(t,e,a,r)=>{for(var s=r>1?void 0:r?je(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ce(e,a,s),s};let $=class extends v{constructor(){super(...arguments);this.guess=Pt.letters,this.result=Pt.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0),this.revealed&&this.evaluated&&(this.revealed=!1)}render(){let t=this.guess.split("");t=[...t,...Z(()=>"",E-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
+  `;V([h({reflect:!0})],z.prototype,"status",2);V([h({reflect:!0})],z.prototype,"animation",2);V([h()],z.prototype,"letter",2);z=V([v("wd-cell")],z);var Ge=Object.defineProperty,Se=Object.getOwnPropertyDescriptor,E=(t,e,a,r)=>{for(var s=r>1?void 0:r?Se(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ge(e,a,s),s};let P=class extends p{constructor(){super(...arguments);this.guess=jt.letters,this.result=jt.result,this.status="idle",this.evaluated=!1,this.revealed=!1}updated(){!this.revealed&&this.status==="reveal"&&(this.revealed=!0),this.revealed&&this.evaluated&&(this.revealed=!1)}render(){let t=this.guess.split("");t=[...t,...tt(()=>"",$-t.length)];const e=this.status==="reveal"&&!this.revealed;return n`
       <div class="row">
         <wd-cell
           style="--transition-delay:${this.evaluated&&this.status!=="win"?"0ms":e?"150ms":"0ms"};"
@@ -373,17 +383,17 @@ ${t}
           .animation=${t[4]!==""?this.evaluated&&this.status!=="win"?"":e?"flip":this.status==="win"?"bounce":this.revealed?"":"pop":""}
         ></wd-cell>
       </div>
-    `}};$.styles=p`
+    `}};P.styles=u`
     :host {
       display: block;
     }
     :host([status="invalid"]) {
       animation-name: Shake;
-      animation-duration: ${xt}ms;
+      animation-duration: ${$t}ms;
     }
     .row {
       display: grid;
-      grid-template-columns: repeat(${E}, 1fr);
+      grid-template-columns: repeat(${$}, 1fr);
       grid-gap: 5px;
     }
     @keyframes Shake {
@@ -408,7 +418,7 @@ ${t}
         transform: translateX(4px);
       }
     }
-  `;M([c()],$.prototype,"guess",2);M([c()],$.prototype,"result",2);M([c({reflect:!0})],$.prototype,"status",2);M([c()],$.prototype,"evaluated",2);$=M([w("wd-row")],$);var De=Object.defineProperty,Ge=Object.getOwnPropertyDescriptor,V=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ge(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&De(e,a,s),s};let D=class extends v{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=J}render(){return n`
+  `;E([h()],P.prototype,"guess",2);E([h()],P.prototype,"result",2);E([h({reflect:!0})],P.prototype,"status",2);E([h()],P.prototype,"evaluated",2);P=E([v("wd-row")],P);var Me=Object.defineProperty,Re=Object.getOwnPropertyDescriptor,B=(t,e,a,r)=>{for(var s=r>1?void 0:r?Re(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Me(e,a,s),s};let D=class extends p{constructor(){super(...arguments);this.guess=0,this.status="idle",this.guesses=et}render(){return n`
       <div class="board">
         <wd-row
           .guess=${this.guesses[0].letters}
@@ -447,7 +457,7 @@ ${t}
           .evaluated=${this.guesses[5].status==="evaluated"}
         ></wd-row>
       </div>
-    `}};D.styles=p`
+    `}};D.styles=u`
     :host {
       display: flex;
       justify-content: center;
@@ -462,12 +472,12 @@ ${t}
       width: 10.9375em;
       height: 13.125em;
       display: grid;
-      grid-template-rows: repeat(6, 1fr);
+      grid-template-rows: repeat(${$}, 1fr);
       grid-gap: 5px;
       padding: 10px;
       box-sizing: border-box;
     }
-  `;V([c()],D.prototype,"guess",2);V([c()],D.prototype,"status",2);V([c()],D.prototype,"guesses",2);D=V([w("wd-board")],D);var Se=Object.defineProperty,ze=Object.getOwnPropertyDescriptor,jt=(t,e,a,r)=>{for(var s=r>1?void 0:r?ze(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Se(e,a,s),s};let B=class extends v{constructor(){super(...arguments);this.letters=z}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:r=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};Xt[r]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:r}))};return t.addEventListener("click",e),t}render(){return n`
+  `;B([h()],D.prototype,"guess",2);B([h()],D.prototype,"status",2);B([h()],D.prototype,"guesses",2);D=B([v("wd-board")],D);var Ee=Object.defineProperty,Te=Object.getOwnPropertyDescriptor,St=(t,e,a,r)=>{for(var s=r>1?void 0:r?Te(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ee(e,a,s),s};let U=class extends p{constructor(){super(...arguments);this.letters=M}createRenderRoot(){const t=super.createRenderRoot(),e=a=>{var s;a.preventDefault();const{key:r=""}=((s=a==null?void 0:a.target)==null?void 0:s.dataset)||{};se[r]&&window.dispatchEvent(new KeyboardEvent("keydown",{key:r}))};return t.addEventListener("click",e),t}render(){return n`
       <div id="keyboard">
         <div class="row">
           <button title="Q" data-key="q" data-state=${this.letters.q}>q</button>
@@ -516,7 +526,7 @@ ${t}
           </button>
         </div>
       </div>
-    `}};B.styles=p`
+    `}};U.styles=u`
     :host {
       height: var(--keyboard-height);
     }
@@ -603,7 +613,7 @@ ${t}
       background-color: var(--key-bg-absent);
       color: var(--key-evaluated-text-color);
     }
-  `;jt([c()],B.prototype,"letters",2);B=jt([w("wd-keyboard")],B);var Ee=Object.defineProperty,Re=Object.getOwnPropertyDescriptor,Me=(t,e,a,r)=>{for(var s=r>1?void 0:r?Re(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ee(e,a,s),s};let st=class extends v{render(){return n`
+  `;St([h()],U.prototype,"letters",2);U=St([v("wd-keyboard")],U);var Ae=Object.defineProperty,Le=Object.getOwnPropertyDescriptor,Ne=(t,e,a,r)=>{for(var s=r>1?void 0:r?Le(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ae(e,a,s),s};let ot=class extends p{render(){return n`
       <section>
         <div class="instructions">
           <p>Guess the <strong>WORD</strong> in 6 tries.</p>
@@ -665,7 +675,7 @@ ${t}
           </p>
         </div>
       </section>
-    `}};st.styles=p`
+    `}};ot.styles=u`
     :host {
       color: var(--modal-content-color);
     }
@@ -693,7 +703,7 @@ ${t}
       padding: 16px;
       padding-top: 0px;
     }
-  `;st=Me([w("wd-help")],st);var Te=Object.defineProperty,Ae=Object.getOwnPropertyDescriptor,Le=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ae(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Te(e,a,s),s};let at=class extends v{render(){return n`
+  `;ot=Ne([v("wd-help")],ot);var Ye=Object.defineProperty,We=Object.getOwnPropertyDescriptor,He=(t,e,a,r)=>{for(var s=r>1?void 0:r?We(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ye(e,a,s),s};let it=class extends p{render(){return n`
       <div class="container">
         <h1>Game Already Played</h1>
         <div class="content">
@@ -708,7 +718,7 @@ ${t}
           <p>You are not allowed to replay your own shared game link.</p>
         </div>
       </div>
-    `}};at.styles=p`
+    `}};it.styles=u`
     .container {
       display: flex;
       flex-direction: column;
@@ -731,7 +741,7 @@ ${t}
     .content {
       flex: 1;
     }
-  `;at=Le([w("wd-seed-played")],at);var Ne=Object.defineProperty,Ye=Object.getOwnPropertyDescriptor,We=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ye(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ne(e,a,s),s};let rt=class extends v{render(){return n`
+  `;it=He([v("wd-seed-played")],it);var Ke=Object.defineProperty,Ve=Object.getOwnPropertyDescriptor,Be=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ve(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ke(e,a,s),s};let nt=class extends p{render(){return n`
       <div class="container">
         <h1>Game In Progress</h1>
         <div class="content">
@@ -741,7 +751,7 @@ ${t}
           </p>
         </div>
       </div>
-    `}};rt.styles=p`
+    `}};nt.styles=u`
     .container {
       display: flex;
       flex-direction: column;
@@ -764,14 +774,14 @@ ${t}
     .content {
       flex: 1;
     }
-  `;rt=We([w("wd-game-in-progress")],rt);var Ke=Object.defineProperty,He=Object.getOwnPropertyDescriptor,ot=(t,e,a,r)=>{for(var s=r>1?void 0:r?He(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ke(e,a,s),s};let T=class extends v{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
+  `;nt=Be([v("wd-game-in-progress")],nt);var Ue=Object.defineProperty,Fe=Object.getOwnPropertyDescriptor,lt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Fe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ue(e,a,s),s};let T=class extends p{constructor(){super(...arguments);this.checked=!1,this.disabled=!1}render(){return n`
       <div class="container">
         <label><slot></slot></label>
         <div class="switch">
           <span class="knob"></span>
         </div>
       </div>
-    `}};T.styles=p`
+    `}};T.styles=u`
     .container {
       display: flex;
       justify-content: space-between;
@@ -806,7 +816,7 @@ ${t}
     :host([disabled="true"]) .switch {
       opacity: 0.5;
     }
-  `;ot([c({reflect:!0})],T.prototype,"checked",2);ot([c({reflect:!0})],T.prototype,"disabled",2);T=ot([w("wd-switch")],T);var Ve=Object.defineProperty,Be=Object.getOwnPropertyDescriptor,Dt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Be(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ve(e,a,s),s};let U=class extends v{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
+  `;lt([h({reflect:!0})],T.prototype,"checked",2);lt([h({reflect:!0})],T.prototype,"disabled",2);T=lt([v("wd-switch")],T);var qe=Object.defineProperty,Xe=Object.getOwnPropertyDescriptor,Mt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Xe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&qe(e,a,s),s};let F=class extends p{constructor(){super(...arguments);this.darkTheme=localStorage.getItem("theme_dark")||""}toggleDarkTheme(t){t.preventDefault(),this.darkTheme=this.darkTheme==="on"?"":"on",localStorage.setItem("theme_dark",this.darkTheme),this.dispatchEvent(new CustomEvent("wd-dark-theme",{detail:{on:this.darkTheme==="on"},bubbles:!0,composed:!0}))}render(){return n`
       <div class="sections">
         <section>
           <div class="setting">
@@ -824,7 +834,7 @@ ${t}
           </div>
         </section>
       </div>
-    `}};U.styles=p`
+    `}};F.styles=u`
     .setting {
       display: flex;
       justify-content: space-between;
@@ -873,12 +883,12 @@ ${t}
         padding: 16px;
       }
     }
-  `;Dt([g()],U.prototype,"darkTheme",2);U=Dt([w("wd-settings")],U);var Ue=Object.defineProperty,Fe=Object.getOwnPropertyDescriptor,qe=(t,e,a,r)=>{for(var s=r>1?void 0:r?Fe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ue(e,a,s),s};let it=class extends v{render(){return n`
+  `;Mt([w()],F.prototype,"darkTheme",2);F=Mt([v("wd-settings")],F);var Ze=Object.defineProperty,Je=Object.getOwnPropertyDescriptor,Qe=(t,e,a,r)=>{for(var s=r>1?void 0:r?Je(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Ze(e,a,s),s};let dt=class extends p{render(){return n`
       <div class="overlay">
         <div class="before"></div>
         <div class="after"></div>
       </div>
-    `}};it.styles=p`
+    `}};dt.styles=u`
     .overlay > .before,
     .overlay > .after {
       position: absolute;
@@ -984,7 +994,7 @@ ${t}
         margin-left: 80%;
       }
     }
-  `;it=qe([w("wd-fireworks")],it);var Xe=Object.defineProperty,Ze=Object.getOwnPropertyDescriptor,nt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Ze(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Xe(e,a,s),s};let A=class extends v{constructor(){super(...arguments);this.stats={},this.activeGameId="",this.winResult=!1}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await C;this.stats=t(),this.activeGameId=e().id,this.winResult=this.stats.lastGameId===this.activeGameId&&this.stats.lastResult==="win"}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}async share(t){t.preventDefault();const{active:e}=await C,{seed:a,guesses:r}=e();await ge(fe(r),a)}get ratingGrade(){const t=this.stats.rating;return t>=0?"S":t>=-500?"A":t>=-1e3?"B":t>=-2e3?"C":t>=-5e3?"D":"E"}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0,a=this.ratingGrade;return n`
+  `;dt=Qe([v("wd-fireworks")],dt);var ts=Object.defineProperty,es=Object.getOwnPropertyDescriptor,ct=(t,e,a,r)=>{for(var s=r>1?void 0:r?es(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ts(e,a,s),s};let A=class extends p{constructor(){super(...arguments);this.stats={},this.activeGameId="",this.winResult=!1}async connectedCallback(){await super.connectedCallback();const{stats:t,active:e}=await _;this.stats=t(),this.activeGameId=e().id,this.winResult=this.stats.lastGameId===this.activeGameId&&this.stats.lastResult==="win"}newGame(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-new-game",{composed:!0,bubbles:!0}))}async share(t){t.preventDefault();const{active:e}=await _,{seed:a,guesses:r}=e();await zt(It(r),a)}get ratingGrade(){const t=this.stats.rating;return t>=0?"S":t>=-500?"A":t>=-1e3?"B":t>=-2e3?"C":t>=-5e3?"D":"E"}graphWidth(t){const e=this.stats.wins;return e?Math.max(Math.floor(this.stats.distribution[t]/e*100),7):7}render(){const t=this.stats.lastGameId||"",e=this.stats.lastGuess||0,a=this.ratingGrade;return n`
       ${this.winResult?n`<wd-fireworks></wd-fireworks>`:""}
       <div class="container">
         <h1>Statistics</h1>
@@ -1125,7 +1135,7 @@ ${t}
         </div>
       </div>`:null}
       </div>
-    `}};A.styles=p`
+    `}};A.styles=u`
     .container {
       display: flex;
       flex-direction: column;
@@ -1329,7 +1339,165 @@ ${t}
       height: 24px;
       padding-left: 8px;
     }
-  `;nt([g()],A.prototype,"stats",2);nt([g()],A.prototype,"activeGameId",2);A=nt([w("wd-stats")],A);var Je=Object.defineProperty,Qe=Object.getOwnPropertyDescriptor,lt=(t,e,a,r)=>{for(var s=r>1?void 0:r?Qe(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&Je(e,a,s),s};let L=class extends v{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
+  `;ct([w()],A.prototype,"stats",2);ct([w()],A.prototype,"activeGameId",2);A=ct([v("wd-stats")],A);var ss=Object.defineProperty,as=Object.getOwnPropertyDescriptor,Rt=(t,e,a,r)=>{for(var s=r>1?void 0:r?as(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ss(e,a,s),s};let q=class extends p{constructor(){super(...arguments);this.game=null}async share(){!this.game||await zt(It(this.game.guesses),this.game.seed)}get duration(){if(!this.game)return"";let t=(this.game.end-this.game.start)/1e3;return t<1?"< 1s":t<60?`${t}s`:t/60<60?`${Math.floor(t/60)}m`:t/60/24<24?`${Math.floor(t)}h`:`${Math.floor(t/60/24)}d`}render(){return this.game===null||!this.game.end?null:n`
+      <div class="guess-grid">
+        ${this.game.guesses.map(t=>t.result.map(e=>n`<div class="guess-grid-item ${e}"></div>`))}
+      </div>
+      <div class="results">
+        <div class="result">
+          <wd-icon
+            class="status ${this.game.status==="win"?"circlecheck":"circlex"}"
+            name=${this.game.status==="win"?"circlecheck":"circlex"}
+          ></wd-icon>
+          <h3>${this.game.seed}</h3>
+          <button class="share" @click=${this.share}>
+            <wd-icon name="share" size="sm"></wd-icon>
+          </button>
+        </div>
+        <div class="stats">
+          <span>${this.duration}</span>
+          <time datetime="${this.game.start}"
+            >${new Intl.DateTimeFormat().format(new Date(this.game.start))}</time
+          >
+        </div>
+      </div>
+    `}};q.styles=u`
+    :host {
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      flex: 1;
+      gap: 1rem;
+    }
+    .guess-grid {
+      box-sizing: border-box;
+      display: grid;
+      grid-template-rows: repeat(${Y}, 1fr);
+      grid-template-columns: repeat(${$}, 1fr);
+      grid-gap: 1px;
+      padding: 1px;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 80px;
+      flex-shrink: 0;
+    }
+    .guess-grid-item {
+      box-sizing: border-box;
+      aspect-ratio: 1;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .guess-grid-item.present {
+      background-color: var(--color-present);
+    }
+    .guess-grid-item.absent {
+      background-color: var(--color-absent);
+    }
+    .guess-grid-item.correct {
+      background-color: var(--color-correct);
+    }
+    .guess-grid-item.empty {
+      background-color: var(--color-absent);
+    }
+    .results {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+      justify-content: space-around;
+      gap: 1rem;
+      overflow: hidden;
+    }
+    .result {
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h3 {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 700;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stats {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+      justify-content: flex-end;
+      gap: 0.25rem;
+    }
+    .status {
+      flex-shrink: 0;
+      height: 32px;
+      width: 32px;
+      overflow: hidden;
+      padding: 4px;
+      border-radius: 9999px;
+      color: var(--key-evaluated-text-color);
+      box-sizing: border-box;
+    }
+    .circlecheck {
+      background-color: var(--color-correct);
+    }
+    .circlex {
+      background-color: var(--color-error);
+    }
+    button.share {
+      box-sizing: border-box;
+      flex-shrink: 0;
+      background-color: transparent;
+      color: var(--wd-share-color);
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      height: 32px;
+      width: 32px;
+      -webkit-filter: brightness(100%);
+      opacity: 0.7;
+      transition: opacity 0.2s ease-out, backround-color 0.2s ease-out;
+    }
+    button.share:hover {
+      background-color: var(--wd-share-bg);
+      opacity: 1;
+    }
+    button.share wd-icon {
+      width: 20px;
+      height: 20px;
+    }
+    time {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  `;Rt([h()],q.prototype,"game",2);q=Rt([v("wd-history-item")],q);var rs=Object.defineProperty,os=Object.getOwnPropertyDescriptor,Et=(t,e,a,r)=>{for(var s=r>1?void 0:r?os(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&rs(e,a,s),s};let X=class extends p{constructor(){super(...arguments);this.history=[]}async connectedCallback(){super.connectedCallback();const{history:t}=await _;this.history=t()}render(){return n`
+      ${this.history.map(t=>n` <wd-history-item .game=${t}></wd-history-item> `)}
+    `}};X.styles=u`
+    :host {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+      gap: 1rem;
+      padding: 1rem 0.5rem;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+  `;Et([w()],X.prototype,"history",2);X=Et([v("wd-history")],X);var is=Object.defineProperty,ns=Object.getOwnPropertyDescriptor,ht=(t,e,a,r)=>{for(var s=r>1?void 0:r?ns(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&is(e,a,s),s};let L=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}updated(){this.open}closePage(){this.dispatchEvent(new CustomEvent("wd-page",{detail:{open:!1},composed:!0,bubbles:!0}))}render(){return n`
       <div class="overlay">
         <div class="content">
           <header>
@@ -1343,8 +1511,12 @@ ${t}
           </div>
         </div>
       </div>
-    `}};L.styles=p`
+    `}};L.styles=u`
+    :host {
+      box-sizing: border-box;
+    }
     .overlay {
+      box-sizing: border-box;
       display: none;
       position: absolute;
       width: 100%;
@@ -1379,9 +1551,11 @@ ${t}
       height: 100%;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
     }
 
     .content-container {
+      box-sizing: border-box;
       flex: 1;
       overflow-y: auto;
     }
@@ -1451,7 +1625,7 @@ ${t}
         transform: translateY(12vh);
       }
     }
-  `;lt([c({reflect:!0})],L.prototype,"open",2);lt([c({reflect:!0})],L.prototype,"closing",2);L=lt([w("wd-page")],L);var ts=Object.defineProperty,es=Object.getOwnPropertyDescriptor,dt=(t,e,a,r)=>{for(var s=r>1?void 0:r?es(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ts(e,a,s),s};let N=class extends v{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
+  `;ht([h({reflect:!0})],L.prototype,"open",2);ht([h({reflect:!0})],L.prototype,"closing",2);L=ht([v("wd-page")],L);var ls=Object.defineProperty,ds=Object.getOwnPropertyDescriptor,ut=(t,e,a,r)=>{for(var s=r>1?void 0:r?ds(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ls(e,a,s),s};let N=class extends p{constructor(){super(...arguments);this.open=!1,this.closing=!1}closeModal(t){t.preventDefault(),this.dispatchEvent(new CustomEvent("wd-modal",{detail:{open:!1},composed:!0,bubbles:!0}))}preventClose(t){t.preventDefault(),t.stopPropagation()}render(){return n`
       <div class="overlay" @click=${this.closeModal}>
         <div class="content" @click=${this.preventClose}>
           <slot></slot>
@@ -1460,7 +1634,7 @@ ${t}
           </button>
         </div>
       </div>
-    `}};N.styles=p`
+    `}};N.styles=u`
     .overlay {
       display: none;
       position: absolute;
@@ -1539,7 +1713,7 @@ ${t}
         transform: translateY(6vh);
       }
     }
-  `;dt([c({reflect:!0})],N.prototype,"open",2);dt([c({reflect:!0})],N.prototype,"closing",2);N=dt([w("wd-modal")],N);var ss=Object.defineProperty,as=Object.getOwnPropertyDescriptor,b=(t,e,a,r)=>{for(var s=r>1?void 0:r?as(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&ss(e,a,s),s};let m=class extends v{constructor(){super(...arguments);this.gameId="",this.seed="",this.guess=0,this.guesses=J,this.letters=z,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}debugMode(){return null}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;Y(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<E&&t in z&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case I.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case I.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},xt)}async validate(t){return t.length<E?{success:!1,reason:I.INVALID_CHAR_LEN}:await we(t)?{success:!0}:{success:!1,reason:I.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let r=0;r<e.length;r++)a[t.charAt(r)]=e[r];this.letters=k(k({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let r=0;r<t.length;r++){const s=t.charAt(r),o=e.charAt(r);a[r]=o===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await C;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await C;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,seed:this.seed,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},kt))},5*500)}async setupGame(t){try{this.gameId=t.id,this.guess=t.guess,this.guesses=t.guesses,this.solution=await de(t.solution,t.iv),this.seed=t.seed,this.status=t.status,this.letters=t.letters}catch(e){console.log(e)}}async startNewGame(){const{generateGame:t}=await C;await this.setupGame(await t()),this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await C;await this.setupGame(t()),this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){window.removeEventListener("keydown",this._handleKeydown),super.disconnectedCallback()}render(){return n`
+  `;ut([h({reflect:!0})],N.prototype,"open",2);ut([h({reflect:!0})],N.prototype,"closing",2);N=ut([v("wd-modal")],N);var cs=Object.defineProperty,hs=Object.getOwnPropertyDescriptor,b=(t,e,a,r)=>{for(var s=r>1?void 0:r?hs(e,a):e,o=t.length-1,i;o>=0;o--)(i=t[o])&&(s=(r?i(e,a,s):i(s))||s);return r&&s&&cs(e,a,s),s};let m=class extends p{constructor(){super(...arguments);this.gameId="",this.seed="",this.guess=0,this.guesses=et,this.letters=M,this.solution="",this.status="idle",this.page="",this.modal="",this.toast="",this.closingPage=!1,this.closingModal=!1,this._clearTimeout=null,this._autosaveTimeout=null,this._handleKeydown=async t=>{if(!(t.isComposing||t.ctrlKey||t.altKey||this.status!=="idle"))switch(t.key){case"Escape":this.page="",this.modal="";return;case"Backspace":return this.removeLetter();case"Enter":return await this.attemptGuess();default:return this.insertLetter(t.key.toLowerCase())}}}debugMode(){return null}handleModal(t){const{open:e=!1,content:a=""}=t.detail;e?this.modal=a:(this.closingModal=!0,setTimeout(()=>{this.modal="",this.closingModal=!1},200))}handleToast(t){const{content:e=""}=t.detail;W(e)}handlePage(t){const{open:e=!1,content:a=""}=t.detail;e?this.page=a:(this.closingPage=!0,setTimeout(()=>{this.page="",this.closingPage=!1},200))}get activeGuess(){return this.guesses[this.guess].letters}set activeGuess(t){const e=this.guesses[this.guess];e.letters=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}get activeResult(){return this.guesses[this.guess].result}set activeResult(t){const e=this.guesses[this.guess];e.result=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}set activeStatus(t){const e=this.guesses[this.guess];e.status=t,this.guesses=this.guesses.map((a,r)=>r===this.guess?e:a)}removeLetter(){this.activeGuess.length>0&&(this.activeGuess=this.activeGuess.slice(0,-1))}insertLetter(t){this.activeGuess.length<$&&t in M&&this.letters[t]!=="absent"&&(this.activeGuess+=t)}win(){this.status="win"}lose(){this.status="lose"}nextRow(){this.guess++,this.status="idle"}invalidGuess(t,e){switch(this.status="invalid",e){case I.INVALID_CHAR_LEN:this.handleToast({detail:{content:"Not enough letters!"}});break;case I.INVALID_WORD:this.handleToast({detail:{content:"Not a valid word!"}});break}this._clearTimeout=setTimeout(()=>{this.status="idle"},$t)}async validate(t){return t.length<$?{success:!1,reason:I.INVALID_CHAR_LEN}:await xe(t)?{success:!0}:{success:!1,reason:I.INVALID_WORD}}updateKeyboard(){const t=this.activeGuess,e=this.activeResult,a={};for(let r=0;r<e.length;r++)a[t.charAt(r)]=e[r];this.letters=x(x({},this.letters),a)}determineResults(t){const e=this.solution,a=this.activeResult;this.status="reveal";for(let r=0;r<t.length;r++){const s=t.charAt(r),o=e.charAt(r);a[r]=o===s?"correct":e.indexOf(s)>-1?"present":"absent"}this.activeResult=a}updateGameStatus(){this._clearTimeout=setTimeout(()=>{this.updateKeyboard(),this.activeStatus="evaluated",this.activeResult.some(t=>t!=="correct")?this.guess<5?this.nextRow():this.lose():this.win()},5*300)}async attemptGuess(){this._clearTimeout&&clearTimeout(this._clearTimeout);const t=this.activeGuess,e=await this.validate(t);e.success?(this.determineResults(t),this.updateGameStatus()):this.invalidGuess(t,e.reason),this.saveGame()}async saveStats(){const{saveStats:t}=await _;await t(this.gameId)}async saveGame(){this._autosaveTimeout&&clearTimeout(this._autosaveTimeout);const{saveGame:t}=await _;this._autosaveTimeout=setTimeout(async()=>{const e=this.status==="win"||this.status==="lose"?Date.now():void 0;await t({id:this.gameId,guess:this.guess,guesses:this.guesses,letters:this.letters,solution:this.solution,seed:this.seed,status:e?this.status:"idle",end:e}),e&&(await this.saveStats(),setTimeout(()=>{this.modal="stats"},_t))},5*500)}async setupGame(t){try{this.gameId=t.id,this.guess=t.guess,this.guesses=t.guesses,this.solution=await ge(t.solution,t.iv),this.seed=t.seed,this.status=t.status,this.letters=t.letters}catch(e){console.log(e)}}async startNewGame(){const{generateGame:t}=await _;await this.setupGame(await t()),this.handleModal({detail:{open:!1}})}async connectedCallback(){super.connectedCallback();const{active:t,modal:e}=await _;await this.setupGame(t()),this.modal=e,window.addEventListener("keydown",this._handleKeydown)}disconnectedCallback(){super.disconnectedCallback(),window.removeEventListener("keydown",this._handleKeydown)}render(){return n`
       <wd-header
         @wd-modal=${this.handleModal}
         @wd-page=${this.handlePage}
@@ -1559,6 +1733,8 @@ ${t}
                   <wd-help page slot="content"></wd-help>`:null}
             ${this.page==="settings"?n`<span>Settings</span>
                   <wd-settings page slot="content"></wd-settings>`:null}
+            ${this.page==="history"?n`<span>History</span
+                  ><wd-history page slot="content"></wd-history>`:null}
           </wd-page>`:""}
       ${this.closingModal||this.modal?n`<wd-modal
             .open=${!this.closingModal&&this.modal!==""}
@@ -1568,11 +1744,10 @@ ${t}
             ${this.modal==="help"?n`<wd-help></wd-help>`:null}
             ${this.modal==="game-in-progress"?n`<wd-game-in-progress></wd-game-in-progress>`:null}
             ${this.modal==="seed-played"?n`<wd-seed-played></wd-seed-played>`:null}
-            ${this.modal==="help"?n`<wd-help></wd-help>`:null}
             ${this.modal==="stats"?n`<wd-stats @wd-new-game=${this.startNewGame}></wd-stats>`:null}
           </wd-modal>`:null}
       ${this.debugMode()}
-    `}};m.styles=p`
+    `}};m.styles=u`
     :host {
       width: 100%;
       max-width: var(--wd-max-width);
@@ -1582,5 +1757,5 @@ ${t}
       flex-direction: column;
       box-sizing: border-box;
     }
-    ${p``}
-  `;b([g()],m.prototype,"gameId",2);b([g()],m.prototype,"seed",2);b([g()],m.prototype,"guess",2);b([g()],m.prototype,"guesses",2);b([g()],m.prototype,"letters",2);b([g()],m.prototype,"solution",2);b([g()],m.prototype,"status",2);b([g()],m.prototype,"page",2);b([g()],m.prototype,"modal",2);b([g()],m.prototype,"toast",2);b([g()],m.prototype,"closingPage",2);b([g()],m.prototype,"closingModal",2);m=b([w("wd-app")],m);Ht({});
+    ${u``}
+  `;b([w()],m.prototype,"gameId",2);b([w()],m.prototype,"seed",2);b([w()],m.prototype,"guess",2);b([w()],m.prototype,"guesses",2);b([w()],m.prototype,"letters",2);b([w()],m.prototype,"solution",2);b([w()],m.prototype,"status",2);b([w()],m.prototype,"page",2);b([w()],m.prototype,"modal",2);b([w()],m.prototype,"toast",2);b([w()],m.prototype,"closingPage",2);b([w()],m.prototype,"closingModal",2);m=b([v("wd-app")],m);Xt({});
