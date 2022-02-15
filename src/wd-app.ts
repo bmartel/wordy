@@ -18,6 +18,7 @@ import {
   RowStatus,
   Game,
   maybeDecryptSolution,
+  WIN_ANIMATION_DURATION,
 } from "./utils";
 import "./wd-header.ts";
 import "./wd-board.ts";
@@ -363,7 +364,7 @@ export class CwApp extends LitElement {
         await this.saveStats();
         setTimeout(() => {
           this.modal = "stats";
-        }, 750);
+        }, WIN_ANIMATION_DURATION);
       }
     }, 5 * 500);
   }

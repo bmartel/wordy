@@ -107,7 +107,9 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:300ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:${this.status === "win" && this.revealed
+            ? "150ms"
+            : "300ms"};--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
@@ -135,7 +137,9 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:600ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:${this.status === "win" && this.revealed
+            ? "300ms"
+            : "600ms"};--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
@@ -163,7 +167,9 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:900ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:${this.status === "win" && this.revealed
+            ? "450ms"
+            : "900ms"};--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing
@@ -191,7 +197,9 @@ export class CwRow extends LitElement {
             : ""}
         ></wd-cell>
         <wd-cell
-          style="--animation-delay:1200ms;--transition-delay:${this.evaluated &&
+          style="--animation-delay:${this.status === "win" && this.revealed
+            ? "600ms"
+            : "1200ms"};--transition-delay:${this.evaluated &&
           this.status !== "win"
             ? "0ms"
             : revealing

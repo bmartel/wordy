@@ -38,7 +38,7 @@ export class CwModal extends LitElement {
       border: 1px solid var(--wd-border-color);
       background-color: var(--modal-content-bg);
       color: var(--modal-content-color);
-      box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 23px 0 var(--shadow-color);
       width: 90%;
       max-height: 90%;
       overflow-y: auto;
