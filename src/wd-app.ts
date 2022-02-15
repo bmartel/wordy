@@ -28,6 +28,7 @@ import "./wd-seed-played.ts";
 import "./wd-game-in-progress.ts";
 import "./wd-settings.ts";
 import "./wd-stats.ts";
+import "./wd-history.ts";
 import "./wd-page.ts";
 import "./wd-modal.ts";
 
@@ -398,8 +399,8 @@ export class CwApp extends LitElement {
   }
 
   disconnectedCallback() {
-    window.removeEventListener("keydown", this._handleKeydown);
     super.disconnectedCallback();
+    window.removeEventListener("keydown", this._handleKeydown);
   }
 
   render() {
@@ -428,6 +429,10 @@ export class CwApp extends LitElement {
               ? html`<span>Settings</span>
                   <wd-settings page slot="content"></wd-settings>`
               : null}
+            ${this.page === "history"
+              ? html`<span>History</span
+                  ><wd-history page slot="content"></wd-history>`
+              : null}
           </wd-page>`
         : ""}
       ${this.closingModal || this.modal
@@ -443,7 +448,6 @@ export class CwApp extends LitElement {
             ${this.modal === "seed-played"
               ? html`<wd-seed-played></wd-seed-played>`
               : null}
-            ${this.modal === "help" ? html`<wd-help></wd-help>` : null}
             ${this.modal === "stats"
               ? html`<wd-stats @wd-new-game=${this.startNewGame}></wd-stats>`
               : null}

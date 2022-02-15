@@ -21,12 +21,14 @@ export class CwTheme extends LitElement {
       --darkendGreen: #538d4e;
       --yellow: #c9b458;
       --darkendYellow: #b39200;
+      --red: #fd5731;
       --white: #fff;
       --black: #000;
 
       --color-present: var(--yellow);
       --color-correct: var(--green);
       --color-absent: var(--color-tone-3);
+      --color-error: var(--red);
       --cell-text-color: var(--color-tone-7);
       --key-text-color: var(--color-tone-7);
       --key-evaluated-text-color: var(--white);

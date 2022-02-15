@@ -184,6 +184,10 @@ export const manager = (async (): Promise<GameManager> => {
     games: () => games,
     active: () => active,
     stats: () => stats,
+    history: () =>
+      Object.values(games)
+        .filter((game) => !!game.end)
+        .sort((a, b) => b.end! - a.end!),
     modal: modal as any,
     saveGame,
     saveStats,

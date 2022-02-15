@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { GameStatus, Guess, initializeGuesses } from "./utils";
+import { GameStatus, Guess, initializeGuesses, WORD_SIZE } from "./utils";
 import "./wd-row.ts";
 
 @customElement("wd-board")
@@ -27,7 +27,7 @@ export class CwBoard extends LitElement {
       width: 10.9375em;
       height: 13.125em;
       display: grid;
-      grid-template-rows: repeat(6, 1fr);
+      grid-template-rows: repeat(${WORD_SIZE}, 1fr);
       grid-gap: 5px;
       padding: 10px;
       box-sizing: border-box;

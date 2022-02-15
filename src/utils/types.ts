@@ -103,6 +103,7 @@ export interface GameManager {
   active(): Game;
   games(): Record<string, Game>;
   stats(): GameStats;
+  history(): Game[];
   saveGame(game: Partial<Game>): Promise<void>;
   saveStats(id: string): Promise<void>;
   generateGame(): Promise<Game>;

@@ -40,46 +40,38 @@ export class CwHeader extends LitElement {
     }
   `;
 
-  private showHelp(e: Event) {
+  private showOverlay(
+    e: Event,
+    type: "modal" | "page",
+    detail: { content: string }
+  ) {
     e.preventDefault();
     this.dispatchEvent(
-      new CustomEvent("wd-page", {
+      new CustomEvent(`wd-${type}`, {
         detail: {
-          content: "help",
+          ...detail,
           open: true,
         },
         bubbles: true,
         composed: true,
       })
     );
+  }
+
+  private showHelp(e: Event) {
+    this.showOverlay(e, "page", { content: "help" });
   }
 
   private showStats(e: Event) {
-    e.preventDefault();
-    this.dispatchEvent(
-      new CustomEvent("wd-modal", {
-        detail: {
-          content: "stats",
-          open: true,
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.showOverlay(e, "modal", { content: "stats" });
   }
 
   private showSettings(e: Event) {
-    e.preventDefault();
-    this.dispatchEvent(
-      new CustomEvent("wd-page", {
-        detail: {
-          content: "settings",
-          open: true,
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.showOverlay(e, "page", { content: "settings" });
+  }
+
+  private showHistory(e: Event) {
+    this.showOverlay(e, "page", { content: "history" });
   }
 
   render() {
@@ -93,6 +85,14 @@ export class CwHeader extends LitElement {
             aria-label="help"
           >
             <wd-icon name="help"></wd-icon>
+          </button>
+          <button
+            @click=${this.showHistory}
+            id="statistics-button"
+            class="icon"
+            aria-label="statistics"
+          >
+            <wd-icon name="puzzle"></wd-icon>
           </button>
         </div>
         <div class="title">🟨🟩🟨🟩🟩</div>

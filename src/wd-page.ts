@@ -10,7 +10,11 @@ export class CwPage extends LitElement {
   closing = false;
 
   static styles = css`
+    :host {
+      box-sizing: border-box;
+    }
     .overlay {
+      box-sizing: border-box;
       display: none;
       position: absolute;
       width: 100%;
@@ -45,9 +49,11 @@ export class CwPage extends LitElement {
       height: 100%;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
     }
 
     .content-container {
+      box-sizing: border-box;
       flex: 1;
       overflow-y: auto;
     }
